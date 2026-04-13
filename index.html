@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary-color: #003366; /* 濃紺 */
-            --accent-color: #f39c12;  /* アクティブ時のオレンジ */
+            --accent-color: #f39c12;  /* オレンジ */
             --bg-color: #f8f9fa;
             --white: #ffffff;
         }
@@ -15,7 +15,7 @@
         body {
             font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
             margin: 0;
-            padding-bottom: 70px;
+            padding-bottom: 80px;
             background-color: var(--bg-color);
             color: #333;
         }
@@ -44,12 +44,25 @@
 
         header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.8rem; }
 
-        /* --- 改良版タブメニュー --- */
+        /* --- 改良版サブタイトル（楕円背景） --- */
+        .sub-title {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: var(--white);
+            padding: 8px 25px;
+            border-radius: 50px; /* 楕円形にする */
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 25px 0 15px 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+        }
+
+        /* --- タブメニュー --- */
         .tab-menu {
             position: fixed;
             bottom: 0; left: 0;
             width: 100%;
-            background: var(--primary-color); /* タブ全体を青色に */
+            background: var(--primary-color);
             display: flex;
             justify-content: space-around;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
@@ -62,37 +75,31 @@
             border: none;
             background: none;
             font-weight: bold;
-            color: rgba(255, 255, 255, 0.7); /* 未選択時は少し透けた白 */
+            color: rgba(255, 255, 255, 0.7);
             cursor: pointer;
             font-size: 0.95rem;
             position: relative;
-            transition: all 0.3s;
         }
 
-        /* タブ間の白色線 */
         .tab-btn:not(:last-child)::after {
             content: "";
             position: absolute;
-            right: 0;
-            top: 25%;
-            height: 50%;
-            width: 1px;
-            background-color: rgba(255, 255, 255, 0.3); /* 控えめな白色線 */
+            right: 0; top: 25%;
+            height: 50%; width: 1px;
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* アクティブなタブの状態 */
         .tab-btn.active {
-            color: var(--white); /* 文字を真っ白に */
-            background: rgba(255, 255, 255, 0.1); /* わずかに背景を明るく */
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .tab-btn.active::before {
             content: "";
             position: absolute;
             top: 0; left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--accent-color); /* 上部にオレンジの線 */
+            width: 100%; height: 4px;
+            background-color: var(--accent-color);
         }
 
         /* --- コンテンツ表示 --- */
@@ -101,13 +108,10 @@
             padding: 20px;
             max-width: 800px;
             margin: 0 auto;
-            animation: fadeIn 0.3s ease; /* 切り替え時にふわっと表示 */
+            animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .tab-content.active { display: block; }
 
@@ -117,9 +121,10 @@
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
             margin-bottom: 20px;
+            text-align: left;
         }
 
-        #timer { font-size: 2rem; font-weight: bold; color: var(--accent-color); }
+        #timer { font-size: 2rem; font-weight: bold; color: var(--accent-color); text-align: center; }
 
         .btn {
             display: block;
@@ -132,7 +137,6 @@
             font-weight: bold;
             border: 1px solid #ddd;
             text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
         .btn:hover { background: #f0f7ff; border-color: var(--primary-color); }
     </style>
@@ -152,36 +156,44 @@
 
 <div id="home" class="tab-content active">
     <div class="card">
-        <div style="font-weight: bold; margin-bottom: 10px; color: #555;">7.11 男子部結成記念日まで</div>
+        <div style="font-weight: bold; margin-bottom: 10px; color: #555; text-align: center;">7.11 男子部結成記念日まで</div>
         <div id="timer">計算中...</div>
     </div>
 
-    <div class="card" style="text-align: left;">
-        <h3 style="border-bottom: 2px solid var(--primary-color); padding-bottom: 5px; color: var(--primary-color);">お知らせ</h3>
-        <p><strong>2026.04.13</strong><br>メニューのデザインを視認性の高い「ネイビーブルー」に変更しました。</p>
+    <div style="text-align: center;">
+        <div class="sub-title">お知らせ</div>
+    </div>
+    <div class="card">
+        <p><strong>2026.04.13</strong><br>各セクションのタイトルを楕円形デザインに更新しました。視認性がアップしています。</p>
     </div>
 
-    <h3 style="text-align: left; margin-left: 10px;">外部リンク</h3>
+    <div style="text-align: center;">
+        <div class="sub-title">クイックリンク</div>
+    </div>
     <a href="https://sokadisearch.org/" class="btn" target="_blank">SOKA DIサーチ</a>
     <a href="https://goshoshinpan-search.sokanet.jp/" class="btn" target="_blank">御書検索</a>
     <a href="https://www.miraibu.net/" class="btn" target="_blank">未来部希望ネット</a>
 </div>
 
 <div id="schedule" class="tab-content">
-    <h2 style="color: var(--primary-color);">活動スケジュール</h2>
+    <div style="text-align: center;">
+        <div class="sub-title">活動スケジュール</div>
+    </div>
     <div class="card">
-        <ul style="text-align: left; list-style: none; padding: 0;">
-            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">📅 4月20日：男子部座談会</li>
-            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">📅 5月3日：創価学会の日 記念行事</li>
-            <li style="padding: 10px 0; border-bottom: 1px solid #eee;">📅 7月11日：男子部結成記念日</li>
+        <ul style="list-style: none; padding: 0;">
+            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">📅 4月20日：男子部座談会</li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">📅 5月3日：創価学会の日 記念行事</li>
+            <li style="padding: 12px 0; border-bottom: 1px solid #eee;">📅 7月11日：男子部結成記念日</li>
         </ul>
     </div>
 </div>
 
 <div id="action" class="tab-content">
-    <h2 style="color: var(--primary-color);">今月の取り組み</h2>
-    <div class="card" style="text-align: left;">
-        <h3 style="color: var(--accent-color);">1. 訪問・激励の推進</h3>
+    <div style="text-align: center;">
+        <div class="sub-title">今月の取り組み内容</div>
+    </div>
+    <div class="card">
+        <h3 style="color: var(--accent-color); margin-top: 0;">1. 訪問・激励の推進</h3>
         <p>一人ひとりの部員に寄り添い、希望の対話を広げます。</p>
         <h3 style="color: var(--accent-color);">2. 研鑽の充実</h3>
         <p>御書を通して、確信の人生を歩む土台を作ります。</p>
