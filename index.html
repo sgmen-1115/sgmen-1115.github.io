@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>男子部結成記念日 サポートサイト</title>
+    <title>男子部公式サイト</title>
     <style>
-        /* デザインのこだわり設定 */
+        /* --- 基本設定 --- */
         :root {
             --primary-color: #003366; /* 誠実な紺色 */
             --accent-color: #e67e22;  /* 情熱のオレンジ */
             --bg-color: #f8f9fa;
+            --text-color: #333;
         }
 
         body {
-            font-family: 'Helvetica Neue', Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", sans-serif;
+            font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; /* ゴシック体 */
             margin: 0;
             background-color: var(--bg-color);
-            color: #333;
+            color: var(--text-color);
             line-height: 1.6;
         }
 
@@ -27,16 +28,42 @@
             text-align: center;
         }
 
+        /* --- タイトルと背景（ライオンデザイン） --- */
         header {
-            background: var(--primary-color);
+            position: relative;
             color: white;
-            padding: 40px 0;
+            padding: 80px 20px 60px; /* 余白を調整 */
             margin-bottom: 30px;
+            background-color: var(--primary-color);
+            overflow: hidden; /* ライオンがはみ出さないように */
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        /* カウントダウンのデザイン */
-        .countdown-container {
+        /* ライオンの背景グラフィック（SVG） */
+        header::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(2); /* 中央に配置して拡大 */
+            width: 100%;
+            height: 100%;
+            opacity: 0.15; /* 透明度を調整 */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white"><path d="M78.6,35.2c-2.8-5-8.1-8.3-14.1-8.3c-0.8,0-1.7,0.1-2.5,0.2c-0.1,0-0.2,0.1-0.2,0.2c-0.1,1.1-0.2,2.2-0.2,3.3 c0,0.6,0,1.2,0,1.9c0,0.1,0.1,0.2,0.2,0.2c1.7-0.1,3.4-0.1,5-0.1c4.5,0,8.4,2.5,10.6,6.2c0.1,0.2,0,0.3-0.2,0.4c-0.7,0.3-1.4,0.6-2,1 c-0.1,0.1-0.1,0.2-0.1,0.3c0.1,0.5,0.2,1,0.2,1.6c0,2.1-1.1,4.1-3,5.3c-0.2,0.1-0.2,0.3,0,0.4c0.4,0.3,0.9,0.7,1.3,1.1 c0.1,0.1,0.1,0.2,0,0.3c-0.5,0.5-1.1,0.9-1.7,1.2c-0.2,0.1-0.2,0.2-0.1,0.4c0.2,0.3,0.4,0.6,0.5,1c0.1,0.2,0,0.3-0.2,0.4 c-0.3,0.2-0.6,0.4-1,0.6c-0.2,0.1-0.2,0.2-0.1,0.3c0.2,0.5,0.3,1.1,0.3,1.7c0,2.7-1.8,5-4.3,5.8c-0.2,0.1-0.2,0.2-0.1,0.4 c0.3,0.3,0.6,0.6,0.8,1l-0.6,1.4c-0.1,0.2-0.2,0.3-0.4,0.3h-4c-0.3,0-0.5,0.2-0.5,0.5c0,1,0,2.1-0.1,3.1c0,0.4-0.1,0.7-0.1,1.1 c0,0.2,0.1,0.3,0.2,0.3h4.4c0.3,0,0.5,0.2,0.6,0.4c1.1,2.7,3.5,4.7,6.4,5.4c0.2,0.1,0.3,0,0.4-0.2l1.6-4.5c0.1-0.2,0.2-0.3,0.4-0.3 h1.6c0.3,0,0.5-0.2,0.5-0.5v-3.7c0-0.3,0.2-0.5,0.5-0.6c2.8-0.4,5.3-2.1,6.8-4.5c0.1-0.2,0-0.3-0.2-0.4l-3.3-1.6 c-0.2-0.1-0.3-0.2-0.3-0.4v-1.6c0-0.3,0.2-0.5,0.5-0.5h1.1c2.2,0,4.2-1.3,5.2-3.2c0.1-0.2,0-0.3-0.2-0.4l-2.2-1 c-0.2-0.1-0.3-0.2-0.3-0.4v-0.6c0-0.3,0.2-0.5,0.5-0.6h1.7c2.2,0,4.2-1.3,5.2-3.2c0.1-0.2,0-0.3-0.2-0.4l-1.1-0.5 C88.3,42.4,82.7,38.3,78.6,35.2z"/><path d="M51.5,56.2V65c0,0.3-0.2,0.5-0.5,0.5H41c-0.3,0-0.5-0.2-0.5-0.5v-8.8c0-0.3,0.2-0.5,0.5-0.5h10.1 C51.2,55.7,51.5,55.9,51.5,56.2z"/><path d="M37.8,61.7h1.6c0.3,0,0.5,0.2,0.5,0.5c0,1.1-0.1,2.1-0.2,3.2c0,0.2-0.1,0.3-0.2,0.3h-1.6c-0.2,0-0.3-0.1-0.3-0.2 L37.2,62C37.2,61.9,37.3,61.7,37.8,61.7z"/><path d="M49.4,32c-1.1,0-2.2,0.1-3.3,0.2c-0.2,0-0.3,0.1-0.3,0.3V44c0,0.3,0.2,0.5,0.5,0.5h3.1c0.3,0,0.5-0.2,0.5-0.5V32.4 C49.8,32.2,49.6,32,49.4,32z"/><path d="M36.1,38.6c0-0.6-0.1-1.3-0.1-1.9c0-0.3,0.2-0.5,0.5-0.5h4.1c0.3,0,0.5,0.2,0.5,0.5c0.1,0.6,0.1,1.3,0.1,1.9 c0,0.3-0.2,0.5-0.5,0.5h-4.1C36.3,39.1,36.1,38.9,36.1,38.6z"/><path d="M52.3,44.5h5.5c0.3,0,0.5,0.2,0.5,0.5v2c0,0.3-0.2,0.5-0.5,0.5h-5.5c-0.3,0-0.5-0.2-0.5-0.5v-2 C51.8,44.7,52,44.5,52.3,44.5z"/><path d="M10,81.1c0.1,0.2,0.3,0.3,0.5,0.3h8.3c0.3,0,0.5-0.2,0.5-0.5V70c0-0.3-0.2-0.5-0.5-0.5h-8.3 c-0.2,0-0.4,0.1-0.5,0.3c-1,2.8-1,5.8-0.1,8.7L10,81.1z"/><path d="M22.2,74c0-0.3,0.2-0.5,0.5-0.5h7.1c0.3,0,0.5,0.2,0.5,0.5v5.1c0,0.3-0.2,0.5-0.5,0.5h-7.1c-0.3,0-0.5-0.2-0.5-0.5 V74z"/><path d="M33.8,77.9c0-0.3,0.2-0.5,0.5-0.5h2.1c0.3,0,0.5,0.2,0.5,0.5v2.8c0,0.3-0.2,0.5-0.5,0.5h-2.1c-0.3,0-0.5-0.2-0.5-0.5 V77.9z"/><path d="M39.6,26.6c-0.1,0-0.2,0-0.3,0c-0.2,0.1-0.3,0.2-0.3,0.4c0,0.3,0.2,0.5,0.5,0.5h1.1c0.3,0,0.5,0.2,0.5,0.5 c0.1,0.6,0.1,1.2,0.1,1.9c0,0.3-0.2,0.5-0.5,0.5H39c-0.3,0-0.5,0.2-0.6,0.5c-0.4,1-1,1.9-1.8,2.6c-0.2,0.2-0.3,0.3-0.3,0.5c0,0.3,0.2,0.5,0.5,0.5h1.7c0.3,0,0.5-0.2,0.6-0.5c0.4-1,1.1-1.9,2-2.7c0.2-0.2,0.3-0.4,0.3-0.6v-2.3c0-0.3-0.2-0.5-0.5-0.6c-0.4-0.1-0.8-0.2-1.2-0.2V26.6z"/><path d="M17.4,63.1c0-0.3,0.2-0.5,0.5-0.5h10.4c0.3,0,0.5,0.2,0.5,0.5v4.5c0,0.3-0.2,0.5-0.5,0.5H17.9 c-0.3,0-0.5-0.2-0.5-0.5V63.1z"/><path d="M60.1,70h3.6c0.3,0,0.5,0.2,0.5,0.5c0,0.8-0.1,1.6-0.2,2.4c0,0.2-0.1,0.3-0.2,0.3h-3.6c-0.2,0-0.3-0.1-0.3-0.2 L60.1,70z"/><path d="M51.2,74.5h4.1c0.3,0,0.5,0.2,0.5,0.5c0,0.8-0.1,1.6-0.2,2.4c0,0.2-0.1,0.3-0.2,0.3h-4.1c-0.2,0-0.3-0.1-0.3-0.2 v-2.6C51.2,74.6,51.2,74.5,51.2,74.5z"/></svg>');
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        header h1 {
+            position: relative;
+            z-index: 1; /* ライオンよりも手前に */
+            font-size: 2.5rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        /* --- カウントダウン（タイトルの下） --- */
+        #countdown-section {
             background: white;
             padding: 20px;
             border-radius: 15px;
@@ -44,83 +71,151 @@
             margin-bottom: 30px;
         }
 
+        #countdown-label {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
         #timer {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: bold;
             color: var(--accent-color);
         }
 
-        /* 掲示板のデザイン */
+        /* --- お知らせボード --- */
         .board {
             text-align: left;
             background: white;
             padding: 20px;
             border-left: 5px solid var(--primary-color);
             margin-bottom: 30px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        .board h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
 
         .post {
             border-bottom: 1px solid #eee;
-            padding: 10px 0;
+            padding: 15px 0;
         }
 
-        .post-date { font-size: 0.8rem; color: #888; }
-        .post-admin { font-weight: bold; color: var(--primary-color); }
+        .post-date { font-size: 0.9rem; color: #888; margin-bottom: 5px; }
+        .post-title { font-weight: bold; font-size: 1.1rem; }
 
-        /* デザインボタン */
+        /* --- 各種リンク（ボタンデザイン） --- */
+        .links-section {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            display: grid; /* グリッドレイアウト */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1
+            fr)); /* スマホにも対応 */
+            gap: 20px;
+        }
+
         .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: var(--primary-color);
+            padding: 20px;
             text-decoration: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: bold;
-            transition: transform 0.2s, background 0.2s;
-            box-shadow: 0 4px 15px rgba(0,51,102,0.3);
+            font-size: 1.1rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid #eee;
         }
 
         .btn:hover {
-            background: #004080;
-            transform: translateY(-2px);
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,51,102,0.2);
+            border-color: var(--primary-color);
+        }
+
+        /* フッター */
+        footer {
+            margin-top: 80px;
+            padding: 20px 0;
+            color: #888;
+            border-top: 1px solid #eee;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>男子部結成記念日サポート</h1>
-    <p>7.11 勝利を目指して</p>
+    <h1>男子部公式サイト</h1>
+    <p style="position: relative; z-index: 1;">未来に向けて、共に駆ける。</p>
 </header>
 
 <div class="container">
 
-    <div class="countdown-container">
-        <h2>7.11 まであと...</h2>
+    <div id="countdown-section">
+        <div id="countdown-label">男子部結成記念日（7月11日）まで</div>
         <div id="timer">計算中...</div>
     </div>
 
     <div class="board">
-        <h2>中央幹部からの発信</h2>
+        <h2>お知らせボード</h2>
+        
         <div class="post">
             <div class="post-date">2026.04.13</div>
-            <div class="post-admin">【本部より】</div>
-            <p>全国の同志の皆さん、本日よりカウントダウンサイトを開設しました！</p>
+            <div class="post-title">男子部公式サイトをリニューアルしました</div>
+            <p>全国の同志の皆さんの活動に役立つ情報を発信していきます。</p>
         </div>
+        
     </div>
 
-    <div style="margin-top: 50px;">
-        <a href="https://sokadisearch.org/" class="btn" target="_blank">Soka Search へアクセス</a>
+    <h2>各種リンク</h2>
+    <div class="links-section">
+        
+        <a href="https://sokadisearch.org/" class="btn" target="_blank">
+            <span>SOKA DIサーチ</span>
+        </a>
+        
+        <a href="https://goshoshinpan-search.sokanet.jp/" class="btn" target="_blank">
+            <span>御書検索</span>
+        </a>
+        
+        <a href="https://www.miraibu.net/" class="btn" target="_blank">
+            <span>未来部希望ネット</span>
+        </a>
+        
     </div>
+
+    <footer>
+        <p>&copy; sgmen-1115.github.io. All Rights Reserved.</p>
+    </footer>
 
 </div>
 
 <script>
     // カウントダウンの計算ロジック
     function updateTimer() {
-        const targetDate = new Date('July 11, 2026 00:00:00').getTime();
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+        // 現在の日時を取得
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        
+        // 今年の7月11日の日時を設定
+        let targetDate = new Date(`July 11, ${currentYear} 00:00:00`).getTime();
+        
+        // もし今年の7月11日がすでに過ぎている場合は、来年の7月11日を設定
+        if (now.getTime() > targetDate) {
+            targetDate = new Date(`July 11, ${currentYear + 1} 00:00:00`).getTime();
+        }
+
+        const distance = targetDate - now.getTime();
 
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -133,7 +228,9 @@
             document.getElementById("timer").innerHTML = days + "日 " + hours + "時間 " + minutes + "分 " + seconds + "秒 ";
         }
     }
+    // 1秒ごとに更新
     setInterval(updateTimer, 1000);
+    // ページロード時に初回実行
     updateTimer();
 </script>
 
