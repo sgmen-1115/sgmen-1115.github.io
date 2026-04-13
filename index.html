@@ -244,28 +244,27 @@
         <p>御書を通して、確信の人生を歩む土台を作ります。</p>
     </div>
 
-    <div class="sub-title">唱題チャレンジ</div>
-    <div class="card" style="text-align: center;">
-        <div style="display: flex; justify-content: space-around; margin-bottom: 15px; background: #fdf5f5; padding: 10px; border-radius: 8px;">
-            <div>
-                <div style="font-size: 0.7rem; color: #888;">累計遍数</div>
-                <div id="total-count" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0</div>
-            </div>
-            <div>
-                <div style="font-size: 0.7rem; color: #888;">累計時間</div>
-                <div id="total-time" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0:00</div>
-            </div>
+  <div class="sub-title">唱題チャレンジ</div>
+<div class="card" style="text-align: center;">
+    <div style="display: flex; justify-content: space-around; margin-bottom: 15px; background: #fdf5f5; padding: 10px; border-radius: 8px;">
+        <div>
+            <div style="font-size: 0.7rem; color: #888;">累計遍数</div>
+            <div id="total-count" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0</div>
         </div>
-        
-        <div id="timer-display" style="font-size: 3.5rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 10px 0; color: #333;">00:00:00</div>
-        <div id="session-count" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 20px; font-weight: bold;">0 遍</div>
-
-        <div style="display: flex; gap: 10px; justify-content: center;">
-            <button id="startBtn" class="btn" style="flex: 1; background: var(--primary-color); color: white; margin: 0; padding: 15px;">スタート</button>
-            <button id="resetBtn" class="btn" style="flex: 1; margin: 0; padding: 15px;">リセット</button>
+        <div>
+            <div style="font-size: 0.7rem; color: #888;">累計時間</div>
+            <div id="total-time" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0:00</div>
         </div>
-        <button id="saveBtn" class="btn" style="width: 100%; margin-top: 15px; background: #fff9c4; color: #333; display: none; padding: 15px; font-weight: bold; border: 1px solid #fbc02d;">記録を保存する</button>
     </div>
+    
+    <div id="timer-display" style="font-size: 3.5rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 10px 0; color: #333;">00:00:00</div>
+    <div id="session-count" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 20px; font-weight: bold;">0 遍</div>
+
+    <div style="display: flex; gap: 10px; justify-content: center;">
+        <button id="startBtn" class="btn" style="flex: 1; background: var(--primary-color); color: white; margin: 0; padding: 15px;">スタート</button>
+        <button id="resetBtn" class="btn" style="flex: 1; margin: 0; padding: 15px;">リセット</button>
+    </div>
+    <button id="saveBtn" class="btn" onclick="saveData()" style="width: 100%; margin-top: 15px; background: #fff9c4; color: #5d4037; display: none; padding: 15px; font-weight: bold; border: 2px solid #fbc02d; cursor: pointer;">記録を保存する</button>
 </div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -294,9 +293,8 @@
   const totalTimeDisp = document.getElementById('total-time');
   const saveBtn = document.getElementById('saveBtn');
   const startBtn = document.getElementById('startBtn');
-  const resetBtn = document.getElementById('resetBtn');
 
-  // 1. 累計データの同期
+  // 累計データの同期
   onValue(userRef, (snapshot) => {
     const data = snapshot.val() || { total: 0, totalMs: 0 };
     totalCountDisp.innerText = (data.total || 0).toLocaleString();
@@ -306,7 +304,6 @@
     totalTimeDisp.innerText = `${hours}:${mins.toString().padStart(2, '0')}`;
   });
 
-  // 2. タイマー更新
   function updateTimer() {
     const diff = Date.now() - startTime + elapsedTime;
     const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
@@ -316,8 +313,8 @@
     sessionDisplay.innerText = `${Math.floor(diff / 1500)} 遍`;
   }
 
-  // 3. スタート/ストップボタン
-  startBtn.onclick = () => {
+  startBtn.onclick = (e) => {
+    e.stopPropagation(); // タブ切り替えイベントを止める
     if (!isRunning) {
       isRunning = true;
       startBtn.innerText = "ストップ";
@@ -331,14 +328,12 @@
       startBtn.style.background = "var(--primary-color)";
       clearInterval(timerInterval);
       elapsedTime += Date.now() - startTime;
-      if (elapsedTime >= 1500) { // 1遍以上の場合のみ表示
-        saveBtn.style.display = "block";
-      }
+      if (elapsedTime >= 1500) saveBtn.style.display = "block";
     }
   };
 
-  // 4. リセットボタン
-  resetBtn.onclick = () => {
+  document.getElementById('resetBtn').onclick = (e) => {
+    e.stopPropagation();
     if(confirm("タイマーをリセットしますか？")) {
       clearInterval(timerInterval);
       isRunning = false;
@@ -351,37 +346,29 @@
     }
   };
 
-  // 5. 保存ボタンの修正版
-  saveBtn.onclick = async () => {
+  // 保存関数をグローバルに公開
+  window.saveData = async () => {
     const sessionCount = Math.floor(elapsedTime / 1500);
-    if (sessionCount === 0) {
-      alert("記録時間が短すぎます");
-      return;
-    }
-
+    saveBtn.innerText = "保存中...";
+    
     try {
-      // 現在のデータを取得
       const snapshot = await get(userRef);
       const data = snapshot.val() || { total: 0, totalMs: 0 };
-      
-      // 更新処理
       await update(userRef, {
         total: (data.total || 0) + sessionCount,
         totalMs: (data.totalMs || 0) + elapsedTime,
         lastDate: new Date().toLocaleDateString()
       });
-
       alert(`保存成功！ +${sessionCount}遍`);
-      
-      // 成功後に表示をリセット
       elapsedTime = 0;
       display.innerText = "00:00:00";
       sessionDisplay.innerText = "0 遍";
       saveBtn.style.display = "none";
+      saveBtn.innerText = "記録を保存する";
       startBtn.innerText = "スタート";
-    } catch (error) {
-      console.error("Save Error:", error);
-      alert("保存中にエラーが発生しました。インターネット接続やFirebaseの設定を確認してください。");
+    } catch (e) {
+      alert("保存エラー");
+      saveBtn.innerText = "記録を保存する";
     }
   };
 </script>
