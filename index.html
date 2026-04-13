@@ -1,3 +1,16 @@
+さらに使い勝手とデザインをブラッシュアップしましょう！
+
+「タブを一番上に配置する」ことで、ナビゲーションとしての役割がより明確になります。また、タブの色を淡くし、タイトルエリアとの境界線をはっきりさせることで、モダンで清潔感のあるデザインに仕上げました。
+
+今回の修正ポイント
+タブを最上部に移動: ヘッダー（タイトル）よりも上に配置し、常に操作できる形にしました。
+
+淡いカラーリング: タブの背景を「淡いグレー（または非常に薄い青）」にし、文字色を濃紺にすることで視認性を高めました。
+
+境界の明確化: タブとタイトルの間に細い境界線やシャドウを入れ、重なりが綺麗に見えるようにしました。
+
+index.html の全コード
+HTML
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -9,6 +22,7 @@
             --primary-color: #003366;
             --accent-color: #f39c12;
             --bg-color: #f8f9fa;
+            --tab-bg: #eef2f6; /* タブ用の淡い色 */
             --white: #ffffff;
         }
 
@@ -20,29 +34,17 @@
             color: #333;
         }
 
-        /* --- ヘッダー --- */
-        header {
-            position: relative;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 40px 20px 20px 20px;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        header h1 { position: relative; z-index: 1; margin: 0; font-size: 1.6rem; }
-        header p { position: relative; z-index: 1; margin: 5px 0 0 0; font-size: 0.9rem; opacity: 0.8; }
-
-        /* --- タブメニュー（タイトル真下） --- */
+        /* --- 最上部タブメニュー --- */
         .tab-menu {
             position: sticky;
             top: 0;
             width: 100%;
-            background: var(--primary-color);
+            background: var(--tab-bg); /* 淡い色 */
             display: flex;
             justify-content: space-around;
-            z-index: 100;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            border-bottom: 2px solid #ddd; /* タイトルとの区切り線 */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .tab-btn {
@@ -51,26 +53,40 @@
             border: none;
             background: none;
             font-weight: bold;
-            color: rgba(255, 255, 255, 0.7);
+            color: var(--primary-color); /* 文字は濃紺で見やすく */
             cursor: pointer;
             font-size: 0.9rem;
             position: relative;
+            transition: background 0.2s;
         }
 
         .tab-btn.active {
-            color: var(--white);
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--white);
+            color: var(--primary-color);
         }
 
         .tab-btn.active::after {
             content: "";
             position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 4px;
+            bottom: -2px; /* 区切り線に重ねる */
+            left: 0;
+            width: 100%;
+            height: 4px;
             background-color: var(--accent-color);
         }
 
-        /* --- コンテンツ --- */
+        /* --- ヘッダー（タイトルの位置） --- */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+        header p { margin: 5px 0 0 0; font-size: 0.85rem; opacity: 0.8; }
+
+        /* --- コンテンツエリア --- */
         .tab-content {
             display: none;
             padding: 20px;
@@ -90,44 +106,46 @@
             margin-bottom: 20px;
         }
 
-        /* カウントダウン左寄せラベル + 中央数字 */
+        /* カウントダウン */
         .timer-label {
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #555;
-            text-align: left; /* 左寄せ */
+            text-align: left;
             display: block;
+            font-size: 0.9rem;
         }
         #timer { 
             font-size: 1.8rem; 
             font-weight: bold; 
             color: var(--accent-color); 
-            text-align: center; /* 中央揃え */
-            padding: 10px 0;
+            text-align: center;
+            padding: 5px 0;
         }
 
         .sub-title {
             display: inline-block;
             background-color: var(--primary-color);
             color: var(--white);
-            padding: 8px 25px;
+            padding: 6px 20px;
             border-radius: 50px;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: bold;
-            margin: 10px 0 15px 0;
+            margin: 15px 0 10px 0;
         }
 
         .btn {
             display: block;
             background: var(--white);
             color: var(--primary-color);
-            padding: 15px;
+            padding: 14px;
             margin: 10px 0;
             text-decoration: none;
             border-radius: 8px;
             font-weight: bold;
             border: 1px solid #ddd;
             text-align: center;
+            font-size: 0.95rem;
         }
 
         .video-container {
@@ -135,11 +153,13 @@
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            margin-bottom: 20px;
+            margin: 20px 0;
             border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
+        /* スケジュール */
         .schedule-item {
             display: flex;
             justify-content: space-between;
@@ -149,22 +169,22 @@
             text-decoration: none;
             color: inherit;
         }
-        .schedule-date { font-weight: bold; color: var(--primary-color); margin-right: 10px; min-width: 70px; display: inline-block; }
-        .add-cal { font-size: 0.75rem; color: #e67e22; border: 1px solid #e67e22; padding: 2px 8px; border-radius: 4px; }
+        .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 85px; display: inline-block; }
+        .add-cal { font-size: 0.75rem; color: #e67e22; border: 1px solid #e67e22; padding: 2px 8px; border-radius: 4px; font-weight: bold; }
     </style>
 </head>
 <body>
-
-<header>
-    <h1>男子部公式サイト</h1>
-    <p>未来に向けて、共に駆ける。</p>
-</header>
 
 <nav class="tab-menu">
     <button class="tab-btn active" onclick="openTab(event, 'home')">ホーム</button>
     <button class="tab-btn" onclick="openTab(event, 'schedule')">スケジュール</button>
     <button class="tab-btn" onclick="openTab(event, 'action')">取り組み</button>
 </nav>
+
+<header>
+    <h1>男子部公式サイト</h1>
+    <p>未来に向けて、共に駆ける。</p>
+</header>
 
 <div id="home" class="tab-content active">
     <div class="card">
@@ -174,7 +194,7 @@
 
     <div class="sub-title">お知らせ</div>
     <div class="card">
-        <p><strong>2026.04.13</strong><br>メニュー位置を上部に移動し、操作性を改善しました。</p>
+        <p><strong>2026.04.13</strong><br>タブを最上部に配置し、より直感的に操作できるように変更しました。</p>
     </div>
 
     <div class="video-container">
@@ -194,7 +214,7 @@
             <span class="add-cal">+ 追加</span>
         </a>
         <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事&dates=20260503T100000Z/20260503T120000Z" target="_blank" class="schedule-item">
-            <span><span class="schedule-date">5/03（日）</span> 創価学会の日 記念行事</span>
+            <span><span class="schedule-date">5/03（日）</span> 創価の日 記念行事</span>
             <span class="add-cal">+ 追加</span>
         </a>
         <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部結成記念日&dates=20260711T000000Z/20260711T235959Z" target="_blank" class="schedule-item">
@@ -223,7 +243,6 @@
         for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
-        // タブ切り替え時にトップへスクロール
         window.scrollTo(0, 0);
     }
 
