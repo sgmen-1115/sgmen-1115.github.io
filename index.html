@@ -220,15 +220,15 @@
 <div id="schedule" class="tab-content">
     <div class="sub-title">活動スケジュール</div>
     <div class="card">
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部座談会&dates=20260420T190000Z/20260420T203000Z" target="_blank" class="schedule-item">
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部座談会&dates=20260420/20260421" target="_blank" class="schedule-item">
             <span><span class="schedule-date">4/20（月）</span> 男子部座談会</span>
             <span class="add-cal">+ カレンダー</span>
         </a>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事&dates=20260503T100000Z/20260503T120000Z" target="_blank" class="schedule-item">
-            <span><span class="schedule-date">5/03（日）</span> 創価の日 記念行事</span>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事&dates=20260503/20260504" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">5/03（日）</span> 創価学会の日</span>
             <span class="add-cal">+ カレンダー</span>
         </a>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部結成記念日&dates=20260711T000000Z/20260711T235959Z" target="_blank" class="schedule-item">
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部結成記念日&dates=20260711/20260712" target="_blank" class="schedule-item">
             <span><span class="schedule-date">7/11（土）</span> 男子部結成記念日</span>
             <span class="add-cal">+ カレンダー</span>
         </a>
@@ -294,10 +294,10 @@
   const saveBtn = document.getElementById('saveBtn');
   const startBtn = document.getElementById('startBtn');
 
-  // 累計データの同期
+  // 1. 累計データの同期（この中を探してください）
   onValue(userRef, (snapshot) => {
     const data = snapshot.val() || { total: 0, totalMs: 0 };
-    totalCountDisp.innerText = (data.total || 0).toLocaleString();
+    totalCountDisp.innerText = (data.total || 0).toLocaleString() + " 遍";
     const totalMs = data.totalMs || 0;
     const hours = Math.floor(totalMs / 3600000);
     const mins = Math.floor((totalMs % 3600000) / 60000);
