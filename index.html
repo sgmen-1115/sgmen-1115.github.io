@@ -238,24 +238,38 @@
 <div id="study" class="tab-content">
     <div class="sub-title">学習資料</div>
 
-    <div class="card">
-        <h3 style="color: var(--primary-color); font-size: 1.1rem; margin-top: 0;">資料 1</h3>
-        <div style="width: 100%; height: 400px; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; background: #eee;">
-            <iframe src="https://drive.google.com/preview?id=1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm" width="100%" height="100%" allow="autoplay"></iframe>
-        </div>
-        <a href="https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view?usp=sharing" target="_blank" class="btn" style="background: #f1f8e9; color: #33691e; margin-top: 10px; border: 1px solid #c5e1a5;">
-            資料1を別ウィンドウで開く
-        </a>
-    </div>
+    <p style="font-size: 0.85rem; color: #777; margin-bottom: 15px; padding-left: 5px;">
+        必要な資料をタップして確認してください。
+    </p>
 
-    <div class="card">
-        <h3 style="color: var(--primary-color); font-size: 1.1rem; margin-top: 0;">資料 2</h3>
-        <div style="width: 100%; height: 400px; border-radius: 8px; overflow: hidden; border: 1px solid #ddd; background: #eee;">
-            <iframe src="https://drive.google.com/preview?id=1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5" width="100%" height="100%" allow="autoplay"></iframe>
+    <div style="display: flex; flex-direction: column; gap: 12px;">
+
+        <div class="card" style="display: flex; align-items: center; padding: 15px; margin-bottom: 0; border: 1px solid #eee; transition: background 0.2s;" onclick="window.open('https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view?usp=sharing', '_blank')">
+            <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-right: 15px; flex-shrink: 0;">
+                PDF
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="font-weight: bold; color: #333; font-size: 1rem;">資料 1</div>
+                <div style="font-size: 0.75rem; color: #999;">タップしてGoogleドライブで開く</div>
+            </div>
+            <div style="color: #ccc; font-size: 1.2rem; margin-left: 10px;">
+                ❯
+            </div>
         </div>
-        <a href="https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view?usp=sharing" target="_blank" class="btn" style="background: #f1f8e9; color: #33691e; margin-top: 10px; border: 1px solid #c5e1a5;">
-            資料2を別ウィンドウで開く
-        </a>
+
+        <div class="card" style="display: flex; align-items: center; padding: 15px; margin-bottom: 0; border: 1px solid #eee; transition: background 0.2s;" onclick="window.open('https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view?usp=sharing', '_blank')">
+            <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; margin-right: 15px; flex-shrink: 0;">
+                PDF
+            </div>
+            <div style="flex-grow: 1;">
+                <div style="font-weight: bold; color: #333; font-size: 1rem;">資料 2</div>
+                <div style="font-size: 0.75rem; color: #999;">タップしてGoogleドライブで開く</div>
+            </div>
+            <div style="color: #ccc; font-size: 1.2rem; margin-left: 10px;">
+                ❯
+            </div>
+        </div>
+
     </div>
 </div>
 
