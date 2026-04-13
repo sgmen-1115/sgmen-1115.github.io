@@ -264,14 +264,13 @@
             <button id="startBtn" class="btn" style="flex: 1; background: var(--primary-color); color: white; margin: 0; padding: 15px;">スタート</button>
             <button id="resetBtn" class="btn" style="flex: 1; margin: 0; padding: 15px;">リセット</button>
         </div>
-        <button id="saveBtn" class="btn" style="width: 100%; margin-top: 15px; background: #28a745; color: white; display: none; padding: 15px; font-weight: bold;">記録を保存する</button>
+        <button id="saveBtn" class="btn" style="width: 100%; margin-top: 15px; background: #fff9c4; color: #333; display: none; padding: 15px; font-weight: bold; border: 1px solid #fbc02d;">記録を保存する</button>
     </div>
 </div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-  // あなたのFirebase構成
   const firebaseConfig = {
     apiKey: "AIzaSyCFEUoUyWhz8Qlr2Z261LOlzwe7BIQQTx4",
     authDomain: "sgmen-db.firebaseapp.com",
@@ -295,26 +294,29 @@
   const totalTimeDisp = document.getElementById('total-time');
   const saveBtn = document.getElementById('saveBtn');
   const startBtn = document.getElementById('startBtn');
+  const resetBtn = document.getElementById('resetBtn');
 
-  // 1. データの自動同期
+  // 1. 累計データの同期
   onValue(userRef, (snapshot) => {
     const data = snapshot.val() || { total: 0, totalMs: 0 };
     totalCountDisp.innerText = (data.total || 0).toLocaleString();
-    const hours = Math.floor((data.totalMs || 0) / 3600000);
-    const mins = Math.floor(((data.totalMs || 0) % 3600000) / 60000);
+    const totalMs = data.totalMs || 0;
+    const hours = Math.floor(totalMs / 3600000);
+    const mins = Math.floor((totalMs % 3600000) / 60000);
     totalTimeDisp.innerText = `${hours}:${mins.toString().padStart(2, '0')}`;
   });
 
-  // 2. タイマー制御
+  // 2. タイマー更新
   function updateTimer() {
     const diff = Date.now() - startTime + elapsedTime;
     const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
     const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
     const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
     display.innerText = `${h}:${m}:${s}`;
-    sessionDisplay.innerText = `${Math.floor(diff / 1500)} 遍`; // 1分40遍換算
+    sessionDisplay.innerText = `${Math.floor(diff / 1500)} 遍`;
   }
 
+  // 3. スタート/ストップボタン
   startBtn.onclick = () => {
     if (!isRunning) {
       isRunning = true;
@@ -329,42 +331,58 @@
       startBtn.style.background = "var(--primary-color)";
       clearInterval(timerInterval);
       elapsedTime += Date.now() - startTime;
-      saveBtn.style.display = "block";
+      if (elapsedTime >= 1500) { // 1遍以上の場合のみ表示
+        saveBtn.style.display = "block";
+      }
     }
   };
 
-  document.getElementById('resetBtn').onclick = () => {
+  // 4. リセットボタン
+  resetBtn.onclick = () => {
     if(confirm("タイマーをリセットしますか？")) {
-        clearInterval(timerInterval);
-        isRunning = false;
-        elapsedTime = 0;
-        display.innerText = "00:00:00";
-        sessionDisplay.innerText = "0 遍";
-        startBtn.innerText = "スタート";
-        saveBtn.style.display = "none";
+      clearInterval(timerInterval);
+      isRunning = false;
+      elapsedTime = 0;
+      display.innerText = "00:00:00";
+      sessionDisplay.innerText = "0 遍";
+      startBtn.innerText = "スタート";
+      startBtn.style.background = "var(--primary-color)";
+      saveBtn.style.display = "none";
     }
   };
 
-  // 3. 保存
+  // 5. 保存ボタンの修正版
   saveBtn.onclick = async () => {
     const sessionCount = Math.floor(elapsedTime / 1500);
-    if (sessionCount === 0) return alert("1遍以上から保存できます");
+    if (sessionCount === 0) {
+      alert("記録時間が短すぎます");
+      return;
+    }
 
-    const snapshot = await get(userRef);
-    const data = snapshot.val() || { total: 0, totalMs: 0 };
-    
-    update(userRef, {
-      total: data.total + sessionCount,
-      totalMs: data.totalMs + elapsedTime,
-      lastDate: new Date().toLocaleDateString()
-    }).then(() => {
+    try {
+      // 現在のデータを取得
+      const snapshot = await get(userRef);
+      const data = snapshot.val() || { total: 0, totalMs: 0 };
+      
+      // 更新処理
+      await update(userRef, {
+        total: (data.total || 0) + sessionCount,
+        totalMs: (data.totalMs || 0) + elapsedTime,
+        lastDate: new Date().toLocaleDateString()
+      });
+
       alert(`保存成功！ +${sessionCount}遍`);
+      
+      // 成功後に表示をリセット
       elapsedTime = 0;
       display.innerText = "00:00:00";
       sessionDisplay.innerText = "0 遍";
       saveBtn.style.display = "none";
       startBtn.innerText = "スタート";
-    });
+    } catch (error) {
+      console.error("Save Error:", error);
+      alert("保存中にエラーが発生しました。インターネット接続やFirebaseの設定を確認してください。");
+    }
   };
 </script>
 
