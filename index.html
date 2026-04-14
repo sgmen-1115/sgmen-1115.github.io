@@ -20,7 +20,6 @@
     body {
         font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
         margin: 0;
-        /* ヘッダーとタブの合計分、上部に余白を作る */
         padding-top: calc(var(--header-height) + var(--tab-height));
         background-color: var(--bg-color);
         color: #333;
@@ -28,7 +27,7 @@
         background-size: 20px 20px;
     }
 
-    /* --- 1. 固定ヘッダー --- */
+    /* --- 固定ヘッダー --- */
     .fixed-header {
         position: fixed;
         top: 0;
@@ -48,11 +47,10 @@
         margin: 0;
         letter-spacing: 1px;
         color: var(--primary-color);
-        padding: 0 50px; /* ボタンと重ならないよう左右に余白 */
+        padding: 0 50px;
         text-align: center;
     }
 
-    /* 設定ボタン */
     .settings-btn {
         position: absolute;
         right: 15px;
@@ -66,10 +64,9 @@
         justify-content: center;
         cursor: pointer;
         font-size: 1.1rem;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    /* --- 2. 固定タブメニュー --- */
+    /* --- 固定タブメニュー --- */
     .tab-menu {
         position: fixed;
         top: var(--header-height);
@@ -81,7 +78,6 @@
         justify-content: space-around;
         z-index: 1000;
         border-bottom: 1px solid #c0c9d1;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
     .tab-btn {
@@ -92,9 +88,8 @@
         font-weight: bold;
         color: #556677;
         cursor: pointer;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         position: relative;
-        transition: all 0.3s ease;
         height: 100%;
     }
 
@@ -106,60 +101,8 @@
     .tab-btn.active::after {
         content: "";
         position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
+        bottom: 0; left: 0; width: 100%; height: 4px;
         background-color: var(--accent-color);
-    }
-
-    /* --- メインビジュアル --- */
-    .hero-container {
-        position: relative;
-        width: 100%;
-        height: 60vh;
-        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), 
-                    url('https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=1200&q=80');
-        background-size: cover;
-        background-position: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 0 0 40px 40px;
-        overflow: hidden;
-    }
-
-    .hero-content {
-        text-align: center;
-        background: rgba(255, 255, 255, 0.6); 
-        padding: 25px 15px;
-        border-radius: 25px;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        width: 85%;
-    }
-
-    .hero-main-copy { font-size: 1.3rem; line-height: 1.5; color: #1a1a1a; margin: 0; font-weight: bold; }
-
-    /* --- 学習資料タブ用画像 --- */
-    .study-hero {
-        width: 100%;
-        height: 200px;
-        background-image: url('https://images.unsplash.com/photo-1604866830506-4ffc2d57fea3?q=80&w=1000&auto=format&fit=crop');
-        background-size: cover;
-        background-position: center;
-        border-radius: 15px;
-        margin-bottom: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .study-hero-title {
-        background: rgba(255, 255, 255, 0.8);
-        padding: 10px 20px;
-        border-radius: 50px;
     }
 
     /* --- 共通パーツ --- */
@@ -170,17 +113,22 @@
     .card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 20px; }
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
 
-    .video-container { position: relative; padding-bottom: 56.25%; margin: 20px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-
-    .btn { display: block; background: var(--white); color: var(--primary-color); padding: 15px; margin: 10px 0; text-decoration: none; border-radius: 12px; font-weight: bold; border: 1px solid #e0e6ed; text-align: center; transition: 0.3s; }
-
-    .oumi-btn { display: flex; align-items: center; justify-content: center; background-color: #ffffff; color: #333; padding: 15px; border-radius: 50px; font-weight: bold; text-decoration: none; position: relative; border: 1px solid #ddd; cursor: pointer; }
-    .oumi-btn::after { content: "→"; position: absolute; right: 15px; width: 28px; height: 28px; background-color: #79bede; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-
-    #timer { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); text-align: center; }
-    .schedule-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f0f0f0; text-decoration: none; color: inherit; }
-    .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 85px; font-size: 0.9rem; }
+    /* 目標設定用の入力エリア */
+    .goal-input-area {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    .goal-input-area textarea {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-family: inherit;
+        font-size: 0.95rem;
+        box-sizing: border-box;
+    }
 
     /* --- 設定モーダル --- */
     #settings-modal {
@@ -193,14 +141,9 @@
         justify-content: center;
     }
     .modal-content {
-        background: white;
-        padding: 25px;
-        border-radius: 20px;
-        width: 85%;
-        max-width: 400px;
-        text-align: center;
+        background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 400px; text-align: center;
     }
-    .modal-content select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; font-size: 1rem; }
+    .modal-content select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; }
     .save-settings-btn { background: var(--primary-color); color: white; padding: 12px 30px; border-radius: 50px; border: none; margin-top: 15px; font-weight: bold; width: 100%; }
 
     .area-content { display: none; }
@@ -216,33 +159,20 @@
 <nav class="tab-menu">
     <button class="tab-btn active" onclick="openTab(event, 'home')">ホーム</button>
     <button class="tab-btn" onclick="openTab(event, 'schedule')">予定</button>
-    <button class="tab-btn" onclick="openTab(event, 'action')">取組</button>
+    <button class="tab-btn" onclick="openTab(event, 'everyone')">みんなの挑戦</button>
+    <button class="tab-btn" onclick="openTab(event, 'mine')">私の挑戦</button>
     <button class="tab-btn" onclick="openTab(event, 'study')">学習</button>
 </nav>
 
 <div id="settings-modal">
     <div class="modal-content">
-        <h3 style="margin-top:0;">所属設定</h3>
-        <p style="font-size:0.8rem; color:#666;">地域を選択すると内容が切り替わります</p>
-        <label style="font-size:0.9rem; font-weight:bold;">1. 方面を選択</label>
+        <h3>地域設定</h3>
         <select id="select-houmen" onchange="updateSoukuList()">
-            <option value="">選択してください</option>
+            <option value="">方面を選択してください</option>
             <option value="tokyo">東京</option>
             <option value="dai2tokyo">第二総東京</option>
-            <option value="toukaidou">東海道</option>
-            <option value="kantou">関東</option>
             <option value="kansai">関西</option>
-            <option value="hokkaido">北海道</option>
-            <option value="touhoku">東北</option>
-            <option value="chuubu">中部</option>
-            <option value="shinetsu">信越</option>
-            <option value="hokuriku">北陸</option>
-            <option value="chuugoku">中国</option>
-            <option value="shikoku">四国</option>
-            <option value="kyushu">九州</option>
-            <option value="okinawa">沖縄</option>
-        </select>
-        <label style="font-size:0.9rem; font-weight:bold;">2. 総区を選択</label>
+            </select>
         <select id="select-souku">
             <option value="">先に方面を選択してください</option>
         </select>
@@ -251,67 +181,54 @@
     </div>
 </div>
 
-<div id="home" class="tab-content active" style="padding: 0; max-width: 100%;">
-    <div class="hero-container">
-        <div class="hero-content">
-            <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">TOKYO MEN'S DIVISION</div>
-            <h2 class="hero-main-copy">自分が変われば、<br>街が変わる。<br>新しい東京の未来を。</h2>
-        </div>
+<div id="home" class="tab-content active">
+    <div class="card" style="text-align: center;">
+        <span style="font-weight: bold; color: #666; font-size: 0.8rem;">7.11 男子部結成記念日まで</span>
+        <div id="timer" style="font-size: 1.8rem; font-weight: bold; color: var(--primary-color);">計算中...</div>
     </div>
-
-    <div style="padding: 0 15px; max-width: 800px; margin: 0 auto;">
-        <div class="card" style="margin-top: -30px; position: relative; z-index: 10; text-align: center;">
-            <span style="font-weight: bold; color: #666; font-size: 0.8rem;">7.11 男子部結成記念日まで</span>
-            <div id="timer">計算中...</div>
-        </div>
-
-        <div class="sub-title">お知らせ</div>
-        <div class="card">
-            <p style="margin:0; font-size:0.9rem;"><strong>2026.04.14</strong><br>公式サイトをリニューアルしました。右上の⚙️から自分の地域を設定してください。</p>
-        </div>
-
-        <div class="sub-title">注目動画</div>
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/WORGpCGs3GY?start=483" frameborder="0" allowfullscreen></iframe>
-        </div>
-
-        <div class="sub-title">クイックリンク</div>
-        <a href="https://sokadisearch.org/" class="btn" target="_blank">SOKA DIサーチ</a>
-        <a href="https://goshoshinpan-search.sokanet.jp/" class="btn" target="_blank">御書検索</a>
-    </div>
+    <div class="sub-title">お知らせ</div>
+    <div class="card"><p style="margin:0;">地域に合わせた「みんなの挑戦」が表示されるようになりました！</p></div>
 </div>
 
 <div id="schedule" class="tab-content">
     <div class="sub-title">活動スケジュール</div>
     <div class="card">
-        <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">【全方面共通】</p>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事" target="_blank" class="schedule-item">
-            <span><span class="schedule-date">5/03（日）</span> 創価学会の日</span>
-            <span style="font-size: 0.7rem; color: #e67e22; border: 1px solid #f39c12; padding: 2px 8px; border-radius: 6px;">+ 追加</span>
-        </a>
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=教学実力試験(任用試験)" target="_blank" class="schedule-item">
-            <span><span class="schedule-date">6/07（日）</span> 任用試験</span>
-            <span style="font-size: 0.7rem; color: #e67e22; border: 1px solid #f39c12; padding: 2px 8px; border-radius: 6px;">+ 追加</span>
-        </a>
-    </div>
-
-    <div id="sched-default" class="area-content card" style="text-align: center; border: 1px dashed #ccc; display: block;">
-        <p style="color: #888; font-size: 0.85rem;">⚙️設定から地域を選択すると、<br>個別の予定が表示されます。</p>
-    </div>
-
-    <div id="sched-tokyo-新宿総区" class="area-content card">
-        <p style="font-size: 0.8rem; color: var(--primary-color); font-weight: bold;">【東京・新宿総区の予定】</p>
-        <div class="schedule-item"><span><span class="schedule-date">4/20（月）</span> 男子部座談会</span></div>
+        <p>【共通】5/03 創価学会の日</p>
     </div>
 </div>
 
-<div id="action" class="tab-content">
-    <div class="sub-title">今月の取り組み</div>
+<div id="everyone" class="tab-content">
+    <div class="sub-title">地域の取り組み</div>
+    
+    <div id="everyone-default" class="card" style="text-align: center; border: 1px dashed #ccc;">
+        <p style="color: #888; font-size: 0.85rem;">⚙️設定から地域を選択すると、<br>その地域の取り組みが表示されます。</p>
+    </div>
+
+    <div id="action-tokyo-新宿総区" class="area-content card">
+        <h3 style="color: var(--primary-color); margin-top:0;">新宿総区の指標</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>一人ひとりの部員への訪問激励</li>
+            <li>「伝統の新宿」の誇りで勝利の対話を！</li>
+        </ul>
+    </div>
+
+    <div id="action-dai2tokyo-八王子総区" class="area-content card">
+        <h3 style="color: var(--primary-color); margin-top:0;">八王子総区の指標</h3>
+        <ul style="padding-left: 20px; line-height: 1.8;">
+            <li>新時代の対話拡大！</li>
+            <li>大学校生の成長を全力で応援</li>
+        </ul>
+    </div>
+</div>
+
+<div id="mine" class="tab-content">
+    <div class="sub-title">目標設定</div>
     <div class="card">
-        <h3 style="color: var(--accent-color); margin-top: 0; font-size: 1rem;">1. 訪問・激励の推進</h3>
-        <p style="font-size:0.9rem;">一人ひとりの部員に寄り添い、希望の対話を広げます。</p>
-        <h3 style="color: var(--accent-color); font-size: 1rem;">2. 研鑽の充実</h3>
-        <p style="font-size:0.9rem;">御書を通して、確信の人生を歩む土台を作ります。</p>
+        <div class="goal-input-area">
+            <label style="font-size: 0.8rem; font-weight: bold; color: #666;">今月のマイ目標</label>
+            <textarea id="my-goal-text" rows="3" placeholder="例：毎日30分唱題、対話3人に挑戦！"></textarea>
+            <button class="save-settings-btn" onclick="saveMyGoal()" style="margin-top:0; padding:10px;">目標を更新</button>
+        </div>
     </div>
 
     <div class="sub-title">唱題チャレンジ</div>
@@ -326,36 +243,21 @@
                 <div id="total-time" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0:00</div>
             </div>
         </div>
-        <div id="timer-display" style="font-size: 3rem; font-weight: 300; margin: 5px 0;">00:00:00</div>
-        <div id="session-count" style="font-size: 1rem; color: #79bede; margin-bottom: 20px; font-weight: bold;">0 遍</div>
-        <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-            <button id="startBtn" class="oumi-btn" style="width: 100%; background-color: var(--primary-color); color: white; border: none;">スタート</button>
-            <button id="resetBtn" class="oumi-btn" style="width: 100%;">リセット</button>
-            <button id="saveBtn" class="oumi-btn" onclick="saveData()" style="width: 100%; display: none; background-color: #fffde7; border: 1px solid #fbc02d;">記録を保存</button>
-        </div>
+        <div id="timer-display" style="font-size: 3rem; font-weight: 300;">00:00:00</div>
+        <div id="session-count" style="font-size: 1rem; color: #79bede; margin-bottom: 20px;">0 遍</div>
+        <button id="startBtn" class="save-settings-btn" style="background-color: var(--primary-color); margin-top:0;">スタート</button>
+        <button id="resetBtn" style="background:none; border:none; color:#999; margin-top:10px; cursor:pointer;">リセット</button>
+        <button id="saveBtn" class="save-settings-btn" onclick="saveData()" style="display: none; background-color: #f39c12; margin-top:10px;">記録を保存</button>
     </div>
 </div>
 
 <div id="study" class="tab-content">
-    <div class="study-hero">
-        <div class="study-hero-title">
-            <h2 style="margin:0; font-size:1.1rem; color:var(--primary-color);">資料ライブラリ</h2>
-        </div>
-    </div>
     <div class="sub-title">学習資料</div>
-    <div class="card" onclick="window.open('https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view', '_blank')" style="cursor:pointer; display: flex; align-items: center; margin-bottom: 12px; padding: 15px;">
-        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; flex-shrink: 0;">PDF</div>
-        <div style="flex-grow: 1;"><strong>創価の源流 大東京（上）</strong></div>
-        <div style="color: #ccc;">❯</div>
-    </div>
-    <div class="card" onclick="window.open('https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view', '_blank')" style="cursor:pointer; display: flex; align-items: center; padding: 15px;">
-        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px; flex-shrink: 0;">PDF</div>
-        <div style="flex-grow: 1;"><strong>創価の源流 大東京（下）</strong></div>
-        <div style="color: #ccc;">❯</div>
-    </div>
+    <div class="card">資料を準備中...</div>
 </div>
 
 <script type="module">
+    // Firebaseの設定とタイマー処理（前回のロジックを継承）
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
@@ -372,120 +274,96 @@
     const db = getDatabase(app);
     const userRef = ref(db, 'users/my-test-user');
 
+    // --- 唱題タイマーロジック ---
     let startTime, timerInterval, elapsedTime = 0, isRunning = false;
+    const startBtn = document.getElementById('startBtn');
     const display = document.getElementById('timer-display');
     const sessionDisplay = document.getElementById('session-count');
-    const totalCountDisp = document.getElementById('total-count');
-    const totalTimeDisp = document.getElementById('total-time');
-    const startBtn = document.getElementById('startBtn');
     const saveBtn = document.getElementById('saveBtn');
 
     onValue(userRef, (snapshot) => {
         const data = snapshot.val() || { total: 0, totalMs: 0 };
-        totalCountDisp.innerText = (data.total || 0).toLocaleString() + " 遍";
-        const totalMs = data.totalMs || 0;
-        const hours = Math.floor(totalMs / 3600000);
-        const mins = Math.floor((totalMs % 3600000) / 60000);
-        totalTimeDisp.innerText = `${hours}:${mins.toString().padStart(2, '0')}`;
+        document.getElementById('total-count').innerText = (data.total || 0).toLocaleString() + " 遍";
+        const h = Math.floor((data.totalMs || 0) / 3600000);
+        const m = Math.floor(((data.totalMs || 0) % 3600000) / 60000);
+        document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
     });
 
     startBtn.onclick = () => {
         if (!isRunning) {
-            isRunning = true;
-            startBtn.innerText = "ストップ";
-            startBtn.style.background = "#666";
-            startTime = Date.now();
+            isRunning = true; startBtn.innerText = "ストップ"; startTime = Date.now();
             timerInterval = setInterval(() => {
                 const diff = Date.now() - startTime + elapsedTime;
-                const h = Math.floor(diff / 3600000).toString().padStart(2, '0');
-                const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
-                const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
-                display.innerText = `${h}:${m}:${s}`;
+                const hh = Math.floor(diff / 3600000).toString().padStart(2, '0');
+                const mm = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+                const ss = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+                display.innerText = `${hh}:${mm}:${ss}`;
                 sessionDisplay.innerText = `${Math.floor(diff / 1500)} 遍`;
             }, 100);
             saveBtn.style.display = "none";
         } else {
-            isRunning = false;
-            startBtn.innerText = "再開";
-            startBtn.style.background = "var(--primary-color)";
-            clearInterval(timerInterval);
+            isRunning = false; startBtn.innerText = "再開"; clearInterval(timerInterval);
             elapsedTime += Date.now() - startTime;
             if (elapsedTime >= 1500) saveBtn.style.display = "block";
         }
     };
 
+    window.saveData = async () => {
+        const sessionCount = Math.floor(elapsedTime / 1500);
+        const snapshot = await get(userRef);
+        const data = snapshot.val() || { total: 0, totalMs: 0 };
+        await update(userRef, {
+            total: (data.total || 0) + sessionCount,
+            totalMs: (data.totalMs || 0) + elapsedTime
+        });
+        alert("保存しました！");
+        elapsedTime = 0; display.innerText = "00:00:00"; sessionDisplay.innerText = "0 遍";
+        saveBtn.style.display = "none"; startBtn.innerText = "スタート";
+    };
+
     document.getElementById('resetBtn').onclick = () => {
         if(confirm("リセットしますか？")) {
-            clearInterval(timerInterval);
-            isRunning = false; elapsedTime = 0;
+            clearInterval(timerInterval); isRunning = false; elapsedTime = 0;
             display.innerText = "00:00:00"; sessionDisplay.innerText = "0 遍";
             startBtn.innerText = "スタート"; saveBtn.style.display = "none";
         }
     };
-
-    window.saveData = async () => {
-        const sessionCount = Math.floor(elapsedTime / 1500);
-        saveBtn.innerText = "保存中...";
-        try {
-            const snapshot = await get(userRef);
-            const data = snapshot.val() || { total: 0, totalMs: 0 };
-            await update(userRef, {
-                total: (data.total || 0) + sessionCount,
-                totalMs: (data.totalMs || 0) + elapsedTime,
-                lastDate: new Date().toLocaleDateString()
-            });
-            alert(`保存成功！ +${sessionCount}遍`);
-            elapsedTime = 0; display.innerText = "00:00:00"; sessionDisplay.innerText = "0 遍";
-            saveBtn.style.display = "none"; saveBtn.innerText = "記録を保存";
-            startBtn.innerText = "スタート";
-        } catch (e) { alert("エラー"); saveBtn.innerText = "記録を保存"; }
-    };
 </script>
 
 <script>
+    // --- 目標設定機能 ---
+    function saveMyGoal() {
+        const goalText = document.getElementById('my-goal-text').value;
+        localStorage.setItem('myPersonalGoal', goalText);
+        alert("目標を保存しました！");
+    }
+
+    // --- タブ切り替え ---
     function openTab(evt, tabName) {
-        var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tab-content");
-        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
-        tablinks = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        const contents = document.getElementsByClassName("tab-content");
+        for (let i = 0; i < contents.length; i++) contents[i].classList.remove("active");
+        const btns = document.getElementsByClassName("tab-btn");
+        for (let i = 0; i < btns.length; i++) btns[i].classList.remove("active");
         document.getElementById(tabName).classList.add("active");
         evt.currentTarget.classList.add("active");
         window.scrollTo(0, 0);
     }
 
-    function updateTimer() {
-        const now = new Date();
-        const targetDate = new Date(`July 11, ${now.getFullYear()} 00:00:00`).getTime();
-        let distance = targetDate - now.getTime();
-        if (distance < 0) { distance = new Date(`July 11, ${now.getFullYear() + 1} 00:00:00`).getTime() - now.getTime(); }
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        document.getElementById("timer").innerHTML = days + "日 " + hours + "時 " + minutes + "分 " + seconds + "秒 ";
-    }
-    setInterval(updateTimer, 1000);
-    updateTimer();
-
+    // --- 地域設定関連 ---
     const soukuData = {
-        'tokyo': ['新宿総区', '港総区', '千代田区', '文京区', '台東区', '中央区', '大田総区', '品川総区', '世田谷総区', '目黒総区', '杉並総区', '中野総区', '渋谷総区', '練馬総区', '豊島総区', '北総区', '板橋総区', '足立総区', '江東総区', '墨田総区', '荒川総区', '江戸川総区', '葛飾総区'],
-        'dai2tokyo': ['武蔵野総区', '小金井総区', '新立川総区', '八王子総区', '秋川総区', '青梅総区', '学園総区', '村山総区', '町田総区', '多摩池田総区', '府中総区', '調布総区'],
-        'toukaidou': ['神奈川', '静岡'], 'kantou': ['千葉', '埼玉', '茨城', '群馬', '栃木'], 'kansai': ['大阪', '兵庫', '京都', '滋賀', '奈良', '和歌山'],
-        'hokkaido': ['札幌', '旭川', '函館', '釧路'], 'touhoku': ['宮城', '岩手', '青森', '秋田', '山形', '福島'], 'chuubu': ['愛知', '三重', '岐阜'],
-        'shinetsu': ['長野', '新潟'], 'hokuriku': ['石川', '富山', '福井'], 'chuugoku': ['広島', '岡山', '山口', '鳥取', '島根'],
-        'shikoku': ['香川', '徳島', '愛媛', '高知'], 'kyushu': ['福岡', '佐賀', '長崎', '熊本', '大分', '宮崎', '鹿児島'], 'okinawa': ['沖縄本島', '先島']
+        'tokyo': ['新宿総区', '港総区', '千代田区'],
+        'dai2tokyo': ['八王子総区', '武蔵野総区']
     };
 
-    window.toggleSettings = function() {
+    function toggleSettings() {
         const modal = document.getElementById('settings-modal');
         modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-    };
+    }
 
-    window.updateSoukuList = function() {
+    function updateSoukuList() {
         const houmen = document.getElementById('select-houmen').value;
         const soukuSelect = document.getElementById('select-souku');
-        soukuSelect.innerHTML = '<option value="">総区を選択してください</option>';
+        soukuSelect.innerHTML = '<option value="">総区を選択</option>';
         if (soukuData[houmen]) {
             soukuData[houmen].forEach(name => {
                 const opt = document.createElement('option');
@@ -494,31 +372,48 @@
                 soukuSelect.appendChild(opt);
             });
         }
-    };
+    }
 
-    window.saveSettings = function() {
+    function saveSettings() {
         const selected = document.getElementById('select-souku').value;
         if (!selected) return;
         localStorage.setItem('userArea', selected);
         applyAreaSettings(selected);
         toggleSettings();
-    };
+    }
 
     function applyAreaSettings(areaKey) {
         document.querySelectorAll('.area-content').forEach(el => el.style.display = 'none');
-        const targetSched = document.getElementById('sched-' + areaKey);
-        if (targetSched) targetSched.style.display = 'block';
         const targetAction = document.getElementById('action-' + areaKey);
-        if (targetAction) targetAction.style.display = 'block';
-        const def = document.getElementById('sched-default');
-        if (def) def.style.display = 'none';
+        if (targetAction) {
+            targetAction.style.display = 'block';
+            document.getElementById('everyone-default').style.display = 'none';
+        }
     }
 
+    // 読み込み時の処理
     window.addEventListener('load', () => {
+        // 保存された目標の復元
+        const savedGoal = localStorage.getItem('myPersonalGoal');
+        if (savedGoal) document.getElementById('my-goal-text').value = savedGoal;
+        
+        // 保存された地域の復元
         const savedArea = localStorage.getItem('userArea');
         if (savedArea) applyAreaSettings(savedArea);
+
+        // 結成記念日カウントダウン
+        setInterval(() => {
+            const now = new Date();
+            const target = new Date(now.getFullYear(), 6, 11);
+            let diff = target - now;
+            if (diff < 0) diff = new Date(now.getFullYear() + 1, 6, 11) - now;
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+            const s = Math.floor((diff % (1000*60)) / 1000);
+            document.getElementById("timer").innerText = `${d}日 ${h}時 ${m}分 ${s}秒`;
+        }, 1000);
     });
 </script>
-
 </body>
 </html>
