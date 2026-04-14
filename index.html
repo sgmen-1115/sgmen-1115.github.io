@@ -177,7 +177,8 @@
     #timer { font-size: 2.2rem; font-weight: bold; color: var(--primary-color); text-align: center; }
     .schedule-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0f0; text-decoration: none; color: inherit; }
     .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 90px; }
-/* --- 設定ボタン（右上） --- */
+
+    /* --- 設定ボタン（右上） --- */
     .settings-btn {
         position: fixed;
         top: 12px;
@@ -245,12 +246,24 @@
         <h3 style="margin-top:0;">所属設定</h3>
         <p style="font-size:0.8rem; color:#666;">所属を選択すると内容が切り替わります</p>
         
-        <label>1. 方面を選択</label>
-        <select id="select-houmen" onchange="updateSoukuList()">
-            <option value="">選択してください</option>
-            <option value="tokyo">東京</option>
-            <option value="dai2tokyo">第二総東京</option>
-            </select>
+       <label>1. 方面を選択</label>
+<select id="select-houmen" onchange="updateSoukuList()">
+    <option value="">選択してください</option>
+    <option value="tokyo">東京</option>
+    <option value="dai2tokyo">第二総東京</option>
+    <option value="toukaidou">東海道</option>
+    <option value="kantou">関東</option>
+    <option value="kansai">関西</option>
+    <option value="hokkaido">北海道</option>
+    <option value="touhoku">東北</option>
+    <option value="chuubu">中部</option>
+    <option value="shinetsu">信越</option>
+    <option value="hokuriku">北陸</option>
+    <option value="chuugoku">中国</option>
+    <option value="shikoku">四国</option>
+    <option value="kyushu">九州</option>
+    <option value="okinawa">沖縄</option>
+</select>
 
         <label>2. 総区を選択</label>
         <select id="select-souku">
@@ -302,13 +315,6 @@
     </div>
 </div>
 
-「スケジュール」の中身を、**「全方面共通の行事」と、「選択した総区ごとの行事」**が両方表示される形に書き換えます。
-
-ポイントは、共通のものはそのまま残し、地域ごとのものだけを area-content というクラスの箱に入れて準備することです。
-
-以下のように書き換えてみてください。
-
-HTML
 <div id="schedule" class="tab-content">
     <div class="sub-title">活動スケジュール</div>
 
@@ -533,9 +539,21 @@ HTML
     updateTimer();
 
     const soukuData = {
-        'tokyo': ['新宿総区', '港総区', '千代田区', '文京区', '台東区', '中央区', '大田総区', '品川総区', '世田谷総区', '目黒総区', '杉並総区', '中野総区', '渋谷総区', '練馬総区', '豊島総区', '北総区', '板橋総区', '足立総区', '江東総区', '墨田総区', '荒川総区', '江戸川総区', '葛飾総区'],
-        'dai2tokyo': ['武蔵野総区', '小金井総区', '新立川総区', '八王子総区', '秋川総区', '青梅総区', '学園総区', '村山総区', '町田総区', '多摩池田総区', '府中総区', '調布総区']
-    };
+    'tokyo': ['新宿総区', '港総区', '千代田区', '文京区', '台東区', '中央区', '大田総区', '品川総区', '世田谷総区', '目黒総区', '杉並総区', '中野総区', '渋谷総区', '練馬総区', '豊島総区', '北総区', '板橋総区', '足立総区', '江東総区', '墨田総区', '荒川総区', '江戸川総区', '葛飾総区'],
+    'dai2tokyo': ['武蔵野総区', '小金井総区', '新立川総区', '八王子総区', '秋川総区', '青梅総区', '学園総区', '村山総区', '町田総区', '多摩池田総区', '府中総区', '調布総区'],
+    'toukaidou': ['神奈川', '静岡'],
+    'kantou': ['千葉', '埼玉', '茨城', '群馬', '栃木'],
+    'kansai': ['大阪', '兵庫', '京都', '滋賀', '奈良', '和歌山'],
+    'hokkaido': ['札幌', '旭川', '函館', '釧路'],
+    'touhoku': ['宮城', '岩手', '青森', '秋田', '山形', '福島'],
+    'chuubu': ['愛知', '三重', '岐阜'],
+    'shinetsu': ['長野', '新潟'],
+    'hokuriku': ['石川', '富山', '福井'],
+    'chuugoku': ['広島', '岡山', '山口', '鳥取', '島根'],
+    'shikoku': ['香川', '徳島', '愛媛', '高知'],
+    'kyushu': ['福岡', '佐賀', '長崎', '熊本', '大分', '宮崎', '鹿児島'],
+    'okinawa': ['沖縄本島', '先島']
+};
 
     // 設定画面の開閉
     window.toggleSettings = function() {
