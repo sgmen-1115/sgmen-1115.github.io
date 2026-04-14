@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex"> 
     <title>男子部公式サイト</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="男子部アプリ">
-<link rel="apple-touch-icon" href="https://via.placeholder.com/192"> <meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="男子部アプリ">
+    <link rel="apple-touch-icon" href="icon-192.png">
 <style>
     :root {
         --primary-color: #003366;
@@ -433,6 +435,16 @@
             document.getElementById("timer").innerText = `${d}日 ${h}時 ${m}分 ${s}秒`;
         }, 1000);
     };
+</script>
+    <script>
+    // 管理人さん(sw.js)を登録するコード
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').then(function(registration) {
+            console.log('ServiceWorkerの登録に成功しました');
+        }).catch(function(err) {
+            console.log('ServiceWorkerの登録に失敗しました:', err);
+        });
+    }
 </script>
 </body>
 </html>
