@@ -6,235 +6,195 @@
     <meta name="robots" content="noindex"> 
     <title>男子部公式サイト</title>
 
-    <style>
-        :root {
-            --primary-color: #003366;
-            --accent-color: #f39c12;
-            --bg-color: #f8f9fa;
-            --tab-bg-darker: #dce4ec; /* 少し濃くしたタブ背景 */
-            --white: #ffffff;
-        }
+<style>
+    /* --- 基本設定（近江リース風の清潔感） --- */
+    :root {
+        --primary-color: #003366;
+        --accent-color: #f39c12;
+        --bg-color: #f8f9fa;
+        --tab-bg-darker: #dce4ec;
+        --white: #ffffff;
+    }
 
-        body {
-            font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: #333;
-            background-image: radial-gradient(#d1d9e6 1px, transparent 1px);
-  　　　　  background-size: 20px 20px; /* ドットの間隔 */
-        }
+    body {
+        font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: #333;
+        /* 背景にプロっぽいドットを敷く */
+        background-image: radial-gradient(#d1d9e6 1px, transparent 1px);
+        background-size: 20px 20px;
+    }
 
-        /* --- 最上部タブメニュー（視認性向上版） --- */
-        .tab-menu {
-            position: sticky;
-            top: 0;
-            width: 100%;
-            background: var(--tab-bg-darker); /* ここを少し濃くしました */
-            display: flex;
-            justify-content: space-around;
-            z-index: 1000;
-            border-bottom: 1px solid #c0c9d1;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    /* --- 最上部タブメニュー（固定表示） --- */
+    .tab-menu {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        background: var(--tab-bg-darker);
+        display: flex;
+        justify-content: space-around;
+        z-index: 1000;
+        border-bottom: 1px solid #c0c9d1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
 
-        .tab-btn {
-            flex: 1;
-            padding: 16px 0;
-            border: none;
-            background: none;
-            font-weight: bold;
-            color: #556677; /* 通常時の文字色を少し抑える */
-            cursor: pointer;
-            font-size: 0.95rem;
-            position: relative;
-            transition: all 0.3s ease;
-        }
+    .tab-btn {
+        flex: 1;
+        padding: 16px 0;
+        border: none;
+        background: none;
+        font-weight: bold;
+        color: #556677;
+        cursor: pointer;
+        font-size: 0.95rem;
+        position: relative;
+        transition: all 0.3s ease;
+    }
 
-        /* 選択されているタブ */
-        .tab-btn.active {
-            background: var(--white); /* 選択中は白くして浮かび上がらせる */
-            color: var(--primary-color); /* 文字は濃紺 */
-        }
+    .tab-btn.active {
+        background: var(--white);
+        color: var(--primary-color);
+    }
 
-        .tab-btn.active::after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background-color: var(--accent-color);
-        }
+    .tab-btn.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background-color: var(--accent-color);
+    }
 
-     header {
-    position: relative;
-    /* より深く、高級感のあるグラデーションに変更 */
-    background: radial-gradient(at 0% 0%, hsla(210,100%,20%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(220,100%,25%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(200,100%,30%,1) 0, transparent 50%);
-    background-color: #002244;
-    color: white;
-    padding: 60px 20px;
-    text-align: center;
-    overflow: hidden;
-　　}
+    /* --- ヘッダー（シンプルにしてメインビジュアルを活かす） --- */
+    header {
+        background: white;
+        color: var(--primary-color);
+        padding: 15px 0;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+    }
+    header h1 { font-size: 1.2rem; margin: 0; letter-spacing: 2px; }
+    header p { display: none; }
 
-        header::before {
-            content: "";
-            position: absolute;
-            top: -50%; left: -10%;
-            width: 150%; height: 200%;
-            background: repeating-linear-gradient(
-                45deg,
-                transparent,
-                transparent 100px,
-                rgba(255, 255, 255, 0.03) 100px,
-                rgba(255, 255, 255, 0.03) 200px
-            );
-            transform: rotate(-10deg);
-        }
+    /* --- 【新設】ホーム画面：東京の街並みメインビジュアル --- */
+    .hero-container {
+        position: relative;
+        width: 100%;
+        height: 70vh; /* 画面高さの70% */
+        /* 東京の街並み画像 */
+        background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.4)), 
+                    url('https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&w=1200&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0 0 50px 50px;
+        overflow: hidden;
+        margin-top: 0;
+    }
 
-        header::after {
-            content: "";
-            position: absolute;
-            top: 50%; left: 10%;
-            width: 150px; height: 150px;
-            transform: translateY(-50%);
-            opacity: 0.12;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white"><path d="M78.6,35.2c-2.8-5-8.1-8.3-14.1-8.3c-0.8,0-1.7,0.1-2.5,0.2c-0.1,0-0.2,0.1-0.2,0.2c-0.1,1.1-0.2,2.2-0.2,3.3 c0,0.6,0,1.2,0,1.9c0,0.1,0.1,0.2,0.2,0.2c1.7-0.1,3.4-0.1,5-0.1c4.5,0,8.4,2.5,10.6,6.2c0.1,0.2,0,0.3-0.2,0.4c-0.7,0.3-1.4,0.6-2,1 c-0.1,0.1-0.1,0.2-0.1,0.3c0.1,0.5,0.2,1,0.2,1.6c0,2.1-1.1,4.1-3,5.3c-0.2,0.1-0.2,0.3,0,0.4c0.4,0.3,0.9,0.7,1.3,1.1 c0.1,0.1,0.1,0.2,0,0.3c-0.5,0.5-1.1,0.9-1.7,1.2c-0.2,0.1-0.2,0.2-0.1,0.4c0.2,0.3,0.4,0.6,0.5,1c0.1,0.2,0,0.3-0.2,0.4 c-0.3,0.2-0.6,0.4-1,0.6c-0.2,0.1-0.2,0.2-0.1,0.3c0.2,0.5,0.3,1.1,0.3,1.7c0,2.7-1.8,5-4.3,5.8c-0.2,0.1-0.2,0.2-0.1,0.4 c0.3,0.3,0.6,0.6,0.8,1l-0.6,1.4c-0.1,0.2-0.2,0.3-0.4,0.3h-4c-0.3,0-0.5,0.2-0.5,0.5c0,1,0,2.1-0.1,3.1c0,0.4-0.1,0.7-0.1,1.1 c0,0.2,0.1,0.3,0.2,0.3h4.4c0.3,0,0.5,0.2,0.6,0.4c1.1,2.7,3.5,4.7,6.4,5.4c0.2,0.1,0.3,0,0.4-0.2l1.6-4.5c0.1-0.2,0.2-0.3,0.4-0.3 h1.6c0.3,0,0.5-0.2,0.5-0.5v-3.7c0-0.3,0.2-0.5,0.5-0.6c2.8-0.4,5.3-2.1,6.8-4.5c0.1-0.2,0-0.3-0.2-0.4l-3.3-1.6 c-0.2-0.1-0.3-0.2-0.3-0.4v-1.6c0-0.3,0.2-0.5,0.5-0.5h1.1c2.2,0,4.2-1.3,5.2-3.2c0.1-0.2,0-0.3-0.2-0.4l-2.2-1 c-0.2-0.1-0.3-0.2-0.3-0.4v-0.6c0-0.3,0.2-0.5,0.5-0.6h1.7c2.2,0,4.2-1.3,5.2-3.2c0.1-0.2,0-0.3-0.2-0.4l-1.1-0.5 C88.3,42.4,82.7,38.3,78.6,35.2z"/></svg>');
-            background-repeat: no-repeat;
-            pointer-events: none;
-        }
+    .hero-content {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.5); 
+        padding: 40px 20px;
+        border-radius: 30px;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        width: 80%;
+    }
 
-        header h1 { 
-            position: relative; z-index: 2; margin: 0; font-size: 1.6rem; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3); letter-spacing: 2px;
-        }
-        header p { 
-            position: relative; z-index: 2; margin: 8px 0 0 0; 
-            font-size: 0.9rem; opacity: 0.9; font-weight: 300;
-        }
+    .hero-logo-text { font-size: 0.9rem; letter-spacing: 4px; color: var(--primary-color); margin-bottom: 10px; font-weight: bold; }
+    .hero-main-copy { font-size: 1.5rem; line-height: 1.6; color: #1a1a1a; margin: 0; font-weight: bold; }
+    .hero-sub-copy { font-size: 0.7rem; letter-spacing: 2px; color: #666; margin-top: 15px; }
 
-        /* --- コンテンツ --- */
-        .tab-content {
-            display: none;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            animation: fadeIn 0.4s ease;
-        }
+    .scroll-line {
+        position: absolute;
+        bottom: 40px;
+        width: 1px;
+        height: 40px;
+        background: linear-gradient(to bottom, var(--primary-color), transparent);
+    }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        .tab-content.active { display: block; }
+    /* --- コンテンツカード（グラスモーフィズム） --- */
+    .tab-content {
+        display: none;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+        animation: fadeIn 0.4s ease;
+    }
 
-        .card {
-    background: rgba(255, 255, 255, 0.7); /* 少し透明にする */
-    backdrop-filter: blur(10px); /* 後ろをぼかす（これが重要！） */
-    -webkit-backdrop-filter: blur(10px);
-    padding: 20px;
-    border-radius: 16px; /* 少し角を丸くする */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); /* 影を柔らかく */
-    border: 1px solid rgba(255, 255, 255, 0.3); /* 細い光の縁取り */
-    margin-bottom: 25px;
-　　}
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; } }
+    .tab-content.active { display: block; }
 
-        #timer { 
-            font-size: 1.8rem; font-weight: bold; color: var(--accent-color); 
-            text-align: center; padding: 10px 0; letter-spacing: 1px;
-        }
+    .card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        margin-bottom: 25px;
+    }
 
-        .sub-title {
-            display: inline-block;
-            background-color: var(--primary-color);
-            color: var(--white);
-            padding: 7px 22px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            margin: 10px 0 15px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
+    .sub-title {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--white);
+        padding: 8px 25px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
 
-        .btn {
-            display: block;
-            background: var(--white);
-            color: var(--primary-color);
-            padding: 15px;
-            margin: 12px 0;
-            text-decoration: none;
-            border-radius: 10px;
-            font-weight: bold;
-            border: 1px solid #e0e6ed;
-            text-align: center;
-        }
+    /* --- 近江リース風ボタン（矢印付き） --- */
+    .oumi-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ffffff;
+        color: #333;
+        padding: 15px 30px;
+        border-radius: 50px;
+        font-weight: bold;
+        text-decoration: none;
+        position: relative;
+        border: 1px solid #ddd;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
 
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .oumi-btn:hover {
+        background-color: #f9f9f9;
+        transform: translateY(-2px);
+    }
 
-        .schedule-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid #f0f0f0;
-            text-decoration: none;
-            color: inherit;
-        }
-        .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 90px; }
-        .add-cal { font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px; font-weight: bold; }
+    .oumi-btn::after {
+        content: "→";
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        background-color: #79bede;
+        color: #ffffff;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        /* 近江リース風アクションボタン（image_2.pngを参考） */
-.oumi-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* 中央に配置 */
-    background-color: #ffffff; /* 白背景 */
-    color: #333333; /* 文字色（黒寄り） */
-    padding: 15px 30px; /* 余白（image_2.pngのように少し縦長に） */
-    border-radius: 50px; /* 楕円形にする */
-    font-weight: bold;
-    text-decoration: none; /* 下線を消す */
-    position: relative;
-    border: 1px solid #ddd; /* 薄い縁取りでプロっぽさを出す */
-    cursor: pointer;
-    transition: all 0.3s ease; /* ホバー時の動きを滑らかに */
-}
-
-/* ホバー（指を乗せた時）の効果 */
-.oumi-btn:hover {
-    background-color: #f9f9f9;
-    transform: translateY(-2px); /* 少し上に浮く */
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* 影を柔らかく */
-}
-
-/* ボタン右側の「青い丸と矢印」 */
-.oumi-btn::after {
-    content: "→"; /* 矢印（テキストで代用） */
-    position: absolute;
-    right: 15px; /* 右からの位置 */
-    top: 50%;
-    transform: translateY(-50%); /* 垂直中央に */
-    width: 32px; /* 丸のサイズ */
-    height: 32px;
-    background-color: #79bede; /* image_2.pngのような水色系 */
-    color: #ffffff; /* 矢印の色 */
-    border-radius: 50%; /* 正円にする */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    font-weight: normal;
-}
-        
-    </style>
+    /* タイマー数字のデザイン */
+    #timer { font-size: 2.2rem; font-weight: bold; color: var(--primary-color); text-align: center; }
+</style>
 </head>
 <body>
 
@@ -250,10 +210,23 @@
     <p>未来に向けて、共に駆ける。</p>
 </header>
 
-<div id="home" class="tab-content active">
-    <div class="card">
-        <span style="font-weight: bold; color: #555; font-size: 0.85rem;">7.11 男子部結成記念日まで</span>
-        <div id="timer">計算中...</div>
+<div id="home" class="tab-content active" style="padding: 0; max-width: 100%;">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-logo-text">SGMEN TOKYO</div>
+            <h2 class="hero-main-copy">開拓の精神で、<br>新しい東京の未来を。</h2>
+            <p class="hero-sub-copy">FOR OUR BRIGHT FUTURE</p>
+        </div>
+        <div class="scroll-line"></div>
+    </div>
+
+    <div style="padding: 0 20px;">
+        <div class="card" style="margin-top: -40px; position: relative; z-index: 10; text-align: center; border: none; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+            <span style="font-weight: bold; color: #666; font-size: 0.85rem; letter-spacing: 1px;">7.11 男子部結成記念日まで</span>
+            <div id="timer" style="font-size: 2.5rem; color: var(--primary-color); margin-top: 5px; font-weight: bold;">計算中...</div>
+        </div>
+    </div>
+
     </div>
 
     <div class="sub-title">お知らせ</div>
