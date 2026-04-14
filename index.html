@@ -1,3 +1,17 @@
+ご不便をおかけして申し訳ありません。デザインを維持しつつ、欠落していた機能の復旧とスケジュールの追加を行いました。
+
+修正内容
+取り組み項目の復旧: 「訪問・激励の推進」などのテキスト項目を唱題チャレンジの上部に再配置しました。
+
+Firebase累計表示の復旧: データベースから「累計遍数」と「累計時間」を取得して表示するパーツとスクリプトを完全に復元しました。
+
+スケジュールの追加: 5月3日「創価学会の日」、6月7日「任用試験」をカレンダー登録ボタン付きで追加しました。
+
+保存機能の修正: 保存後にページをリロードしなくても、即座に累計数に反映されるようリアルタイム同期を強化しました。
+
+以下が修正後の全コードです。
+
+HTML
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -7,7 +21,6 @@
     <title>男子部公式サイト</title>
 
 <style>
-    /* --- 基本設定 --- */
     :root {
         --primary-color: #003366;
         --accent-color: #f39c12;
@@ -26,7 +39,6 @@
         background-size: 20px 20px;
     }
 
-    /* --- タブメニュー --- */
     .tab-menu {
         position: sticky;
         top: 0;
@@ -76,12 +88,10 @@
     }
     header h1 { font-size: 1.2rem; margin: 0; letter-spacing: 2px; }
 
-    /* --- メインビジュアル（東京タワー・清潔感） --- */
     .hero-container {
         position: relative;
         width: 100%;
         height: 65vh;
-        /* 清潔感のある東京タワーの写真へ変更 */
         background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), 
                     url('https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=1200&q=80');
         background-size: cover;
@@ -106,12 +116,11 @@
 
     .hero-main-copy { font-size: 1.5rem; line-height: 1.6; color: #1a1a1a; margin: 0; font-weight: bold; }
 
-    /* --- 動画・リンクのデザイン調整 --- */
     .video-container {
         position: relative;
         padding-bottom: 56.25%;
-        margin: 30px auto; /* 中央揃え */
-        width: 95%; /* サイズを大きく */
+        margin: 30px auto;
+        width: 95%;
         max-width: 700px;
         border-radius: 15px;
         overflow: hidden;
@@ -135,7 +144,6 @@
     }
     .btn:hover { background: #f0f4f8; transform: translateY(-2px); }
 
-    /* --- その他共通パーツ --- */
     .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
     .tab-content.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -201,30 +209,67 @@
             <span><span class="schedule-date">4/20（月）</span> 男子部座談会</span>
             <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
         </a>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">5/03（日）</span> 創価学会の日</span>
+            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
+        </a>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=教学実力試験(任用試験)" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">6/07（日）</span> 任用試験</span>
+            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
+        </a>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部結成記念日" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">7/11（土）</span> 男子部結成記念日</span>
+            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
+        </a>
     </div>
 </div>
 
 <div id="action" class="tab-content">
+    <div class="sub-title">今月の取り組み</div>
+    <div class="card">
+        <h3 style="color: var(--accent-color); margin-top: 0; font-size: 1.1rem;">1. 訪問・激励の推進</h3>
+        <p>一人ひとりの部員に寄り添い、希望の対話を広げます。</p>
+        <h3 style="color: var(--accent-color); font-size: 1.1rem;">2. 研鑽の充実</h3>
+        <p>御書を通して、確信の人生を歩む土台を作ります。</p>
+    </div>
+
     <div class="sub-title">唱題チャレンジ</div>
     <div class="card" style="text-align: center;">
-        <div id="timer-display" style="font-size: 3rem; margin: 10px 0;">00:00:00</div>
-        <div id="session-count" style="font-size: 1.2rem; color: #79bede; margin-bottom: 20px;">0 遍</div>
-        <button id="startBtn" class="oumi-btn" style="width: 100%; max-width: 300px; background: var(--primary-color); color: white; margin: 0 auto 10px;">スタート</button>
-        <button id="resetBtn" class="oumi-btn" style="width: 100%; max-width: 300px; margin: 0 auto;">リセット</button>
-        <button id="saveBtn" class="oumi-btn" onclick="saveData()" style="width: 100%; max-width: 300px; display: none; margin: 10px auto; background: #fffde7;">保存する</button>
+        <div style="display: flex; justify-content: space-around; margin-bottom: 25px; background: #f0f7ff; padding: 15px; border-radius: 12px;">
+            <div>
+                <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">累計遍数</div>
+                <div id="total-count" style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color);">0 遍</div>
+            </div>
+            <div>
+                <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">累計時間</div>
+                <div id="total-time" style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color);">0:00</div>
+            </div>
+        </div>
+
+        <div id="timer-display" style="font-size: 3.5rem; font-weight: 300; margin: 10px 0; color: #333; letter-spacing: 2px;">00:00:00</div>
+        <div id="session-count" style="font-size: 1.2rem; color: #79bede; margin-bottom: 25px; font-weight: bold;">0 遍</div>
+
+        <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+            <button id="startBtn" class="oumi-btn" style="width: 100%; max-width: 300px; background-color: var(--primary-color); color: white; border: none;">スタート</button>
+            <button id="resetBtn" class="oumi-btn" style="width: 100%; max-width: 300px;">リセット</button>
+            <button id="saveBtn" class="oumi-btn" onclick="saveData()" style="width: 100%; max-width: 300px; display: none; background-color: #fffde7; border: 1px solid #fbc02d; color: #5d4037;">記録を保存する</button>
+        </div>
     </div>
 </div>
 
 <div id="study" class="tab-content">
-    <div class="sub-title">資料ライブラリ</div>
-    <div class="card" onclick="window.open('https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view', '_blank')" style="cursor:pointer; display: flex; align-items: center;">
-        <div style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 8px; margin-right: 15px;">PDF</div>
-        <div><strong>創価の源流 大東京（上）</strong></div>
+    <div class="sub-title">学習資料</div>
+    <div class="card" onclick="window.open('https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view', '_blank')" style="cursor:pointer; display: flex; align-items: center; margin-bottom: 12px;">
+        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px;">PDF</div>
+        <div style="flex-grow: 1;"><strong>創価の源流 大東京（上）</strong></div>
+    </div>
+    <div class="card" onclick="window.open('https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view', '_blank')" style="cursor:pointer; display: flex; align-items: center;">
+        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px;">PDF</div>
+        <div style="flex-grow: 1;"><strong>創価の源流 大東京（下）</strong></div>
     </div>
 </div>
 
 <script type="module">
-    // Firebase関連のスクリプト（以前のまま維持）
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
@@ -244,13 +289,26 @@
     let startTime, timerInterval, elapsedTime = 0, isRunning = false;
     const display = document.getElementById('timer-display');
     const sessionDisplay = document.getElementById('session-count');
+    const totalCountDisp = document.getElementById('total-count');
+    const totalTimeDisp = document.getElementById('total-time');
     const startBtn = document.getElementById('startBtn');
     const saveBtn = document.getElementById('saveBtn');
+
+    // 累計データの同期表示
+    onValue(userRef, (snapshot) => {
+        const data = snapshot.val() || { total: 0, totalMs: 0 };
+        totalCountDisp.innerText = (data.total || 0).toLocaleString() + " 遍";
+        const totalMs = data.totalMs || 0;
+        const hours = Math.floor(totalMs / 3600000);
+        const mins = Math.floor((totalMs % 3600000) / 60000);
+        totalTimeDisp.innerText = `${hours}:${mins.toString().padStart(2, '0')}`;
+    });
 
     startBtn.onclick = () => {
         if (!isRunning) {
             isRunning = true;
             startBtn.innerText = "ストップ";
+            startBtn.style.background = "#666";
             startTime = Date.now();
             timerInterval = setInterval(() => {
                 const diff = Date.now() - startTime + elapsedTime;
@@ -264,6 +322,7 @@
         } else {
             isRunning = false;
             startBtn.innerText = "再開";
+            startBtn.style.background = "var(--primary-color)";
             clearInterval(timerInterval);
             elapsedTime += Date.now() - startTime;
             if (elapsedTime >= 1500) saveBtn.style.display = "block";
@@ -271,29 +330,40 @@
     };
 
     document.getElementById('resetBtn').onclick = () => {
-        if(confirm("リセットしますか？")) {
+        if(confirm("タイマーをリセットしますか？")) {
             clearInterval(timerInterval);
             isRunning = false;
             elapsedTime = 0;
             display.innerText = "00:00:00";
             sessionDisplay.innerText = "0 遍";
             startBtn.innerText = "スタート";
+            startBtn.style.background = "var(--primary-color)";
             saveBtn.style.display = "none";
         }
     };
 
     window.saveData = async () => {
         const sessionCount = Math.floor(elapsedTime / 1500);
+        saveBtn.innerText = "保存中...";
         try {
             const snapshot = await get(userRef);
             const data = snapshot.val() || { total: 0, totalMs: 0 };
             await update(userRef, {
                 total: (data.total || 0) + sessionCount,
-                totalMs: (data.totalMs || 0) + elapsedTime
+                totalMs: (data.totalMs || 0) + elapsedTime,
+                lastDate: new Date().toLocaleDateString()
             });
-            alert("保存しました！");
-            location.reload();
-        } catch (e) { alert("エラー"); }
+            alert(`保存成功！ +${sessionCount}遍`);
+            elapsedTime = 0;
+            display.innerText = "00:00:00";
+            sessionDisplay.innerText = "0 遍";
+            saveBtn.style.display = "none";
+            saveBtn.innerText = "記録を保存する";
+            startBtn.innerText = "スタート";
+        } catch (e) {
+            alert("保存エラー");
+            saveBtn.innerText = "記録を保存する";
+        }
     };
 </script>
 
