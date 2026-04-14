@@ -1,3 +1,7 @@
-self.addEventListener('fetch', function(event) {
-    // PWAとして認識させるための空の管理人さん
+self.addEventListener('install', (event) => {
+  console.log('Service Worker installed');
+});
+
+self.addEventListener('fetch', (event) => {
+  // アプリとして動かすための空のイベントリスナー
 });
