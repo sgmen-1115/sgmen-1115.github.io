@@ -1,4 +1,3 @@
-// 管理人さんの設定（これがあるとアプリとして認められやすくなります）
 const CACHE_NAME = 'ver1';
 const urlsToCache = ['./index.html'];
 
