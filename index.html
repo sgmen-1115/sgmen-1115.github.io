@@ -25,6 +25,7 @@
         background-size: 20px 20px;
     }
 
+    /* --- タブメニュー --- */
     .tab-menu {
         position: sticky;
         top: 0;
@@ -74,12 +75,13 @@
     }
     header h1 { font-size: 1.2rem; margin: 0; letter-spacing: 2px; }
 
+    /* --- ホーム画面：メインビジュアル（清潔感のある東京） --- */
     .hero-container {
         position: relative;
         width: 100%;
         height: 65vh;
         background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3)), 
-                    url('https://images.unsplash.com/photo-1551322120-c697cf88fbdc?q=80&w=869&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+                    url('https://images.unsplash.com/photo-1542931287-023b922fa89b?auto=format&fit=crop&w=1200&q=80');
         background-size: cover;
         background-position: center;
         display: flex;
@@ -101,6 +103,46 @@
     }
 
     .hero-main-copy { font-size: 1.5rem; line-height: 1.6; color: #1a1a1a; margin: 0; font-weight: bold; }
+
+    /* --- 学習資料タブ専用：ヒーローデザイン（書架の画像） --- */
+    .study-hero {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        background-image: url('https://images.unsplash.com/photo-1604866830506-4ffc2d57fea3?q=80&w=1000&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        border-radius: 15px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .study-hero-title {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 15px 30px;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .study-hero-title h2 {
+        margin: 0;
+        font-size: 1.3rem;
+        color: var(--primary-color);
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    /* --- 共通パーツ --- */
+    .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    .card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 25px; }
+    .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 8px 25px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; margin: 20px 0 15px 0; }
 
     .video-container {
         position: relative;
@@ -128,14 +170,6 @@
         box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         transition: 0.3s;
     }
-    .btn:hover { background: #f0f4f8; transform: translateY(-2px); }
-
-    .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
-    .tab-content.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-    .card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 25px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 25px; }
-    .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 8px 25px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; margin: 20px 0 15px 0; }
 
     .oumi-btn { display: flex; align-items: center; justify-content: center; background-color: #ffffff; color: #333; padding: 15px 30px; border-radius: 50px; font-weight: bold; text-decoration: none; position: relative; border: 1px solid #ddd; cursor: pointer; transition: 0.3s; }
     .oumi-btn::after { content: "→"; position: absolute; right: 15px; width: 32px; height: 32px; background-color: #79bede; color: #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -244,17 +278,32 @@
 </div>
 
 <div id="study" class="tab-content">
-    <div class="sub-title">学習資料</div>
-    <div class="card" onclick="window.open('https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view', '_blank')" style="cursor:pointer; display: flex; align-items: center; margin-bottom: 12px;">
-        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px;">PDF</div>
-        <div style="flex-grow: 1;"><strong>創価の源流 大東京（上）</strong></div>
+    <div class="study-hero">
+        <div class="study-hero-title">
+            <h2>資料ライブラリ</h2>
+        </div>
     </div>
-    <div class="card" onclick="window.open('https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view', '_blank')" style="cursor:pointer; display: flex; align-items: center;">
-        <div style="background: #ffebee; color: #c62828; width: 45px; height: 45px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 15px;">PDF</div>
-        <div style="flex-grow: 1;"><strong>創価の源流 大東京（下）</strong></div>
+
+    <p style="font-size: 0.85rem; color: #777; margin-bottom: 20px; padding-left: 5px;">
+        必要な資料をタップして、Googleドライブで閲覧・保存してください。
+    </p>
+
+    <div class="study-list">
+
+        <a href="https://drive.google.com/file/d/1NJCwgHrD-JLD7l80Odaik3RbFV5uXNcm/view?usp=sharing" target="_blank" class="study-card">
+            <div class="pdf-icon">PDF</div>
+            <div class="study-card-title">創価の源流 大東京（上）</div>
+            <div class="study-card-arrow">❯</div>
+        </a>
+
+        <a href="https://drive.google.com/file/d/1Hrn_AhXVLsXLrFaeBbpZmbrl8HaVwUp5/view?usp=sharing" target="_blank" class="study-card">
+            <div class="pdf-icon">PDF</div>
+            <div class="study-card-title">創価の源流 大東京（下）</div>
+            <div class="study-card-arrow">❯</div>
+        </a>
+
     </div>
 </div>
-
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
