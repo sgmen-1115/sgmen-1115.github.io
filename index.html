@@ -190,6 +190,50 @@
         }
         .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 90px; }
         .add-cal { font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px; font-weight: bold; }
+
+        /* 近江リース風アクションボタン（image_2.pngを参考） */
+.oumi-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 中央に配置 */
+    background-color: #ffffff; /* 白背景 */
+    color: #333333; /* 文字色（黒寄り） */
+    padding: 15px 30px; /* 余白（image_2.pngのように少し縦長に） */
+    border-radius: 50px; /* 楕円形にする */
+    font-weight: bold;
+    text-decoration: none; /* 下線を消す */
+    position: relative;
+    border: 1px solid #ddd; /* 薄い縁取りでプロっぽさを出す */
+    cursor: pointer;
+    transition: all 0.3s ease; /* ホバー時の動きを滑らかに */
+}
+
+/* ホバー（指を乗せた時）の効果 */
+.oumi-btn:hover {
+    background-color: #f9f9f9;
+    transform: translateY(-2px); /* 少し上に浮く */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); /* 影を柔らかく */
+}
+
+/* ボタン右側の「青い丸と矢印」 */
+.oumi-btn::after {
+    content: "→"; /* 矢印（テキストで代用） */
+    position: absolute;
+    right: 15px; /* 右からの位置 */
+    top: 50%;
+    transform: translateY(-50%); /* 垂直中央に */
+    width: 32px; /* 丸のサイズ */
+    height: 32px;
+    background-color: #79bede; /* image_2.pngのような水色系 */
+    color: #ffffff; /* 矢印の色 */
+    border-radius: 50%; /* 正円にする */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: normal;
+}
+        
     </style>
 </head>
 <body>
@@ -290,27 +334,38 @@
         <p>御書を通して、確信の人生を歩む土台を作ります。</p>
     </div>
 
-  <div class="sub-title">唱題チャレンジ</div>
-<div class="card" style="text-align: center;">
-    <div style="display: flex; justify-content: space-around; margin-bottom: 15px; background: #fdf5f5; padding: 10px; border-radius: 8px;">
+ <div class="sub-title">唱題チャレンジ</div>
+<div class="card" style="text-align: center; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    
+    <div style="display: flex; justify-content: space-around; margin-bottom: 25px; background: #f0f7ff; padding: 15px; border-radius: 12px;">
         <div>
-            <div style="font-size: 0.7rem; color: #888;">累計遍数</div>
-            <div id="total-count" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0</div>
+            <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">累計遍数</div>
+            <div id="total-count" style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color);">0 遍</div>
         </div>
         <div>
-            <div style="font-size: 0.7rem; color: #888;">累計時間</div>
-            <div id="total-time" style="font-size: 1.2rem; font-weight: bold; color: var(--primary-color);">0:00</div>
+            <div style="font-size: 0.75rem; color: #666; margin-bottom: 4px;">累計時間</div>
+            <div id="total-time" style="font-size: 1.4rem; font-weight: bold; color: var(--primary-color);">0:00</div>
         </div>
     </div>
     
-    <div id="timer-display" style="font-size: 3.5rem; font-family: 'Courier New', monospace; font-weight: bold; margin: 10px 0; color: #333;">00:00:00</div>
-    <div id="session-count" style="font-size: 1.2rem; color: var(--accent-color); margin-bottom: 20px; font-weight: bold;">0 遍</div>
+    <div id="timer-display" style="font-size: 3.5rem; font-family: 'Helvetica Neue', sans-serif; font-weight: 300; margin: 10px 0; color: #333; letter-spacing: 2px;">00:00:00</div>
+    <div id="session-count" style="font-size: 1.2rem; color: #79bede; margin-bottom: 25px; font-weight: bold;">0 遍</div>
 
-    <div style="display: flex; gap: 10px; justify-content: center;">
-        <button id="startBtn" class="btn" style="flex: 1; background: var(--primary-color); color: white; margin: 0; padding: 15px;">スタート</button>
-        <button id="resetBtn" class="btn" style="flex: 1; margin: 0; padding: 15px;">リセット</button>
+    <div style="display: flex; flex-direction: column; gap: 15px; align-items: center;">
+        
+        <button id="startBtn" class="oumi-btn" style="width: 100%; max-width: 300px; background-color: var(--primary-color); color: white; border: none;">
+            スタート
+        </button>
+
+        <button id="resetBtn" class="oumi-btn" style="width: 100%; max-width: 300px;">
+            リセット
+        </button>
+
+        <button id="saveBtn" class="oumi-btn" onclick="saveData()" style="width: 100%; max-width: 300px; display: none; background-color: #fffde7; border: 1px solid #fbc02d; color: #5d4037;">
+            記録を保存する
+        </button>
+        
     </div>
-    <button id="saveBtn" class="btn" onclick="saveData()" style="width: 100%; margin-top: 15px; background: #fff9c4; color: #5d4037; display: none; padding: 15px; font-weight: bold; border: 2px solid #fbc02d; cursor: pointer;">記録を保存する</button>
 </div>
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
