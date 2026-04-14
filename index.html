@@ -215,8 +215,12 @@
         </div>
         <div id="timer-display" style="font-size: 3rem; font-weight: 300; margin: 10px 0;">00:00:00</div>
         <div id="session-count" style="font-size: 1rem; color: #79bede; margin-bottom: 20px; font-weight: bold;">0 遍</div>
+        
         <button id="startBtn" class="oumi-btn">スタート</button>
-        <button id="saveBtn" class="oumi-btn" style="display: none; background-color: #f39c12; margin-top:10px;">記録を保存</button>
+        
+        <button id="saveBtn" class="oumi-btn" onclick="saveData()" style="display: none; background-color: #f39c12; margin-top:10px;">記録を保存</button>
+        
+        <button id="resetBtn" onclick="resetTimer()" style="margin-top: 15px; background: none; border: none; color: #999; text-decoration: underline; font-size: 0.8rem; cursor: pointer;">タイマーをリセット</button>
     </div>
 </div>
 
@@ -230,7 +234,7 @@
 </div>
 
 <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+　  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get, set, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
@@ -280,12 +284,13 @@
             document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
         });
     }
-
+// --- 唱題タイマーロジック ---
     let startTime, timerInterval, elapsedTime = 0, isRunning = false;
     const startBtn = document.getElementById('startBtn');
     const display = document.getElementById('timer-display');
     const saveBtn = document.getElementById('saveBtn');
 
+    // 1. スタート・ストップ
     startBtn.onclick = () => {
         if (!userRef) { toggleSettings(); return; }
         if (!isRunning) {
@@ -304,21 +309,59 @@
             isRunning = false; startBtn.innerText = "再開";
             clearInterval(timerInterval);
             elapsedTime += Date.now() - startTime;
-            if (elapsedTime >= 1500) saveBtn.style.display = "block";
+            if (elapsedTime >= 1500) saveBtn.style.display = "block"; // 1500ms(1遍)以上で保存可能
         }
     };
 
-    window.saveData = async () => {
-        const sessionCount = Math.floor(elapsedTime / 1500);
-        const snapshot = await get(userRef);
-        const data = snapshot.val() || { total: 0, totalMs: 0 };
-        await update(userRef, {
-            total: (data.total || 0) + sessionCount,
-            totalMs: (data.totalMs || 0) + elapsedTime
-        });
-        alert("保存完了");
-        location.reload();
+    // 2. リセット機能
+    window.resetTimer = () => {
+        if (isRunning) {
+            clearInterval(timerInterval);
+            isRunning = false;
+        }
+        elapsedTime = 0;
+        display.innerText = "00:00:00";
+        document.getElementById('session-count').innerText = "0 遍";
+        startBtn.innerText = "スタート";
+        saveBtn.style.display = "none";
     };
+
+    // 3. データの保存（ここが動作していませんでした）
+    window.saveData = async () => {
+        if (!userRef) return;
+        
+        try {
+            const sessionCount = Math.floor(elapsedTime / 1500);
+            const snapshot = await get(userRef);
+            const data = snapshot.val() || { total: 0, totalMs: 0 };
+            
+            await update(userRef, {
+                total: (data.total || 0) + sessionCount,
+                totalMs: (data.totalMs || 0) + elapsedTime
+            });
+            
+            alert("記録を保存しました！");
+            resetTimer(); // 保存後にタイマーをリセット
+        } catch (error) {
+            console.error("保存エラー:", error);
+            alert("保存に失敗しました。ネット接続を確認してください。");
+        }
+    };
+
+    // データのリアルタイム反映
+    if (userRef) {
+        onValue(userRef, (snapshot) => {
+            const data = snapshot.val() || { total: 0, totalMs: 0 };
+            document.getElementById('total-count').innerText = (data.total || 0).toLocaleString() + " 遍";
+            const h = Math.floor(data.totalMs / 3600000);
+            const m = Math.floor((data.totalMs % 3600000) / 60000);
+            document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
+        });
+    }
+// モジュール内の関数を外部（HTMLのonclick）から呼べるようにwindowに登録
+    window.saveData = saveData;
+    window.resetTimer = resetTimer;
+    
 </script>
 
 <script>
