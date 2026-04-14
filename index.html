@@ -177,9 +177,89 @@
     #timer { font-size: 2.2rem; font-weight: bold; color: var(--primary-color); text-align: center; }
     .schedule-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px solid #f0f0f0; text-decoration: none; color: inherit; }
     .schedule-date { font-weight: bold; color: var(--primary-color); min-width: 90px; }
+/* --- 設定ボタン（右上） --- */
+    .settings-btn {
+        position: fixed;
+        top: 12px;
+        right: 15px;
+        z-index: 1100;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid #ddd;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    /* --- 設定モーダル --- */
+    #settings-modal {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 25px;
+        border-radius: 20px;
+        width: 85%;
+        max-width: 400px;
+        text-align: center;
+    }
+    .modal-content select {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+    }
+    .save-settings-btn {
+        background: var(--primary-color);
+        color: white;
+        padding: 12px 30px;
+        border-radius: 50px;
+        border: none;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    /* --- コンテンツの出し分け用表示・非表示 --- */
+    .area-content { display: none; }
+    .area-content.active { display: block; }
+
 </style>
 </head>
 <body>
+
+<div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+<div id="settings-modal">
+    <div class="modal-content">
+        <h3 style="margin-top:0;">所属設定</h3>
+        <p style="font-size:0.8rem; color:#666;">所属を選択すると内容が切り替わります</p>
+        
+        <label>1. 方面を選択</label>
+        <select id="select-houmen" onchange="updateSoukuList()">
+            <option value="">選択してください</option>
+            <option value="tokyo">東京</option>
+            <option value="dai2tokyo">第二総東京</option>
+            </select>
+
+        <label>2. 総区を選択</label>
+        <select id="select-souku">
+            <option value="">方面を先に選択してください</option>
+        </select>
+
+        <button class="save-settings-btn" onclick="saveSettings()">設定を保存</button>
+    </div>
+</div>
 
 <nav class="tab-menu">
     <button class="tab-btn active" onclick="openTab(event, 'home')">ホーム</button>
@@ -222,13 +302,18 @@
     </div>
 </div>
 
+「スケジュール」の中身を、**「全方面共通の行事」と、「選択した総区ごとの行事」**が両方表示される形に書き換えます。
+
+ポイントは、共通のものはそのまま残し、地域ごとのものだけを area-content というクラスの箱に入れて準備することです。
+
+以下のように書き換えてみてください。
+
+HTML
 <div id="schedule" class="tab-content">
     <div class="sub-title">活動スケジュール</div>
+
     <div class="card">
-        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=男子部座談会" target="_blank" class="schedule-item">
-            <span><span class="schedule-date">4/20（月）</span> 男子部座談会</span>
-            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
-        </a>
+        <p style="font-size: 0.8rem; color: #666; margin-bottom: 10px;">【全方面共通】</p>
         <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=創価学会の日記念行事" target="_blank" class="schedule-item">
             <span><span class="schedule-date">5/03（日）</span> 創価学会の日</span>
             <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
@@ -242,7 +327,28 @@
             <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
         </a>
     </div>
-</div>
+
+    <div id="sched-default" class="area-content card" style="text-align: center; border: 1px dashed #ccc;">
+        <p style="color: #888; font-size: 0.9rem;">右上の⚙️設定から所属を選択すると、<br>地域のスケジュールが表示されます。</p>
+    </div>
+
+    <div id="sched-tokyo-新宿総区" class="area-content card">
+        <p style="font-size: 0.8rem; color: var(--primary-color); margin-bottom: 10px; font-weight: bold;">【東京・新宿総区の予定】</p>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=新宿総区男子部座談会" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">4/20（月）</span> 男子部座談会</span>
+            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
+        </a>
+    </div>
+
+    <div id="sched-dai2tokyo-八王子総区" class="area-content card">
+        <p style="font-size: 0.8rem; color: var(--primary-color); margin-bottom: 10px; font-weight: bold;">【第二総東京・八王子総区の予定】</p>
+        <a href="https://www.google.com/calendar/render?action=TEMPLATE&text=八王子総区総会" target="_blank" class="schedule-item">
+            <span><span class="schedule-date">4/25（土）</span> 八王子総区総会</span>
+            <span style="font-size: 0.75rem; color: #e67e22; border: 1px solid #f39c12; padding: 3px 10px; border-radius: 6px;">+ カレンダー</span>
+        </a>
+    </div>
+
+    </div>
 
 <div id="action" class="tab-content">
     <div class="sub-title">今月の取り組み</div>
@@ -425,6 +531,65 @@
     }
     setInterval(updateTimer, 1000);
     updateTimer();
+
+    const soukuData = {
+        'tokyo': ['新宿総区', '港総区', '千代田区', '文京区', '台東区', '中央区', '大田総区', '品川総区', '世田谷総区', '目黒総区', '杉並総区', '中野総区', '渋谷総区', '練馬総区', '豊島総区', '北総区', '板橋総区', '足立総区', '江東総区', '墨田総区', '荒川総区', '江戸川総区', '葛飾総区'],
+        'dai2tokyo': ['武蔵野総区', '小金井総区', '新立川総区', '八王子総区', '秋川総区', '青梅総区', '学園総区', '村山総区', '町田総区', '多摩池田総区', '府中総区', '調布総区']
+    };
+
+    // 設定画面の開閉
+    window.toggleSettings = function() {
+        const modal = document.getElementById('settings-modal');
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+    };
+
+    // 方面に合わせて総区リストを更新
+    window.updateSoukuList = function() {
+        const houmen = document.getElementById('select-houmen').value;
+        const soukuSelect = document.getElementById('select-souku');
+        soukuSelect.innerHTML = '';
+        if (soukuData[houmen]) {
+            soukuData[houmen].forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = houmen + '-' + name;
+                opt.innerText = name;
+                soukuSelect.appendChild(opt);
+            });
+        }
+    };
+
+    // 設定を保存して反映
+    window.saveSettings = function() {
+        const selected = document.getElementById('select-souku').value;
+        if (!selected) return;
+        localStorage.setItem('userArea', selected);
+        applyAreaSettings(selected);
+        toggleSettings();
+    };
+
+    // コンテンツを切り替えるメイン処理
+    function applyAreaSettings(areaKey) {
+        document.querySelectorAll('.area-content').forEach(el => el.style.display = 'none');
+        // 保存された地域ID（例：sched-tokyo-新宿総区）を表示
+        const targetSched = document.getElementById('sched-' + areaKey);
+        if (targetSched) targetSched.style.display = 'block';
+        
+        // 取り組み(action)も同じルールでIDを作れば連動します
+        const targetAction = document.getElementById('action-' + areaKey);
+        if (targetAction) targetAction.style.display = 'block';
+    }
+
+    // ページ読み込み時に実行（既存のwindow.onloadがあれば中身に追加）
+    window.addEventListener('load', () => {
+        const savedArea = localStorage.getItem('userArea');
+        if (savedArea) {
+            applyAreaSettings(savedArea);
+        } else {
+            const def = document.getElementById('sched-default');
+            if (def) def.style.display = 'block';
+        }
+    });
+</script>
 </script>
 
 </body>
