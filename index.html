@@ -438,13 +438,13 @@
 </script>
     <script>
     // 管理人さん(sw.js)を登録するコード
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('sw.js').then(function(registration) {
-            console.log('ServiceWorkerの登録に成功しました');
-        }).catch(function(err) {
-            console.log('ServiceWorkerの登録に失敗しました:', err);
-        });
-    }
+   if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(reg => console.log('ServiceWorker registered:', reg))
+      .catch(err => console.error('SW registration failed:', err));
+  });
+}
 </script>
 </body>
 </html>
