@@ -49,21 +49,50 @@
     }
 
     /* --- 固定タブメニュー --- */
-    .tab-menu {
-        position: fixed; top: var(--header-height); left: 0; width: 100%;
-        height: var(--tab-height); background: var(--tab-bg-darker);
-        display: flex; justify-content: space-around; z-index: 1000;
-        border-bottom: 1px solid #c0c9d1; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .tab-btn {
-        flex: 1; border: none; background: none; font-weight: bold;
-        color: #556677; cursor: pointer; font-size: 0.75rem; position: relative; height: 100%;
-    }
-    .tab-btn.active { background: var(--white); color: var(--primary-color); }
-    .tab-btn.active::after {
-        content: ""; position: absolute; bottom: 0; left: 0; width: 100%;
-        height: 4px; background-color: var(--accent-color);
-    }
+   .tab-menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 900px;
+    width: calc(100% - 32px);
+    height: var(--tab-height);
+    background: rgba(255,255,255,0.88);
+    border-radius: 999px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 6px;
+    box-shadow: 0 16px 50px rgba(0,0,0,0.08);
+    backdrop-filter: blur(18px);
+    z-index: 1000;
+    border: 1px solid rgba(255,255,255,0.8);
+}
+.tab-btn {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    color: #61708e;
+    font-weight: 700;
+    font-size: 0.82rem;
+    transition: 220ms ease;
+    cursor: pointer;
+    transition: all 180ms ease;
+}
+.tab-btn:hover {
+    background: rgba(0, 51, 102, 0.08);
+}
+.tab-btn.active {
+    color: white;
+    background: linear-gradient(135deg, #003366, #0f5db5);
+    box-shadow: 0 16px 28px rgba(0, 51, 102, 0.18);
+    transform: scale(1.02);
+}
 
     /* --- コンテンツ共通 --- */
     .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
