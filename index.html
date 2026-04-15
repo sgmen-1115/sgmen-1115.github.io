@@ -103,40 +103,66 @@
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
 
     /* ホーム画面用 */
-   .hero-container {
-    position: relative;
-    width: 100%;
-    height: 50vh;
-    background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.18)),
-                url('/images/anime-cityscape.png') center/cover no-repeat;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0 0 40px 40px;
-    overflow: hidden;
+  .hero-container {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  background: linear-gradient(180deg, #4d6ec6 0%, #1d2f6f 55%, #090b1e 100%);
+  overflow: hidden;
 }
+.hero-container::before,
 .hero-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 80% 20%, rgba(255,245,205,0.18), transparent 18%);
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50% 50% 0 0;
+  opacity: 0.25;
+}
+
+.hero-container::before {
+  bottom: 0;
+  width: 220%;
+  height: 42%;
+  background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.14), transparent 55%);
+  filter: blur(18px);
+}
+
+.hero-container::after {
+  bottom: -6%;
+  width: 120%;
+  height: 28%;
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 80%);
+}
+    .hero-container .hero-glow {
+  position: absolute;
+  width: 14%;
+  height: 120%;
+  top: -10%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 45%);
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+.hero-container .hero-line {
+  position: absolute;
+  bottom: 8%;
+  left: 16%;
+  width: 220px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.32), transparent);
+  transform: rotate(-6deg);
 }
 .hero-content {
-    text-align: center;
-    background: rgba(5, 18, 50, 0.7);
-    padding: 28px 22px;
-    border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.18);
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(16px);
-}
-.hero-content h2 {
-    font-size: 1.5rem;
-    color: #fff;
-    letter-spacing: 0.05em;
-    line-height: 1.3;
-    text-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  background: rgba(8, 16, 54, 0.72);
+  padding: 28px 26px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.22);
 }
     .video-container { position: relative; padding-bottom: 56.25%; margin: 20px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
     .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -199,9 +225,11 @@
 
 <div id="home" class="tab-content active" style="padding:0; max-width:100%;">
     <div class="hero-container">
+        <div class="hero-glow"></div>
+        <div class="hero-line"></div>
         <div class="hero-content">
-            <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">TOKYO MEN'S DIVISION</div>
-            <h2 style="font-size: 1.3rem; margin:0;">自分が変われば、街が変わる。<br>新しい東京の未来を。</h2>
+            <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">MEN'S DIVISION</div>
+            <h2 style="font-size: 1.3rem; margin:0;">自分が変われば、街が変わる。<br>新しい未来を。</h2>
         </div>
     </div>
     <div style="padding: 20px; max-width:800px; margin: 0 auto;">
@@ -262,7 +290,7 @@
         <button class="oumi-btn" onclick="saveMyGoal()" style="padding: 10px;">目標を保存する</button>
     </div>
 
-    <div class="sub-title">唱題チャレンジ</div>
+    <div class="sub-title">唱題カウンター</div>
     <div class="card" style="text-align: center;">
         <p id="user-display-name" style="font-size:0.8rem; color:var(--primary-color); font-weight:bold;"></p>
         <div style="display: flex; justify-content: space-around; margin-bottom: 20px; background: #f0f7ff; padding: 15px; border-radius: 12px;">
@@ -329,7 +357,7 @@
         location.reload();
     };
 
-    // --- 唱題チャレンジ ---
+    // --- 唱題カウンター ---
     if (userRef) {
         document.getElementById('user-display-name').innerText = `利用者: ${currentUsername}`;
         onValue(userRef, (snapshot) => {
