@@ -134,11 +134,17 @@
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
 
     /* ホーム画面用 */
- .hero-container {
-    position: relative;
-    width: 100%;
-    min-height: 50vh;
-    overflow: hidden;
+.hero-container {
+  position: relative;
+  width: 100%;
+  min-height: 50vh;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.18), transparent 18%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.10), transparent 16%),
+    linear-gradient(180deg, #4d6ec6 0%, #1d2f6f 44%, #090b1e 100%),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 24px 100%;
+  overflow: hidden;
 }
 
 .hero-container::before,
@@ -151,21 +157,28 @@
 }
 
 .hero-container::before {
-    width: 240px;
-    height: 240px;
-    top: 10%;
-    left: 8%;
-    background: rgba(255,255,255,0.12);
-    filter: blur(36px);
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 14%),
+    radial-gradient(circle at 88% 18%, rgba(255,255,255,0.06), transparent 12%);
+  pointer-events: none;
 }
 
 .hero-container::after {
-    width: 180px;
-    height: 180px;
-    top: 25%;
-    right: 6%;
-    background: rgba(255,255,255,0.08);
-    filter: blur(30px);
+  content: "";
+  position: absolute;
+  width: 1px;
+  height: 80%;
+  top: 10%;
+  left: 60%;
+  background: rgba(255,255,255,0.08);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04),
+    40px 0 0 1px rgba(255,255,255,0.04),
+    80px 0 0 1px rgba(255,255,255,0.04);
+  pointer-events: none;
 }
 
 .hero-container .hero-glow,
@@ -219,6 +232,38 @@
     padding: 24px 20px;
     border: none;
     box-shadow: none;
+}
+
+    .hero-star-line {
+  position: absolute;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.65), rgba(255,255,255,0));
+  filter: blur(1px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.hero-star-line--one {
+  top: 20%;
+  left: 15%;
+  width: 190px;
+  transform: rotate(-10deg);
+}
+
+.hero-star-line--two {
+  top: 32%;
+  right: 10%;
+  width: 120px;
+  transform: rotate(-6deg);
+  opacity: 0.65;
+}
+
+.hero-star-line--three {
+  top: 45%;
+  left: 30%;
+  width: 240px;
+  transform: rotate(-3deg);
+  opacity: 0.45;
 }
 
 .hero-title {
@@ -304,16 +349,20 @@
 </div>
 
 <div class="page-visual">
-  <div id="home" class="tab-content active" style="padding:0; max-width:100%;">
+  <div id="home" class="tab-content active" style="padding: 0; max-width: 100%;">
     <div class="hero-container">
       <div class="hero-glow"></div>
       <div class="hero-line"></div>
       <div class="city-silhouette"></div>
       <div class="hero-content">
-        <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">MEN'S DIVISION</div>
+        <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">
+          MEN'S DIVISION
+        </div>
         <h2 class="hero-title">自分が変われば、街が変わる。<br>新しい未来を。</h2>
       </div>
     </div>
+  </div>
+</div>
 
     <div style="padding: 20px; max-width:800px; margin: 0 auto;">
       <div class="card" style="margin-top: -40px; text-align: center;">
@@ -327,6 +376,7 @@
       </div>
     </div>
   </div>
+    
 <div id="schedule" class="tab-content">
     <div class="sub-title">活動スケジュール</div>
     <div class="card">
