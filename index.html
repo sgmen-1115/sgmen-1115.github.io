@@ -18,18 +18,23 @@
   --accent-color: #f39c12;
   --bg-color: #f8f9fa;
   --white: #ffffff;
-  --header-h: 56px;
-  --tab-h: 56px;
-  --ui-bg: #e8edf7;
-  --text-blue: #17325f;
+ --header-h: 56px;
+ --tab-h: 64px;
+--main-bg:
+radial-gradient(circle at 14% 12%, rgba(255,255,255,0.26), rgba(255,255,255,0) 28%),
+radial-gradient(circle at 82% 10%, rgba(255,255,255,0.16), rgba(255,255,255,0) 24%),
+linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
+--ui-glass: rgba(236, 241, 252, 0.92);
+--text-blue: #17325f;
 }
 
  body {
   margin: 0;
   padding-top: var(--header-h);
-  background: #eaf3ff;
   color: var(--text-blue);
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+background: var(--main-bg);
+ background-attachment: fixed;
 }
 
    .page-visual {
@@ -37,10 +42,7 @@
   min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
   margin: 0;
   padding: 0;
-  background:
-    radial-gradient(circle at 16% 18%, rgba(255,255,255,0.22), transparent 20%),
-    radial-gradient(circle at 78% 14%, rgba(255,255,255,0.14), transparent 18%),
-    linear-gradient(180deg, #7ea1ec 0%, #5278cf 48%, #2f4f9f 100%);
+  background: transparent;
   overflow: hidden;
 }
 .page-visual::before {
@@ -56,14 +58,7 @@
 }
 
 .page-visual::after {
-    content: "";
-    position: absolute;
-    left: 0;
-  right: 0;
-  bottom: 0;
-  height: 120px;
-  background: linear-gradient(to bottom, rgba(234,243,255,0) 0%, rgba(234,243,255,1) 100%);
-  pointer-events: none;
+content: none;
 }
 
     /* --- 固定ヘッダー --- */
@@ -79,7 +74,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background: var(--ui-bg);
+  background: var(--ui-glass);
   border-bottom: none;
   box-shadow: none;
 }
@@ -105,33 +100,37 @@
   z-index: 2500;
   height: var(--tab-h);
   box-sizing: border-box;
-  margin: 0;              /* 空間の主因 */
-  padding: 8px 14px;
+  margin: 0 auto;
+  padding: 10px 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  background: var(--ui-bg); /* ヘッダーと同色にして境界感を消す */
+  gap: 14px;
+  background: var(--ui-glass);
   border: none;
   box-shadow: none;
-  border-radius: 0 0 26px 26px;
+  border-radius: 0 0 24px 24px;
+  width: min(1440px, calc(100% - 24px));
 }
 /* tab-link/tab-btn どちらでも同じ見た目になるように統一 */
 .tab-menu .tab-link,
 .tab-menu .tab-btn {
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid rgba(73, 103, 187, 0.24);
-  background: linear-gradient(180deg, #ffffff 0%, #eef3ff 100%);
-  color: #2d3e74;
+  border: 1px solid rgba(73,103,187,0.25);
+  background: linear-gradient(180deg, #ffffff 0%, #edf2ff 100%);
+  color: #2a4178;
   padding: 9px 16px;
   border-radius: 14px;
-  font-size: 0.95rem;
-  font-weight: 600;
+  font-size: clamp(16px, 1.05vw, 19px);
+  font-weight: 700;
   letter-spacing: 0.02em;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(56, 84, 163, 0.10);
+  box-shadow: 0 2px 10px rgba(45,73,150,0.12);
+  min-width: 0;
+  min-height: 44px;
+  flex: 1 1 0;
 }
 
 /* ホバー */
@@ -145,39 +144,41 @@
 /* アクティブ */
 .tab-menu .tab-link.active,
 .tab-menu .tab-btn.active {
-  color: #ffffff;
-  background: linear-gradient(180deg, #6f8fe7 0%, #4f6fc6 100%);
-  border-color: rgba(67, 94, 177, 0.75);
-  box-shadow: 0 8px 18px rgba(47, 75, 155, 0.28);
+  color: #fff;
+background: linear-gradient(180deg, #6f8fe7 0%, #4d6ec4 100%);
+border-color: rgba(56, 82, 165, 0.75);
+box-shadow: 0 8px 18px rgba(47, 75, 155, 0.28);
 }
 
 /* スマホ */
 @media (max-width: 768px) {
-  .tab-menu {
-    gap: 8px;
-    padding: 10px;
-    overflow-x: auto;
-    justify-content: flex-start;
-    border-radius: 0 0 20px 20px;
-  }
+.tab-menu {
+width: 100%;
+border-radius: 0;
+padding: 8px 10px;
+gap: 8px;
+overflow-x: auto;
+}
 
-  .tab-menu .tab-link,
-  .tab-menu .tab-btn {
-    white-space: nowrap;
-    font-size: 0.86rem;
-    padding: 8px 12px;
-    border-radius: 12px;
-  }
+.tab-menu .tab-link,
+.tab-menu .tab-btn {
+flex: 0 0 auto;
+min-width: 108px;
+min-height: 40px;
+font-size: 14px;
+white-space: nowrap;
+padding: 8px 12px;
+border-radius: 12px;
 }
 
     /* --- コンテンツ共通 --- */
  .tab-content {
   display: none;
   position: relative;
-  padding: 0;
+  padding: 20px 16px 40px;
   color: var(--text-blue);
   background: transparent;
-  min-height: 0;
+  min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
 }
 
 .tab-content.active {
@@ -185,18 +186,36 @@
 }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-    .card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 20px; }
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
+
+ .tab-content:not(#home)::before {
+content: "";
+position: absolute;
+inset: 0;
+background:
+radial-gradient(circle at 18% 14%, rgba(255,255,255,0.18), rgba(255,255,255,0) 30%),
+radial-gradient(circle at 84% 12%, rgba(255,255,255,0.10), rgba(255,255,255,0) 26%),
+repeating-linear-gradient(
+90deg,
+rgba(255,255,255,0.06) 0,
+rgba(255,255,255,0.06) 1px,
+transparent 1px,
+transparent 26px
+);
+opacity: 0.55;
+pointer-events: none;
+}
+
+.tab-content:not(#home) > * {
+position: relative;
+z-index: 1;
+}
     
     /* ホーム画面用 */
 .hero-container {
   position: relative;
-  min-height: 46vh;
-  background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.12), transparent 22%),
-    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.08), transparent 20%),
-    linear-gradient(180deg, #6f8ee0 0%, #3552a3 50%, #1b2b63 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%;
+  min-height: 52vh;
+  background: transparent;
   border: none;
   box-shadow: none;
   overflow: hidden;
@@ -219,7 +238,7 @@
   top: 10%;
   left: 60%;
   background: rgba(255,255,255,0.08);
-　 box-shadow: none;
+　box-shadow: none;
   pointer-events: none;
   display: none;
     border: none;
@@ -259,7 +278,7 @@
             rgba(255,255,255,0.08) 18px,
             rgba(255,255,255,0.08) 20px
         );
-   opacity: 0.22;
+   opacity: 0.14;
 }
 
 .hero-content {
@@ -415,7 +434,7 @@
         <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">
           MEN'S DIVISION
         </div>
-        <h2 class="hero-title">自分が変われば、街が変わる。<br>新しい未来を。</h2>
+        <h2 class="hero-title">僕が見ている景色は、<br>僕の心で変えられる。</h2>
       </div>
     </div>
 
