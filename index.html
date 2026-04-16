@@ -709,7 +709,41 @@ body {
   background: rgba(255, 255, 255, 0.10) !important;
   border: 1px solid rgba(255, 255, 255, 0.22) !important;
 }
-    
+
+.hero-container {
+  position: relative;
+  min-height: 64vh;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 0 20px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.hero-illustration {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: min(1500px, 100%);
+  height: 280px;
+  z-index: 6;
+  pointer-events: none;
+}
+
+.hero-illustration svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 12px 24px rgba(9, 26, 71, 0.28));
+}
 </style>
 </head>
 <body>
@@ -774,75 +808,83 @@ body {
   </div>
 
   <div class="hero-illustration" aria-hidden="true">
-    <svg viewBox="0 0 1600 380" preserveAspectRatio="xMidYMax meet">
-      <defs>
-        <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#4f78cc" stop-opacity="0.55" />
-          <stop offset="100%" stop-color="#223f86" stop-opacity="0.85" />
-        </linearGradient>
-        <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#b8d6ff" stop-opacity="0.9" />
-          <stop offset="100%" stop-color="#5c87d8" stop-opacity="0.9" />
-        </linearGradient>
-        <pattern id="win" width="20" height="18" patternUnits="userSpaceOnUse">
-          <rect x="4" y="4" width="4" height="3" fill="#dff0ff" opacity="0.45" />
-          <rect x="12" y="4" width="4" height="3" fill="#dff0ff" opacity="0.35" />
-        </pattern>
-      </defs>
+   <svg viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax meet">
+  <defs>
+    <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5377c8" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#203f87" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="buildingFar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8fb0ea" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#4767ad" stop-opacity="0.55"/>
+    </linearGradient>
+    <linearGradient id="buildingMid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6f94dd" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#2f529f" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+ <!-- 消失点基準線 -->
+  <line x1="0" y1="138" x2="1600" y2="138" stroke="#bdd5ff" stroke-opacity="0.2"/>
 
-      <line x1="0" y1="110" x2="1600" y2="110" stroke="#b8d4ff" stroke-opacity="0.25" />
+  <!-- 遠景 -->
+  <g fill="url(#buildingFar)">
+    <rect x="120" y="140" width="100" height="90"/>
+    <rect x="250" y="120" width="80" height="110"/>
+    <rect x="360" y="150" width="120" height="80"/>
+    <rect x="520" y="128" width="90" height="102"/>
+    <rect x="650" y="146" width="120" height="84"/>
+    <rect x="830" y="126" width="95" height="104"/>
+    <rect x="960" y="148" width="130" height="82"/>
+    <rect x="1140" y="122" width="86" height="108"/>
+    <rect x="1260" y="142" width="116" height="88"/>
+  </g>
 
-      <g fill="url(#cityGrad)" opacity="0.55">
-        <rect x="40" y="150" width="120" height="160" />
-        <rect x="150" y="120" width="80" height="190" />
-        <rect x="220" y="170" width="90" height="140" />
-        <rect x="300" y="130" width="120" height="180" />
-        <rect x="410" y="160" width="95" height="150" />
-        <rect x="500" y="115" width="130" height="195" />
-        <rect x="620" y="170" width="100" height="140" />
-        <rect x="710" y="135" width="110" height="175" />
-        <rect x="810" y="155" width="130" height="155" />
-        <rect x="930" y="125" width="105" height="185" />
-        <rect x="1020" y="165" width="115" height="145" />
-        <rect x="1120" y="130" width="120" height="180" />
-        <rect x="1230" y="170" width="90" height="140" />
-        <rect x="1310" y="140" width="120" height="170" />
-        <rect x="1420" y="160" width="130" height="150" />
-      </g>
+  <!-- 中景 -->
+  <g fill="url(#buildingMid)">
+    <rect x="90" y="188" width="130" height="100"/>
+    <rect x="280" y="176" width="110" height="112"/>
+    <rect x="430" y="192" width="130" height="96"/>
+    <rect x="610" y="170" width="120" height="118"/>
+    <rect x="780" y="184" width="140" height="104"/>
+    <rect x="970" y="174" width="120" height="114"/>
+    <rect x="1140" y="188" width="130" height="100"/>
+    <rect x="1320" y="178" width="120" height="110"/>
+  </g>
 
-      <g opacity="0.85">
-        <rect x="0" y="220" width="1600" height="160" fill="#1f3d82" />
-        <rect x="80" y="190" width="130" height="190" fill="#2b4d9a" />
-        <rect x="260" y="210" width="100" height="170" fill="#345caa" />
-        <rect x="430" y="175" width="140" height="205" fill="#2d529f" />
-        <rect x="620" y="205" width="110" height="175" fill="#3b66b7" />
-        <rect x="790" y="180" width="150" height="200" fill="#3159a8" />
-        <rect x="1010" y="200" width="125" height="180" fill="#3b67b8" />
-        <rect x="1190" y="170" width="145" height="210" fill="#2d529f" />
-        <rect x="1400" y="210" width="120" height="170" fill="#3b66b7" />
-        <rect x="80" y="190" width="130" height="190" fill="url(#win)" />
-        <rect x="430" y="175" width="140" height="205" fill="url(#win)" />
-        <rect x="790" y="180" width="150" height="200" fill="url(#win)" />
-        <rect x="1190" y="170" width="145" height="210" fill="url(#win)" />
-      </g>
+  <!-- 道路（奥へ続く） -->
+  <polygon points="710,180 890,180 1280,420 320,420" fill="url(#roadGrad)"/>
 
-      <g transform="translate(1180,65)">
-        <polygon points="0,250 38,40 76,250" fill="url(#towerGrad)" opacity="0.9" />
-        <rect x="33" y="15" width="10" height="30" fill="#d7e9ff" opacity="0.9" />
-        <line x1="38" y1="70" x2="8" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
-        <line x1="38" y1="70" x2="68" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
-        <rect x="20" y="118" width="36" height="8" fill="#d7e9ff" opacity="0.6" />
-      </g>
+  <!-- 歩道 -->
+  <polygon points="640,190 710,180 320,420 220,420" fill="#5f83cf" fill-opacity="0.42"/>
+  <polygon points="890,180 960,190 1380,420 1280,420" fill="#5f83cf" fill-opacity="0.42"/>
 
-      <g opacity="0.9">
-        <rect x="210" y="315" width="7" height="28" fill="#2d4a33" />
-        <circle cx="213" cy="304" r="16" fill="#7fb28f" />
-        <rect x="980" y="320" width="7" height="24" fill="#2d4a33" />
-        <circle cx="983" cy="309" r="14" fill="#7fb28f" />
-        <rect x="1360" y="318" width="7" height="26" fill="#2d4a33" />
-        <circle cx="1363" cy="306" r="15" fill="#7fb28f" />
-      </g>
-    </svg>
+  <!-- センターライン -->
+  <g stroke="#e5efff" stroke-opacity="0.7" stroke-linecap="round">
+    <line x1="800" y1="205" x2="800" y2="225" stroke-width="2"/>
+    <line x1="792" y1="245" x2="808" y2="275" stroke-width="3"/>
+    <line x1="775" y1="295" x2="825" y2="355" stroke-width="4"/>
+  </g>
+
+  <!-- 街路樹 -->
+  <g>
+    <rect x="575" y="230" width="6" height="28" fill="#2b4a39"/>
+    <circle cx="578" cy="224" r="14" fill="#78ad8e"/>
+    <rect x="1020" y="230" width="6" height="28" fill="#2b4a39"/>
+    <circle cx="1023" cy="224" r="14" fill="#78ad8e"/>
+    <rect x="500" y="265" width="7" height="34" fill="#2b4a39"/>
+    <circle cx="503" cy="258" r="16" fill="#7eb595"/>
+    <rect x="1095" y="265" width="7" height="34" fill="#2b4a39"/>
+    <circle cx="1098" cy="258" r="16" fill="#7eb595"/>
+  </g>
+
+  <!-- 街灯 -->
+  <g stroke="#d9e8ff" stroke-opacity="0.6" fill="#d9e8ff" fill-opacity="0.7">
+    <line x1="540" y1="210" x2="540" y2="248" stroke-width="2"/>
+    <circle cx="540" cy="208" r="3"/>
+    <line x1="1060" y1="210" x2="1060" y2="248" stroke-width="2"/>
+    <circle cx="1060" cy="208" r="3"/>
+  </g>
+</svg>
   </div>
 </div>
     
