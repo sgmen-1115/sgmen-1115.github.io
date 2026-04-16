@@ -231,7 +231,7 @@ body {
 /* ホーム画面用 */
 .hero-container {
   position: relative;
-  min-height: 60vh;
+  min-height: 58vh;
   overflow: hidden;
 }
     
@@ -303,6 +303,7 @@ body {
   z-index: 20;
   padding: 0 20px;
   max-width: 980px;
+  margin: 0 auto;
 }
     
 .hero-star-line {
@@ -384,9 +385,9 @@ body {
 
 /* ホーム上のカードだけ暗背景に合わせる */
 #home .card {
+  margin-top: -12px !important;
   position: relative;
   z-index: 8;
-  margin-top: -8px !important;
 }
 #home .card p,
 #home .card strong,
@@ -527,9 +528,9 @@ body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 26px;      /* top指定をやめて下基準に */
+  bottom: 18px;
   width: min(1040px, 92%);
-  height: 118px;     /* 高さを小さく */
+  height: 118px;
   z-index: 6;
   pointer-events: none;
 }
@@ -605,6 +606,15 @@ body {
   transform: rotate(-8deg);
   filter: blur(2px);
 }
+
+.city-silhouette,
+.hero-horizon,
+.hero-city-back,
+.hero-city-front,
+.hero-light-trail {
+  display: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -655,86 +665,90 @@ body {
   <div id="home" class="tab-content active">
     <div class="page-visual">
     <div class="hero-container">
-      <div class="hero-glow"></div>
-      <div class="hero-line"></div>
-      <div class="city-silhouette"></div>
-      <div class="hero-content">
-        <div class="hero-illustration" aria-hidden="true">
- <svg viewBox="0 0 1600 380" preserveAspectRatio="xMidYMax meet">
-    <defs>
-      <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#4f78cc" stop-opacity="0.55" />
-        <stop offset="100%" stop-color="#223f86" stop-opacity="0.85" />
-      </linearGradient>
-      <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#b8d6ff" stop-opacity="0.9" />
-        <stop offset="100%" stop-color="#5c87d8" stop-opacity="0.9" />
-      </linearGradient>
-      <pattern id="win" width="20" height="18" patternUnits="userSpaceOnUse">
-        <rect x="4" y="4" width="4" height="3" fill="#dff0ff" opacity="0.45" />
-        <rect x="12" y="4" width="4" height="3" fill="#dff0ff" opacity="0.35" />
-      </pattern>
-    </defs>
+  <div class="hero-glow"></div>
+  <div class="hero-line"></div>
 
-    <!-- 地平線 -->
-    <line x1="0" y1="110" x2="1600" y2="110" stroke="#b8d4ff" stroke-opacity="0.25" />
+  <div class="hero-content">
+    <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--hero-calm); margin-bottom: 8px; font-weight: bold;">
+      MEN'S DIVISION
+    </div>
+    <h2 class="hero-title">
+      僕が見ている景色は、<br>
+      <span style="color:#ffffff;">僕の心で変えられる。</span>
+    </h2>
+  </div>
 
-    <!-- 遠景 -->
-    <g fill="url(#cityGrad)" opacity="0.55">
-      <rect x="40" y="150" width="120" height="160" />
-      <rect x="150" y="120" width="80" height="190" />
-      <rect x="220" y="170" width="90" height="140" />
-      <rect x="300" y="130" width="120" height="180" />
-      <rect x="410" y="160" width="95" height="150" />
-      <rect x="500" y="115" width="130" height="195" />
-      <rect x="620" y="170" width="100" height="140" />
-      <rect x="710" y="135" width="110" height="175" />
-      <rect x="810" y="155" width="130" height="155" />
-      <rect x="930" y="125" width="105" height="185" />
-      <rect x="1020" y="165" width="115" height="145" />
-      <rect x="1120" y="130" width="120" height="180" />
-      <rect x="1230" y="170" width="90" height="140" />
-      <rect x="1310" y="140" width="120" height="170" />
-      <rect x="1420" y="160" width="130" height="150" />
-    </g>
+  <div class="hero-illustration" aria-hidden="true">
+    <svg viewBox="0 0 1600 380" preserveAspectRatio="xMidYMax meet">
+      <defs>
+        <linearGradient id="cityGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4f78cc" stop-opacity="0.55" />
+          <stop offset="100%" stop-color="#223f86" stop-opacity="0.85" />
+        </linearGradient>
+        <linearGradient id="towerGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b8d6ff" stop-opacity="0.9" />
+          <stop offset="100%" stop-color="#5c87d8" stop-opacity="0.9" />
+        </linearGradient>
+        <pattern id="win" width="20" height="18" patternUnits="userSpaceOnUse">
+          <rect x="4" y="4" width="4" height="3" fill="#dff0ff" opacity="0.45" />
+          <rect x="12" y="4" width="4" height="3" fill="#dff0ff" opacity="0.35" />
+        </pattern>
+      </defs>
 
-    <!-- 前景の建物（窓パターン） -->
-    <g opacity="0.85">
-      <rect x="0" y="220" width="1600" height="160" fill="#1f3d82" />
-      <rect x="80" y="190" width="130" height="190" fill="#2b4d9a" />
-      <rect x="260" y="210" width="100" height="170" fill="#345caa" />
-      <rect x="430" y="175" width="140" height="205" fill="#2d529f" />
-      <rect x="620" y="205" width="110" height="175" fill="#3b66b7" />
-      <rect x="790" y="180" width="150" height="200" fill="#3159a8" />
-      <rect x="1010" y="200" width="125" height="180" fill="#3b67b8" />
-      <rect x="1190" y="170" width="145" height="210" fill="#2d529f" />
-      <rect x="1400" y="210" width="120" height="170" fill="#3b66b7" />
-      <rect x="80" y="190" width="130" height="190" fill="url(#win)" />
-      <rect x="430" y="175" width="140" height="205" fill="url(#win)" />
-      <rect x="790" y="180" width="150" height="200" fill="url(#win)" />
-      <rect x="1190" y="170" width="145" height="210" fill="url(#win)" />
-    </g>
+      <line x1="0" y1="110" x2="1600" y2="110" stroke="#b8d4ff" stroke-opacity="0.25" />
 
-    <!-- 東京タワー風 -->
-    <g transform="translate(1180,65)">
-      <polygon points="0,250 38,40 76,250" fill="url(#towerGrad)" opacity="0.9" />
-      <rect x="33" y="15" width="10" height="30" fill="#d7e9ff" opacity="0.9" />
-      <line x1="38" y1="70" x2="8" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
-      <line x1="38" y1="70" x2="68" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
-      <rect x="20" y="118" width="36" height="8" fill="#d7e9ff" opacity="0.6" />
-    </g>
+      <g fill="url(#cityGrad)" opacity="0.55">
+        <rect x="40" y="150" width="120" height="160" />
+        <rect x="150" y="120" width="80" height="190" />
+        <rect x="220" y="170" width="90" height="140" />
+        <rect x="300" y="130" width="120" height="180" />
+        <rect x="410" y="160" width="95" height="150" />
+        <rect x="500" y="115" width="130" height="195" />
+        <rect x="620" y="170" width="100" height="140" />
+        <rect x="710" y="135" width="110" height="175" />
+        <rect x="810" y="155" width="130" height="155" />
+        <rect x="930" y="125" width="105" height="185" />
+        <rect x="1020" y="165" width="115" height="145" />
+        <rect x="1120" y="130" width="120" height="180" />
+        <rect x="1230" y="170" width="90" height="140" />
+        <rect x="1310" y="140" width="120" height="170" />
+        <rect x="1420" y="160" width="130" height="150" />
+      </g>
 
-    <!-- 木 -->
-    <g opacity="0.9">
-      <rect x="210" y="315" width="7" height="28" fill="#2d4a33" />
-      <circle cx="213" cy="304" r="16" fill="#7fb28f" />
-      <rect x="980" y="320" width="7" height="24" fill="#2d4a33" />
-      <circle cx="983" cy="309" r="14" fill="#7fb28f" />
-      <rect x="1360" y="318" width="7" height="26" fill="#2d4a33" />
-      <circle cx="1363" cy="306" r="15" fill="#7fb28f" />
-    </g>
-  </svg>
-</div>
+      <g opacity="0.85">
+        <rect x="0" y="220" width="1600" height="160" fill="#1f3d82" />
+        <rect x="80" y="190" width="130" height="190" fill="#2b4d9a" />
+        <rect x="260" y="210" width="100" height="170" fill="#345caa" />
+        <rect x="430" y="175" width="140" height="205" fill="#2d529f" />
+        <rect x="620" y="205" width="110" height="175" fill="#3b66b7" />
+        <rect x="790" y="180" width="150" height="200" fill="#3159a8" />
+        <rect x="1010" y="200" width="125" height="180" fill="#3b67b8" />
+        <rect x="1190" y="170" width="145" height="210" fill="#2d529f" />
+        <rect x="1400" y="210" width="120" height="170" fill="#3b66b7" />
+        <rect x="80" y="190" width="130" height="190" fill="url(#win)" />
+        <rect x="430" y="175" width="140" height="205" fill="url(#win)" />
+        <rect x="790" y="180" width="150" height="200" fill="url(#win)" />
+        <rect x="1190" y="170" width="145" height="210" fill="url(#win)" />
+      </g>
+
+      <g transform="translate(1180,65)">
+        <polygon points="0,250 38,40 76,250" fill="url(#towerGrad)" opacity="0.9" />
+        <rect x="33" y="15" width="10" height="30" fill="#d7e9ff" opacity="0.9" />
+        <line x1="38" y1="70" x2="8" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
+        <line x1="38" y1="70" x2="68" y2="250" stroke="#d7e9ff" stroke-opacity="0.4" />
+        <rect x="20" y="118" width="36" height="8" fill="#d7e9ff" opacity="0.6" />
+      </g>
+
+      <g opacity="0.9">
+        <rect x="210" y="315" width="7" height="28" fill="#2d4a33" />
+        <circle cx="213" cy="304" r="16" fill="#7fb28f" />
+        <rect x="980" y="320" width="7" height="24" fill="#2d4a33" />
+        <circle cx="983" cy="309" r="14" fill="#7fb28f" />
+        <rect x="1360" y="318" width="7" height="26" fill="#2d4a33" />
+        <circle cx="1363" cy="306" r="15" fill="#7fb28f" />
+      </g>
+    </svg>
+  </div>
 </div>
         <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">
           MEN'S DIVISION
