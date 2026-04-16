@@ -478,52 +478,8 @@ body {
 .area-content {
   display: none;
 }
-
 .notice-board {
   margin-top: 12px;
-}
-
-.notice-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
-.notice-unlock-btn {
-  border: 1px solid rgba(255,255,255,0.28);
-  background: rgba(255,255,255,0.14);
-  color: #fff;
-  border-radius: 10px;
-  padding: 8px 10px;
-  font-size: 0.8rem;
-  cursor: pointer;
-}
-
-.notice-form {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.notice-form input {
-  flex: 1;
-  min-width: 0;
-  border: 1px solid rgba(255,255,255,0.25);
-  background: rgba(255,255,255,0.14);
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 12px;
-}
-
-.notice-form input::placeholder {
-  color: rgba(255,255,255,0.65);
-}
-
-.notice-post-btn {
-  width: auto;
-  min-width: 80px;
-  padding: 10px 14px;
 }
 
 .notice-list {
@@ -628,11 +584,12 @@ body {
         <div id="timer" style="font-size: 1.8rem; font-weight: bold; color: var(--white);">計算中...</div>
       </div>
 
-    <div class="card notice-board">
-  <div class="notice-head">
-    <div class="sub-title" style="margin:0;">お知らせ</div>
-    <button id="notice-unlock-btn" type="button" class="notice-unlock-btn">投稿モード</button>
+ <div class="card notice-board">
+  <div class="sub-title" style="margin:0 0 10px 0;">お知らせ</div>
+  <div id="notice-list" class="notice-list">
+    <p class="notice-empty">現在お知らせはありません。</p>
   </div>
+</div>
 
   <form id="notice-form" class="notice-form" style="display:none;">
     <input id="notice-input" type="text" maxlength="120" placeholder="お知らせを入力（120文字まで）">
@@ -851,14 +808,8 @@ body {
         });
     }
 
-    // ===== お知らせ機能（管理者ログイン不要版） =====
-const NOTICE_PASSCODE = "ここをあなた専用の投稿キーに変更"; // 例: "sgmen2026!"
-let noticePostEnabled = false;
-
+    // ===== お知らせ機能 =====
 const noticeRef = ref(db, "noticeBoard");
-const noticeUnlockBtn = document.getElementById("notice-unlock-btn");
-const noticeForm = document.getElementById("notice-form");
-const noticeInput = document.getElementById("notice-input");
 const noticeList = document.getElementById("notice-list");
 
 function formatNoticeTime(ts) {
@@ -871,44 +822,6 @@ function formatNoticeTime(ts) {
   return y + "/" + m + "/" + day + " " + h + ":" + min;
 }
 
-// 投稿モード解除/有効化
-if (noticeUnlockBtn && noticeForm) {
-  noticeUnlockBtn.addEventListener("click", () => {
-    const code = prompt("投稿キーを入力");
-    if (code === NOTICE_PASSCODE) {
-      noticePostEnabled = true;
-      noticeForm.style.display = "flex";
-      alert("投稿モードを有効化しました");
-    } else {
-      alert("投稿キーが違います");
-    }
-  });
-}
-
-// 投稿
-if (noticeForm && noticeInput) {
-  noticeForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    if (!noticePostEnabled) {
-      alert("投稿モードが無効です");
-      return;
-    }
-
-    const text = noticeInput.value.trim();
-    if (!text) return;
-
-    await push(noticeRef, {
-      text: text,
-      author: "運営",
-      createdAt: Date.now()
-    });
-
-    noticeInput.value = "";
-  });
-}
-
-// 表示（全員閲覧）
 if (noticeList) {
   const q = query(noticeRef, orderByChild("createdAt"), limitToLast(30));
   onValue(q, (snapshot) => {
@@ -918,10 +831,7 @@ if (noticeList) {
 
     noticeList.innerHTML = "";
     if (!items.length) {
-      const p = document.createElement("p");
-      p.className = "notice-empty";
-      p.textContent = "まだお知らせはありません。";
-      noticeList.appendChild(p);
+      noticeList.innerHTML = '<p class="notice-empty">現在お知らせはありません。</p>';
       return;
     }
 
@@ -931,7 +841,9 @@ if (noticeList) {
 
       const meta = document.createElement("div");
       meta.className = "notice-meta";
-      meta.innerHTML = "<span>" + (item.author || "運営") + "</span><span>" + formatNoticeTime(item.createdAt) + "</span>";
+      meta.innerHTML =
+        "<span>" + (item.author || "運営") + "</span>" +
+        "<span>" + formatNoticeTime(item.createdAt) + "</span>";
 
       const text = document.createElement("div");
       text.className = "notice-text";
