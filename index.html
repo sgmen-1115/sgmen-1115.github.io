@@ -12,34 +12,35 @@
     <meta name="apple-mobile-web-app-title" content="男子部アプリ">
     <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-    :root {
+    
+   :root {
   --primary-color: #003366;
   --accent-color: #f39c12;
   --bg-color: #f8f9fa;
-  --tab-bg-darker: #dce4ec;
   --white: #ffffff;
   --header-h: 56px;
-  --tab-height: 56px;
-  --ui-bg: #e9edf5; /* ヘッダーとタブの共通背景色 */
+  --tab-h: 56px;
+  --ui-bg: #e8edf7;
+  --text-blue: #17325f;
 }
 
-  body {
-  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+ body {
   margin: 0;
-  padding-top: calc(var(--header-h) + var(--tab-height));
-  background: #08102e;
-  color: #fff;
+  padding-top: var(--header-h);
+  background: #eaf3ff;
+  color: var(--text-blue);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
 }
 
    .page-visual {
   position: relative;
-  min-height: calc(100vh - var(--header-h)); /* ここを修正 */
-  margin-top: 0;
-  padding-top: 0;
+  min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
+  margin: 0;
+  padding: 0;
   background:
-    radial-gradient(circle at 16% 18%, rgba(255,255,255,0.14), transparent 18%),
-    radial-gradient(circle at 78% 14%, rgba(255,255,255,0.07), transparent 16%),
-    linear-gradient(180deg, #5e7ed3 0%, #2d468f 48%, #13224f 100%);
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,0.22), transparent 20%),
+    radial-gradient(circle at 78% 14%, rgba(255,255,255,0.14), transparent 18%),
+    linear-gradient(180deg, #7ea1ec 0%, #5278cf 48%, #2f4f9f 100%);
   overflow: hidden;
 }
 .page-visual::before {
@@ -57,33 +58,32 @@
 .page-visual::after {
     content: "";
     position: absolute;
-    bottom: 8%;
-    left: 10%;
-    width: 280px;
-    height: 280px;
-    background: rgba(255,255,255,0.08);
-    filter: blur(40px);
-    pointer-events: none;
+    left: 0;
+  right: 0;
+  bottom: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, rgba(234,243,255,0) 0%, rgba(234,243,255,1) 100%);
+  pointer-events: none;
 }
 
     /* --- 固定ヘッダー --- */
-  .fixed-header {
+.fixed-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: var(--header-h);
-  box-sizing: border-box; /* 追加: padding込みで56pxに収める */
-  z-index: 2000;
+  box-sizing: border-box;
+  z-index: 3000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px; /* 上下paddingを外す */
+  padding: 0 16px;
   background: var(--ui-bg);
   border-bottom: none;
   box-shadow: none;
-  backdrop-filter: blur(4px);
 }
+
 
 .fixed-header h1 {
   margin: 0;
@@ -100,19 +100,22 @@
 
 /* タブ全体の土台 */
 .tab-menu {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 2500;
+  height: var(--tab-h);
+  box-sizing: border-box;
+  margin: 0;              /* 空間の主因 */
+  padding: 8px 14px;
   display: flex;
-  gap: 12px;
-  justify-content: space-between;
   align-items: center;
-  padding: 10px 14px;
-  margin: 0px auto 0;
-  max-width: 1100px;
-  background: var(--ui-bg);
-  border-radius: 0 0 28px 28px;
-  box-shadow: 0 6px 20px rgba(16, 28, 80, 0.12);
-  backdrop-filter: blur(4px);
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--ui-bg); /* ヘッダーと同色にして境界感を消す */
+  border: none;
+  box-shadow: none;
+  border-radius: 0 0 26px 26px;
 }
-
 /* tab-link/tab-btn どちらでも同じ見た目になるように統一 */
 .tab-menu .tab-link,
 .tab-menu .tab-btn {
@@ -168,45 +171,36 @@
 }
 
     /* --- コンテンツ共通 --- */
-    .tab-content { display: none; padding: 20px; max-width: 800px; margin: 0 auto; animation: fadeIn 0.4s ease; }
-    .tab-content.active { display: block; }
+ .tab-content {
+  display: none;
+  position: relative;
+  padding: 0;
+  color: var(--text-blue);
+  background: transparent;
+  min-height: 0;
+}
+
+.tab-content.active {
+  display: block;
+}
     @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
     .card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); padding: 20px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 20px; }
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
-
-/* ホームだけヒーローを持つ */
-#home .page-visual {
-  min-height: calc(100vh - (var(--header-h) + var(--tab-height)));
-}
-#schedule .page-visual,
-#everyone .page-visual,
-#mine .page-visual,
-#study .page-visual {
-  min-height: 0;
-}
     
     /* ホーム画面用 */
- .hero-container {
+.hero-container {
+  position: relative;
   min-height: 46vh;
   background:
     radial-gradient(circle at 15% 20%, rgba(255,255,255,0.12), transparent 22%),
     radial-gradient(circle at 80% 15%, rgba(255,255,255,0.08), transparent 20%),
     linear-gradient(180deg, #6f8ee0 0%, #3552a3 50%, #1b2b63 100%);
   background-size: 100% 100%, 100% 100%, 100% 100%;
-  border-bottom: none;
+  border: none;
   box-shadow: none;
+  overflow: hidden;
 }
-
-.hero-container::before,
-.hero-container::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 1;
-}
-
 .hero-container::before {
   content: "";
   position: absolute;
@@ -225,20 +219,11 @@
   top: 10%;
   left: 60%;
   background: rgba(255,255,255,0.08);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.04),
-    40px 0 0 1px rgba(255,255,255,0.04),
-    80px 0 0 1px rgba(255,255,255,0.04);
+　 box-shadow: none;
   pointer-events: none;
   display: none;
+    border: none;
 }
-
-.hero-container .hero-glow,
-.hero-container .hero-line,
-.hero-container .city-silhouette {
-    z-index: 1;
-}
-
 .hero-container .hero-glow {
     position: absolute;
     width: 14%;
@@ -251,13 +236,13 @@
 }
 
 .hero-container .hero-line {
-    position: absolute;
-    bottom: 12%;
-    left: 8%;
-    width: 220px;
-    height: 3px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.40), transparent);
-    transform: rotate(-7deg);
+  position: absolute;
+  bottom: 12%;
+  left: 8%;
+  width: 220px;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.40), transparent);
+  transform: rotate(-7deg);
 }
 
 .hero-container .city-silhouette {
@@ -329,16 +314,35 @@
     margin: 0 auto;
 }
 
-    .card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    color: #fff;
+  /* 共通カード（全タブ） */
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 20px;
+  color: #17325f;
 }
+
 .card p,
 .card strong,
 .card div {
-    color: #fff;
+  color: inherit;
+}
+  
+/* ホーム上のカードだけ暗背景に合わせる */
+#home .card {
+  background: rgba(18, 40, 92, 0.30);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+#home .card p,
+#home .card strong,
+#home .card div {
+  color: #fff;
 }
     
     .video-container { position: relative; padding-bottom: 56.25%; margin: 20px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
@@ -401,7 +405,7 @@
 </div>
 
 
-  <div id="home" class="tab-content active" style="padding: 0; max-width: 100%;">
+  <div id="home" class="tab-content active">
     <div class="page-visual">
     <div class="hero-container">
       <div class="hero-glow"></div>
