@@ -5,44 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>男子部公式サイト</title>
 
-<meta name="description" content="日頃の活動をサポートするの公式ページです。">
+<meta name="description" content="日頃の活動をサポートする公式ページです。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="創価学会男子部公式サイト">
-<meta property="og:description" content="日頃の活動をサポートするの公式ページです。">
-<meta property="og:url" content="https://sgmen-1115.github.io/?v=20260416">
-<meta property="og:image" content="https://sgmen-1115.github.io/ogp.jpg?v=20260416">
+<meta property="og:description" content="日頃の活動をサポートする公式ページです。">
+<meta property="og:url" content="https://sgmen-1115.github.io/">
+<meta property="og:image" content="https://sgmen-1115.github.io/ogp.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="創価学会男子部公式サイト">
-<meta name="twitter:description" content="日頃の活動をサポートするの公式ページです。">
+<meta name="twitter:description" content="日頃の活動をサポートする公式ページです。">
 <meta name="twitter:image" content="https://sgmen-1115.github.io/ogp.jpg">
+    
 <link rel="manifest" href="/manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="男子部アプリ">
-    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" href="icon-192★.png">
 <style>
 :root {
   --primary-color: #003366;
   --accent-color: #f39c12;
-  --bg-color: #f8f9fa;
   --white: #ffffff;
   --header-h: 56px;
   --tab-h: 64px;
-  --main-bg:
-    radial-gradient(circle at 14% 12%, rgba(255,255,255,0.26), rgba(255,255,255,0) 28%),
-    radial-gradient(circle at 82% 10%, rgba(255,255,255,0.16), rgba(255,255,255,0) 24%),
-    linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
   --ui-glass: rgba(236, 241, 252, 0.92);
   --text-blue: #17325f;
-    --hero-deep: #193b8f;
-  --hero-mid: #3f6fd6;
-  --hero-light: #9dc3ff;
-  --hero-calm: #dbe9ff;
+
+  /* 背景画像のパス（ここだけ後で変更しやすいよう変数化） */
+  --hero-image: url("images/hero-bg.jpg");
 }
 
 body {
@@ -50,45 +44,11 @@ body {
   padding-top: var(--header-h);
   color: var(--text-blue);
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
-  background: var(--main-bg);
+  background: linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
   background-attachment: fixed;
 }
 
-.page-visual {
-  position: relative;
-  min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
-  margin: 0;
-  padding: 0;
-  background:
-    radial-gradient(1100px 420px at 10% 20%, rgba(255,255,255,0.24), rgba(255,255,255,0) 55%),
-    radial-gradient(900px 380px at 88% 14%, rgba(210,230,255,0.20), rgba(210,230,255,0) 52%),
-    linear-gradient(180deg, var(--hero-light) 0%, var(--hero-mid) 44%, var(--hero-deep) 100%);
-  overflow: hidden;
-}
-.page-visual::before {
-  content: "";
-  position: absolute;
-  inset: -20% -10%;
-  background:
-    conic-gradient(from 180deg at 50% 50%,
-      rgba(255,255,255,0.0),
-      rgba(255,255,255,0.18),
-      rgba(164,196,255,0.22),
-      rgba(255,255,255,0.0));
-    background-image:
-    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 24px 24px, 16px 16px;
-  opacity: 0.22;
-  filter: blur(28px);
-  animation: mindShift 14s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-.page-visual::after {
-  content: none;
-}
-
-/* --- 固定ヘッダー --- */
+/* 固定ヘッダー */
 .fixed-header {
   position: fixed;
   top: 0;
@@ -102,22 +62,19 @@ body {
   justify-content: space-between;
   padding: 0 16px;
   background: var(--ui-glass);
-  border-bottom: none;
-  box-shadow: none;
 }
 .fixed-header h1 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
   color: #2f3f75;
-  line-height: 1.2;
 }
 .settings-btn {
   color: #2f3f75;
   cursor: pointer;
 }
 
-/* タブ全体の土台 */
+/* タブ */
 .tab-menu {
   position: sticky;
   top: var(--header-h);
@@ -128,11 +85,8 @@ body {
   padding: 10px 12px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 14px;
   background: var(--ui-glass);
-  border: none;
-  box-shadow: none;
   border-radius: 0 0 24px 24px;
   width: min(1440px, calc(100% - 24px));
 }
@@ -140,17 +94,16 @@ body {
 .tab-menu .tab-btn {
   appearance: none;
   -webkit-appearance: none;
-  border: 1px solid rgba(73,103,187,0.25);
+  border: 1px solid rgba(73, 103, 187, 0.25);
   background: linear-gradient(180deg, #ffffff 0%, #edf2ff 100%);
   color: #2a4178;
   padding: 9px 16px;
   border-radius: 14px;
   font-size: clamp(16px, 1.05vw, 19px);
   font-weight: 700;
-  letter-spacing: 0.02em;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 2px 10px rgba(45,73,150,0.12);
+  box-shadow: 0 2px 10px rgba(45, 73, 150, 0.12);
   min-width: 0;
   min-height: 44px;
   flex: 1 1 0;
@@ -159,17 +112,14 @@ body {
 .tab-menu .tab-btn:hover {
   transform: translateY(-1px);
   background: linear-gradient(180deg, #ffffff 0%, #e7efff 100%);
-  box-shadow: 0 6px 14px rgba(56, 84, 163, 0.16);
 }
 .tab-menu .tab-link.active,
 .tab-menu .tab-btn.active {
   color: #fff;
   background: linear-gradient(180deg, #6f8fe7 0%, #4d6ec4 100%);
   border-color: rgba(56, 82, 165, 0.75);
-  box-shadow: 0 8px 18px rgba(47, 75, 155, 0.28);
 }
 
-/* スマホ */
 @media (max-width: 768px) {
   .tab-menu {
     width: 100%;
@@ -178,7 +128,6 @@ body {
     gap: 8px;
     overflow-x: auto;
   }
-
   .tab-menu .tab-link,
   .tab-menu .tab-btn {
     flex: 0 0 auto;
@@ -191,7 +140,7 @@ body {
   }
 }
 
-/* --- コンテンツ共通 --- */
+/* コンテンツ */
 .tab-content {
   display: none;
   position: relative;
@@ -203,23 +152,6 @@ body {
 .tab-content.active {
   display: block;
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.sub-title {
-  display: inline-block;
-  background-color: var(--primary-color);
-  color: var(--white);
-  padding: 6px 20px;
-  border-radius: 50px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  margin: 15px 0 10px 0;
-}
-
 .tab-content:not(#home)::before {
   content: "";
   position: absolute;
@@ -242,73 +174,32 @@ body {
   z-index: 1;
 }
 
-/* ホーム画面用 */
-.hero-container {
+/* ヒーロー背景（画像ベース） */
+.page-visual {
   position: relative;
-  min-height: 58vh;
+  min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
+  margin: 0;
+  padding: 0;
   overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(25,59,143,0.20) 0%, rgba(25,59,143,0.55) 100%),
+    var(--hero-image) center bottom / cover no-repeat;
 }
-    
-.hero-container::before {
+.page-visual::before {
   content: "";
   position: absolute;
   inset: 0;
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 14%),
-    radial-gradient(circle at 88% 18%, rgba(255,255,255,0.06), transparent 12%);
-  pointer-events: none;
-}
-.hero-container::after {
-  content: "";
-  position: absolute;
-  width: 1px;
-  height: 80%;
-  top: 10%;
-  left: 60%;
-  background: rgba(255,255,255,0.08);
-  box-shadow: none;
-  pointer-events: none;
-  display: none;
-  border: none;
-}
-.hero-container .hero-glow {
-  position: absolute;
-  width: 14%;
-  height: 120%;
-  top: -10%;
-  left: 10%;
-  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 45%);
-  filter: blur(22px);
-  pointer-events: none;
-}
-.hero-container .hero-line {
-  position: absolute;
-  bottom: 12%;
-  left: 8%;
-  width: 220px;
-  height: 3px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.40), transparent);
-  transform: rotate(-7deg);
-}
-.hero-container .city-silhouette {
-    display: none;
-  position: absolute;
-  bottom: -4%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 18%;
   background:
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 18px,
-      rgba(255,255,255,0.08) 18px,
-      rgba(255,255,255,0.08) 20px
-    );
-  opacity: 0.18;
+    radial-gradient(circle at 16% 20%, rgba(255,255,255,0.22), transparent 25%),
+    radial-gradient(circle at 84% 16%, rgba(210,230,255,0.16), transparent 24%);
+  pointer-events: none;
 }
-    
+
+/* ヒーローテキスト */
+.hero-container {
+  position: relative;
+  min-height: 58vh;
+}
 .hero-content {
   position: absolute;
   top: 26px;
@@ -319,35 +210,6 @@ body {
   max-width: 980px;
   margin: 0 auto;
 }
-    
-.hero-star-line {
-  position: absolute;
-  height: 2px;
-  background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.65), rgba(255,255,255,0));
-  filter: blur(1px);
-  opacity: 0.9;
-  pointer-events: none;
-}
-.hero-star-line--one {
-  top: 20%;
-  left: 15%;
-  width: 190px;
-  transform: rotate(-10deg);
-}
-.hero-star-line--two {
-  top: 32%;
-  right: 10%;
-  width: 120px;
-  transform: rotate(-6deg);
-  opacity: 0.65;
-}
-.hero-star-line--three {
-  top: 45%;
-  left: 30%;
-  width: 240px;
-  transform: rotate(-3deg);
-  opacity: 0.45;
-}
 .hero-title {
   margin: 0;
   font-size: clamp(1.8rem, 3.7vw, 3rem);
@@ -355,21 +217,8 @@ body {
   letter-spacing: 0.03em;
   color: #f5f9ff;
   font-weight: 500;
-  text-shadow:
-    0 2px 10px rgba(5, 20, 60, 0.35),
-    0 0 28px rgba(186, 214, 255, 0.28);
-  animation: focusIn 900ms ease-out both;
+  text-shadow: 0 2px 10px rgba(5,20,60,0.35), 0 0 28px rgba(186,214,255,0.28);
 }
-
-    /* 英字ラベルをテーマに合わせる */
-.hero-content > div:first-child {
-  color: var(--hero-calm) !important;
-  letter-spacing: 0.22em !important;
-  font-weight: 700 !important;
-  opacity: 0.92;
-}
-
-/* 4) フレーズ下に細い希望ライン */
 .hero-title::after {
   content: "";
   display: block;
@@ -379,8 +228,24 @@ body {
   background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0.08));
   border-radius: 999px;
 }
+.hero-content > div:first-child {
+  color: #dbe9ff !important;
+  letter-spacing: 0.22em !important;
+  font-weight: 700 !important;
+  opacity: 0.92;
+}
 
-/* 共通カード（全タブ） */
+/* 旧イラスト要素は完全停止 */
+.hero-illustration,
+.city-silhouette,
+.hero-horizon,
+.hero-city-back,
+.hero-city-front,
+.hero-light-trail {
+  display: none !important;
+}
+
+/* カード */
 .card {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
@@ -397,27 +262,40 @@ body {
   color: inherit;
 }
 
-/* ホーム上のカードだけ暗背景に合わせる */
+/* ホーム内カード（可読性重視で暗めに） */
 #home .card {
+  background: linear-gradient(180deg, rgba(27,57,128,0.58), rgba(18,41,98,0.52)) !important;
+  border: 1px solid rgba(190,215,255,0.28) !important;
+  box-shadow: 0 10px 30px rgba(9,26,71,0.28) !important;
+  color: #fff !important;
   margin-top: -12px !important;
   position: relative;
   z-index: 8;
 }
 #home .card p,
 #home .card strong,
-#home .card div {
-  color: #fff;
+#home .card div,
+#home .notice-meta,
+#home .notice-text,
+#home .notice-empty {
+  color: #fff !important;
 }
-    @keyframes mindShift {
-  0%   { transform: translateX(-2%) translateY(0%) rotate(-2deg); opacity: 0.75; }
-  100% { transform: translateX(2%) translateY(1%) rotate(2deg); opacity: 1; }
-}
-
-@keyframes focusIn {
-  from { opacity: 0; transform: translateY(8px); filter: blur(3px); }
-  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+#home .notice-item {
+  background: rgba(255, 255, 255, 0.10) !important;
+  border: 1px solid rgba(255, 255, 255, 0.22) !important;
 }
 
+/* サブUI */
+.sub-title {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 6px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin: 15px 0 10px 0;
+}
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -433,8 +311,6 @@ body {
   width: 100%;
   height: 100%;
 }
-
-/* UIパーツ */
 .oumi-btn {
   display: flex;
   align-items: center;
@@ -458,15 +334,10 @@ body {
   box-sizing: border-box;
   margin-bottom: 10px;
 }
-
-/* 設定モーダル */
 #settings-modal {
   display: none;
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0,0,0,0.6);
   z-index: 3000;
   align-items: center;
@@ -489,266 +360,34 @@ body {
   border: 1px solid #ddd;
   box-sizing: border-box;
 }
-
 .area-content {
   display: none;
 }
 .notice-board {
   margin-top: 12px;
 }
-
 .notice-list {
   display: grid;
   gap: 8px;
   max-height: 260px;
   overflow-y: auto;
 }
-
 .notice-item {
-  border: 1px solid rgba(255,255,255,0.2);
-  background: rgba(255,255,255,0.12);
   border-radius: 10px;
   padding: 10px 12px;
 }
-
 .notice-meta {
   display: flex;
   justify-content: space-between;
-  color: #d9e8ff;
   font-size: 0.75rem;
   margin-bottom: 4px;
 }
-
 .notice-text {
-  color: #fff;
   line-height: 1.45;
   word-break: break-word;
 }
-
 .notice-empty {
   margin: 0;
-  color: #d9e8ff;
-}
-    /* タイトル下の空間を街並みイラストで埋める */
-.hero-container {
-  min-height: 58vh;
-}
-
-.hero-content {
-  padding-bottom: 110px; /* 街並み分の余白を確保 */
-}
-
-.hero-illustration {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 18px;
-  width: min(1040px, 92%);
-  height: 118px;
-  z-index: 6;
-  pointer-events: none;
-}
-    
-.hero-illustration svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* 地平線 */
-.hero-horizon {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 96px;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.32), rgba(255,255,255,0.06));
-}
-
-/* 遠景の街 */
-.hero-city-back {
-  position: absolute;
-  left: -2%;
-  right: -2%;
-  bottom: 52px;
-  height: 95px;
-  background: linear-gradient(180deg, rgba(194,218,255,0.18), rgba(140,174,238,0.24));
-  clip-path: polygon(
-    0% 100%, 0% 58%, 4% 58%, 4% 45%, 8% 45%, 8% 66%, 12% 66%, 12% 40%,
-    16% 40%, 16% 62%, 20% 62%, 20% 48%, 25% 48%, 25% 70%, 30% 70%,
-    30% 38%, 35% 38%, 35% 63%, 41% 63%, 41% 46%, 47% 46%, 47% 69%,
-    54% 69%, 54% 43%, 60% 43%, 60% 60%, 66% 60%, 66% 41%, 72% 41%,
-    72% 68%, 78% 68%, 78% 44%, 84% 44%, 84% 62%, 90% 62%, 90% 50%,
-    95% 50%, 95% 64%, 100% 64%, 100% 100%
-  );
-  opacity: 0.55;
-}
-
-/* 前景の街 */
-.hero-city-front {
-  position: absolute;
-  left: -1%;
-  right: -1%;
-  bottom: 0;
-  height: 125px;
-  background:
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,0.08) 0 1px,
-      transparent 1px 26px
-    ),
-    linear-gradient(180deg, rgba(28,60,138,0.55), rgba(16,40,102,0.78));
-  clip-path: polygon(
-    0% 100%, 0% 62%, 5% 62%, 5% 34%, 9% 34%, 9% 70%, 14% 70%, 14% 40%,
-    19% 40%, 19% 66%, 23% 66%, 23% 30%, 28% 30%, 28% 74%, 34% 74%,
-    34% 36%, 39% 36%, 39% 63%, 45% 63%, 45% 28%, 50% 28%, 50% 70%,
-    56% 70%, 56% 35%, 61% 35%, 61% 61%, 67% 61%, 67% 32%, 73% 32%,
-    73% 72%, 79% 72%, 79% 38%, 84% 38%, 84% 68%, 90% 68%, 90% 42%,
-    95% 42%, 95% 64%, 100% 64%, 100% 100%
-  );
-  box-shadow: inset 0 18px 30px rgba(177,206,255,0.14);
-}
-
-/* 右上から差す光 */
-.hero-light-trail {
-  position: absolute;
-  right: 14%;
-  bottom: 74px;
-  width: 360px;
-  height: 120px;
-  background: radial-gradient(ellipse at center, rgba(196,223,255,0.26), rgba(196,223,255,0) 70%);
-  transform: rotate(-8deg);
-  filter: blur(2px);
-}
-
-.city-silhouette,
-.hero-horizon,
-.hero-city-back,
-.hero-city-front,
-.hero-light-trail {
-  display: none !important;
-}
-/* ===== 1) 街並みを大きく、明るい未来感に ===== */
-.hero-container {
-  position: relative;
-  min-height: 64vh;
-  overflow: hidden;
-}
-
-.hero-content {
-  position: absolute;
-  top: 26px;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  padding: 0 20px;
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.hero-illustration {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 6px;
-  width: min(1420px, 98%);
-  height: 220px;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.hero-illustration svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  transform: scale(1.16);
-  transform-origin: center bottom;
-  filter:
-    drop-shadow(0 12px 24px rgba(9, 26, 71, 0.28))
-    drop-shadow(0 0 30px rgba(188, 215, 255, 0.24));
-  animation: cityFloat 7s ease-in-out infinite alternate;
-}
-
-/* 明るい社会感を少し足す */
-.hero-illustration::before {
-  content: "";
-  position: absolute;
-  inset: -20% -5% auto -5%;
-  height: 180px;
-  background:
-    radial-gradient(circle at 70% 60%, rgba(224, 239, 255, 0.32), rgba(224, 239, 255, 0) 55%),
-    radial-gradient(circle at 25% 40%, rgba(188, 216, 255, 0.22), rgba(188, 216, 255, 0) 50%);
-  pointer-events: none;
-}
-
-@keyframes cityFloat {
-  0% { transform: scale(1.14) translateY(0px); }
-  100% { transform: scale(1.18) translateY(-4px); }
-}
-
-/* ===== 2) カウントダウン / お知らせの背景を元に戻す ===== */
-#home .card {
-  background: linear-gradient(180deg, rgba(27, 57, 128, 0.58), rgba(18, 41, 98, 0.52)) !important;
-  border: 1px solid rgba(190, 215, 255, 0.28) !important;
-  box-shadow: 0 10px 30px rgba(9, 26, 71, 0.28) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(10px);
-  margin-top: -12px !important;
-}
-
-#home .card p,
-#home .card strong,
-#home .card div,
-#home .notice-meta,
-#home .notice-text,
-#home .notice-empty {
-  color: #ffffff !important;
-}
-
-#home .notice-item {
-  background: rgba(255, 255, 255, 0.10) !important;
-  border: 1px solid rgba(255, 255, 255, 0.22) !important;
-}
-
-.hero-container {
-  position: relative;
-  min-height: 64vh;
-  overflow: hidden;
-}
-
-.hero-content {
-  position: absolute;
-  top: 26px;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  padding: 0 20px;
-  max-width: 980px;
-  margin: 0 auto;
-}
-
-.hero-illustration {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 0;
-  width: min(1500px, 100%);
-  height: 280px;
-  z-index: 6;
-  pointer-events: none;
-}
-
-.hero-illustration svg {
-  width: 100%;
-  height: 100%;
-  display: block;
-  filter: drop-shadow(0 12px 24px rgba(9, 26, 71, 0.28));
-}
-.hero-illustration,
-.hero-illustration svg {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
 }
 </style>
 </head>
@@ -797,115 +436,32 @@ body {
 </div>
 
 
-  <div id="home" class="tab-content active">
-    <div class="page-visual">
+ <div id="home" class="tab-content active">
+  <div class="page-visual">
     <div class="hero-container">
-  <div class="hero-glow"></div>
-  <div class="hero-line"></div>
-
-  <div class="hero-content">
-    <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--hero-calm); margin-bottom: 8px; font-weight: bold;">
-      MEN'S DIVISION
+      <div class="hero-content">
+        <div style="font-size: 0.8rem; letter-spacing: 3px; margin-bottom: 8px; font-weight: bold;">
+          MEN'S DIVISION
+        </div>
+        <h2 class="hero-title">
+          僕が見ている景色は、<br>
+          <span style="color:#ffffff;">僕の心で変えられる。</span>
+        </h2>
+      </div>
     </div>
-    <h2 class="hero-title">
-      僕が見ている景色は、<br>
-      <span style="color:#ffffff;">僕の心で変えられる。</span>
-    </h2>
-  </div>
 
-  <div class="hero-illustration" aria-hidden="true">
-   <svg viewBox="0 0 1600 420" preserveAspectRatio="xMidYMax meet">
-  <defs>
-    <linearGradient id="roadGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#5377c8" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#203f87" stop-opacity="0.92"/>
-    </linearGradient>
-    <linearGradient id="buildingFar" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#8fb0ea" stop-opacity="0.35"/>
-      <stop offset="100%" stop-color="#4767ad" stop-opacity="0.55"/>
-    </linearGradient>
-    <linearGradient id="buildingMid" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#6f94dd" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#2f529f" stop-opacity="0.85"/>
-    </linearGradient>
-  </defs>
- <!-- 消失点基準線 -->
- <line x1="0" y1="138" x2="1600" y2="138" stroke="#b8d4ff" stroke-opacity="0.2"/>
-
-  <!-- 遠景 -->
-  <g fill="url(#buildingFar)">
-    <rect x="120" y="140" width="100" height="90"/>
-    <rect x="250" y="120" width="80" height="110"/>
-    <rect x="360" y="150" width="120" height="80"/>
-    <rect x="520" y="128" width="90" height="102"/>
-    <rect x="650" y="146" width="120" height="84"/>
-    <rect x="830" y="126" width="95" height="104"/>
-    <rect x="960" y="148" width="130" height="82"/>
-    <rect x="1140" y="122" width="86" height="108"/>
-    <rect x="1260" y="142" width="116" height="88"/>
-  </g>
-
-  <!-- 中景 -->
-  <g fill="url(#buildingMid)">
-    <rect x="90" y="188" width="130" height="100"/>
-    <rect x="280" y="176" width="110" height="112"/>
-    <rect x="430" y="192" width="130" height="96"/>
-    <rect x="610" y="170" width="120" height="118"/>
-    <rect x="780" y="184" width="140" height="104"/>
-    <rect x="970" y="174" width="120" height="114"/>
-    <rect x="1140" y="188" width="130" height="100"/>
-    <rect x="1320" y="178" width="120" height="110"/>
-  </g>
-
-  <!-- 道路（奥へ続く） -->
-  <polygon points="710,180 890,180 1280,420 320,420" fill="url(#roadGrad)"/>
-
-  <!-- 歩道 -->
-  <polygon points="640,190 710,180 320,420 220,420" fill="#5f83cf" fill-opacity="0.42"/>
-  <polygon points="890,180 960,190 1380,420 1280,420" fill="#5f83cf" fill-opacity="0.42"/>
-
-  <!-- センターライン -->
-  <g stroke="#e5efff" stroke-opacity="0.7" stroke-linecap="round">
-    <line x1="800" y1="205" x2="800" y2="225" stroke-width="2"/>
-    <line x1="792" y1="245" x2="808" y2="275" stroke-width="3"/>
-    <line x1="775" y1="295" x2="825" y2="355" stroke-width="4"/>
-  </g>
-
-  <!-- 街路樹 -->
-  <g>
-    <rect x="575" y="230" width="6" height="28" fill="#2b4a39"/>
-    <circle cx="578" cy="224" r="14" fill="#78ad8e"/>
-    <rect x="1020" y="230" width="6" height="28" fill="#2b4a39"/>
-    <circle cx="1023" cy="224" r="14" fill="#78ad8e"/>
-    <rect x="500" y="265" width="7" height="34" fill="#2b4a39"/>
-    <circle cx="503" cy="258" r="16" fill="#7eb595"/>
-    <rect x="1095" y="265" width="7" height="34" fill="#2b4a39"/>
-    <circle cx="1098" cy="258" r="16" fill="#7eb595"/>
-  </g>
-
-  <!-- 街灯 -->
-  <g stroke="#d9e8ff" stroke-opacity="0.6" fill="#d9e8ff" fill-opacity="0.7">
-    <line x1="540" y1="210" x2="540" y2="248" stroke-width="2"/>
-    <circle cx="540" cy="208" r="3"/>
-    <line x1="1060" y1="210" x2="1060" y2="248" stroke-width="2"/>
-    <circle cx="1060" cy="208" r="3"/>
-  </g>
-</svg>
-  </div>
-</div>
-    
     <div style="padding: 20px; max-width:800px; margin: 0 auto;">
-      <div class="card" style="margin-top: -40px; text-align: center;">
+      <div class="card" style="margin-top: -12px; text-align: center;">
         <span style="font-size: 0.8rem; color: rgba(255,255,255,0.75);">7.11 男子部結成記念日まで</span>
         <div id="timer" style="font-size: 1.8rem; font-weight: bold; color: var(--white);">計算中...</div>
       </div>
 
- <div class="card notice-board">
-  <div class="sub-title" style="margin:0 0 10px 0;">お知らせ</div>
-  <div id="notice-list" class="notice-list">
-    <p class="notice-empty">現在お知らせはありません。</p>
-  </div>
-</div>
+      <div class="card notice-board">
+        <div class="sub-title" style="margin:0 0 10px 0;">お知らせ</div>
+        <div id="notice-list" class="notice-list">
+          <p class="notice-empty">現在お知らせはありません。</p>
+        </div>
+      </div>
 
       <div class="sub-title">注目動画</div>
       <div class="video-container">
