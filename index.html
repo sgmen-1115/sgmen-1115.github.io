@@ -12,32 +12,31 @@
     <meta name="apple-mobile-web-app-title" content="男子部アプリ">
     <link rel="apple-touch-icon" href="icon-192.png">
 <style>
-    
-   :root {
+:root {
   --primary-color: #003366;
   --accent-color: #f39c12;
   --bg-color: #f8f9fa;
   --white: #ffffff;
- --header-h: 56px;
- --tab-h: 64px;
---main-bg:
-radial-gradient(circle at 14% 12%, rgba(255,255,255,0.26), rgba(255,255,255,0) 28%),
-radial-gradient(circle at 82% 10%, rgba(255,255,255,0.16), rgba(255,255,255,0) 24%),
-linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
---ui-glass: rgba(236, 241, 252, 0.92);
---text-blue: #17325f;
+  --header-h: 56px;
+  --tab-h: 64px;
+  --main-bg:
+    radial-gradient(circle at 14% 12%, rgba(255,255,255,0.26), rgba(255,255,255,0) 28%),
+    radial-gradient(circle at 82% 10%, rgba(255,255,255,0.16), rgba(255,255,255,0) 24%),
+    linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
+  --ui-glass: rgba(236, 241, 252, 0.92);
+  --text-blue: #17325f;
 }
 
- body {
+body {
   margin: 0;
   padding-top: var(--header-h);
   color: var(--text-blue);
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
-background: var(--main-bg);
- background-attachment: fixed;
+  background: var(--main-bg);
+  background-attachment: fixed;
 }
 
-   .page-visual {
+.page-visual {
   position: relative;
   min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
   margin: 0;
@@ -46,22 +45,21 @@ background: var(--main-bg);
   overflow: hidden;
 }
 .page-visual::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-        radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
-        radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 24px 24px, 16px 16px;
-    opacity: 0.22;
-    pointer-events: none;
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px, 16px 16px;
+  opacity: 0.22;
+  pointer-events: none;
 }
-
 .page-visual::after {
-content: none;
+  content: none;
 }
 
-    /* --- 固定ヘッダー --- */
+/* --- 固定ヘッダー --- */
 .fixed-header {
   position: fixed;
   top: 0;
@@ -78,16 +76,13 @@ content: none;
   border-bottom: none;
   box-shadow: none;
 }
-
-
 .fixed-header h1 {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  color: #2f3f75;             /* 見える色に固定 */
+  color: #2f3f75;
   line-height: 1.2;
 }
-
 .settings-btn {
   color: #2f3f75;
   cursor: pointer;
@@ -112,7 +107,6 @@ content: none;
   border-radius: 0 0 24px 24px;
   width: min(1440px, calc(100% - 24px));
 }
-/* tab-link/tab-btn どちらでも同じ見た目になるように統一 */
 .tab-menu .tab-link,
 .tab-menu .tab-btn {
   appearance: none;
@@ -132,47 +126,44 @@ content: none;
   min-height: 44px;
   flex: 1 1 0;
 }
-
-/* ホバー */
 .tab-menu .tab-link:hover,
 .tab-menu .tab-btn:hover {
   transform: translateY(-1px);
   background: linear-gradient(180deg, #ffffff 0%, #e7efff 100%);
   box-shadow: 0 6px 14px rgba(56, 84, 163, 0.16);
 }
-
-/* アクティブ */
 .tab-menu .tab-link.active,
 .tab-menu .tab-btn.active {
   color: #fff;
-background: linear-gradient(180deg, #6f8fe7 0%, #4d6ec4 100%);
-border-color: rgba(56, 82, 165, 0.75);
-box-shadow: 0 8px 18px rgba(47, 75, 155, 0.28);
+  background: linear-gradient(180deg, #6f8fe7 0%, #4d6ec4 100%);
+  border-color: rgba(56, 82, 165, 0.75);
+  box-shadow: 0 8px 18px rgba(47, 75, 155, 0.28);
 }
 
 /* スマホ */
 @media (max-width: 768px) {
-.tab-menu {
-width: 100%;
-border-radius: 0;
-padding: 8px 10px;
-gap: 8px;
-overflow-x: auto;
+  .tab-menu {
+    width: 100%;
+    border-radius: 0;
+    padding: 8px 10px;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  .tab-menu .tab-link,
+  .tab-menu .tab-btn {
+    flex: 0 0 auto;
+    min-width: 108px;
+    min-height: 40px;
+    font-size: 14px;
+    white-space: nowrap;
+    padding: 8px 12px;
+    border-radius: 12px;
+  }
 }
 
-.tab-menu .tab-link,
-.tab-menu .tab-btn {
-flex: 0 0 auto;
-min-width: 108px;
-min-height: 40px;
-font-size: 14px;
-white-space: nowrap;
-padding: 8px 12px;
-border-radius: 12px;
-}
-
-    /* --- コンテンツ共通 --- */
- .tab-content {
+/* --- コンテンツ共通 --- */
+.tab-content {
   display: none;
   position: relative;
   padding: 20px 16px 40px;
@@ -180,38 +171,49 @@ border-radius: 12px;
   background: transparent;
   min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
 }
-
 .tab-content.active {
   display: block;
 }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-    .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
-
- .tab-content:not(#home)::before {
-content: "";
-position: absolute;
-inset: 0;
-background:
-radial-gradient(circle at 18% 14%, rgba(255,255,255,0.18), rgba(255,255,255,0) 30%),
-radial-gradient(circle at 84% 12%, rgba(255,255,255,0.10), rgba(255,255,255,0) 26%),
-repeating-linear-gradient(
-90deg,
-rgba(255,255,255,0.06) 0,
-rgba(255,255,255,0.06) 1px,
-transparent 1px,
-transparent 26px
-);
-opacity: 0.55;
-pointer-events: none;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+.sub-title {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: var(--white);
+  padding: 6px 20px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  margin: 15px 0 10px 0;
+}
+
+.tab-content:not(#home)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 14%, rgba(255,255,255,0.18), rgba(255,255,255,0) 30%),
+    radial-gradient(circle at 84% 12%, rgba(255,255,255,0.10), rgba(255,255,255,0) 26%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.06) 0,
+      rgba(255,255,255,0.06) 1px,
+      transparent 1px,
+      transparent 26px
+    );
+  opacity: 0.55;
+  pointer-events: none;
+}
 .tab-content:not(#home) > * {
-position: relative;
-z-index: 1;
+  position: relative;
+  z-index: 1;
 }
-    
-    /* ホーム画面用 */
+
+/* ホーム画面用 */
 .hero-container {
   position: relative;
   min-height: 52vh;
@@ -229,7 +231,6 @@ z-index: 1;
     radial-gradient(circle at 88% 18%, rgba(255,255,255,0.06), transparent 12%);
   pointer-events: none;
 }
-
 .hero-container::after {
   content: "";
   position: absolute;
@@ -238,22 +239,21 @@ z-index: 1;
   top: 10%;
   left: 60%;
   background: rgba(255,255,255,0.08);
-　box-shadow: none;
+  box-shadow: none;
   pointer-events: none;
   display: none;
-    border: none;
+  border: none;
 }
 .hero-container .hero-glow {
-    position: absolute;
-    width: 14%;
-    height: 120%;
-    top: -10%;
-    left: 10%;
-    background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 45%);
-    filter: blur(22px);
-    pointer-events: none;
+  position: absolute;
+  width: 14%;
+  height: 120%;
+  top: -10%;
+  left: 10%;
+  background: radial-gradient(circle, rgba(255,255,255,0.25), transparent 45%);
+  filter: blur(22px);
+  pointer-events: none;
 }
-
 .hero-container .hero-line {
   position: absolute;
   bottom: 12%;
@@ -263,33 +263,31 @@ z-index: 1;
   background: linear-gradient(90deg, rgba(255,255,255,0.40), transparent);
   transform: rotate(-7deg);
 }
-
 .hero-container .city-silhouette {
-    position: absolute;
-    bottom: -4%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    height: 18%;
-    background:
-        repeating-linear-gradient(90deg,
-            transparent,
-            transparent 18px,
-            rgba(255,255,255,0.08) 18px,
-            rgba(255,255,255,0.08) 20px
-        );
-   opacity: 0.14;
+  position: absolute;
+  bottom: -4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 18%;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 18px,
+      rgba(255,255,255,0.08) 18px,
+      rgba(255,255,255,0.08) 20px
+    );
+  opacity: 0.14;
 }
-
 .hero-content {
-    position: relative;
-    z-index: 2;
-    background: transparent;
-    padding: 24px 20px;
-    border: none;
-    box-shadow: none;
+  position: relative;
+  z-index: 2;
+  background: transparent;
+  padding: 24px 20px;
+  border: none;
+  box-shadow: none;
 }
-
 .hero-star-line {
   position: absolute;
   height: 2px;
@@ -298,14 +296,12 @@ z-index: 1;
   opacity: 0.9;
   pointer-events: none;
 }
-
 .hero-star-line--one {
   top: 20%;
   left: 15%;
   width: 190px;
   transform: rotate(-10deg);
 }
-
 .hero-star-line--two {
   top: 32%;
   right: 10%;
@@ -313,7 +309,6 @@ z-index: 1;
   transform: rotate(-6deg);
   opacity: 0.65;
 }
-
 .hero-star-line--three {
   top: 45%;
   left: 30%;
@@ -321,19 +316,18 @@ z-index: 1;
   transform: rotate(-3deg);
   opacity: 0.45;
 }
-
 .hero-title {
-    color: #ffffff;
-    font-weight: 300;
-    letter-spacing: 0.08em;
-    line-height: 1.5;
-    font-size: 1.6rem;
-    text-shadow: 0 0 12px rgba(0, 0, 0, 0.18);
-    max-width: 620px;
-    margin: 0 auto;
+  color: #ffffff;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  font-size: 1.6rem;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.18);
+  max-width: 620px;
+  margin: 0 auto;
 }
 
-  /* 共通カード（全タブ） */
+/* 共通カード（全タブ） */
 .card {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
@@ -344,39 +338,99 @@ z-index: 1;
   margin-bottom: 20px;
   color: #17325f;
 }
-
 .card p,
 .card strong,
 .card div {
   color: inherit;
 }
-  
+
 /* ホーム上のカードだけ暗背景に合わせる */
 #home .card {
   background: rgba(18, 40, 92, 0.30);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: #fff;
 }
-
 #home .card p,
 #home .card strong,
 #home .card div {
   color: #fff;
 }
-    
-    .video-container { position: relative; padding-bottom: 56.25%; margin: 20px 0; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-    .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 
-    /* UIパーツ */
-    .oumi-btn { display: flex; align-items: center; justify-content: center; background-color: var(--primary-color); color: white; padding: 15px; border-radius: 50px; font-weight: bold; border: none; cursor: pointer; width: 100%; }
-    .goal-textarea { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; box-sizing: border-box; margin-bottom: 10px; }
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  margin: 20px 0;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 
-    /* 設定モーダル */
-    #settings-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; align-items: center; justify-content: center; }
-    .modal-content { background: white; padding: 25px; border-radius: 20px; width: 85%; max-width: 400px; text-align: center; }
-    .modal-content input, .modal-content select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; }
+/* UIパーツ */
+.oumi-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+  border-radius: 50px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+.goal-textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
 
-    .area-content { display: none; }
+/* 設定モーダル */
+#settings-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 3000;
+  align-items: center;
+  justify-content: center;
+}
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  width: 85%;
+  max-width: 400px;
+  text-align: center;
+}
+.modal-content input,
+.modal-content select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.area-content {
+  display: none;
+}
 </style>
 </head>
 <body>
