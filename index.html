@@ -514,6 +514,90 @@ body {
   margin: 0;
   color: #d9e8ff;
 }
+    /* タイトル下の空間を街並みイラストで埋める */
+.hero-container {
+  min-height: 58vh;
+}
+
+.hero-content {
+  padding-bottom: 110px; /* 街並み分の余白を確保 */
+}
+
+.hero-illustration {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* 地平線 */
+.hero-horizon {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 96px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.32), rgba(255,255,255,0.06));
+}
+
+/* 遠景の街 */
+.hero-city-back {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  bottom: 52px;
+  height: 95px;
+  background: linear-gradient(180deg, rgba(194,218,255,0.18), rgba(140,174,238,0.24));
+  clip-path: polygon(
+    0% 100%, 0% 58%, 4% 58%, 4% 45%, 8% 45%, 8% 66%, 12% 66%, 12% 40%,
+    16% 40%, 16% 62%, 20% 62%, 20% 48%, 25% 48%, 25% 70%, 30% 70%,
+    30% 38%, 35% 38%, 35% 63%, 41% 63%, 41% 46%, 47% 46%, 47% 69%,
+    54% 69%, 54% 43%, 60% 43%, 60% 60%, 66% 60%, 66% 41%, 72% 41%,
+    72% 68%, 78% 68%, 78% 44%, 84% 44%, 84% 62%, 90% 62%, 90% 50%,
+    95% 50%, 95% 64%, 100% 64%, 100% 100%
+  );
+  opacity: 0.55;
+}
+
+/* 前景の街 */
+.hero-city-front {
+  position: absolute;
+  left: -1%;
+  right: -1%;
+  bottom: 0;
+  height: 125px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.08) 0 1px,
+      transparent 1px 26px
+    ),
+    linear-gradient(180deg, rgba(28,60,138,0.55), rgba(16,40,102,0.78));
+  clip-path: polygon(
+    0% 100%, 0% 62%, 5% 62%, 5% 34%, 9% 34%, 9% 70%, 14% 70%, 14% 40%,
+    19% 40%, 19% 66%, 23% 66%, 23% 30%, 28% 30%, 28% 74%, 34% 74%,
+    34% 36%, 39% 36%, 39% 63%, 45% 63%, 45% 28%, 50% 28%, 50% 70%,
+    56% 70%, 56% 35%, 61% 35%, 61% 61%, 67% 61%, 67% 32%, 73% 32%,
+    73% 72%, 79% 72%, 79% 38%, 84% 38%, 84% 68%, 90% 68%, 90% 42%,
+    95% 42%, 95% 64%, 100% 64%, 100% 100%
+  );
+  box-shadow: inset 0 18px 30px rgba(177,206,255,0.14);
+}
+
+/* 右上から差す光 */
+.hero-light-trail {
+  position: absolute;
+  right: 14%;
+  bottom: 74px;
+  width: 360px;
+  height: 120px;
+  background: radial-gradient(ellipse at center, rgba(196,223,255,0.26), rgba(196,223,255,0) 70%);
+  transform: rotate(-8deg);
+  filter: blur(2px);
+}
 </style>
 </head>
 <body>
@@ -568,6 +652,12 @@ body {
       <div class="hero-line"></div>
       <div class="city-silhouette"></div>
       <div class="hero-content">
+          <div class="hero-illustration" aria-hidden="true">
+  <div class="hero-horizon"></div>
+  <div class="hero-city-back"></div>
+  <div class="hero-city-front"></div>
+  <div class="hero-light-trail"></div>
+</div>
         <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">
           MEN'S DIVISION
         </div>
