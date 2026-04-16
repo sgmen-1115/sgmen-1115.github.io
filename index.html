@@ -134,17 +134,15 @@
     .sub-title { display: inline-block; background-color: var(--primary-color); color: var(--white); padding: 6px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: bold; margin: 15px 0 10px 0; }
 
     /* ホーム画面用 */
-.hero-container {
-  position: relative;
-  width: 100%;
-  min-height: 50vh;
+ .hero-container {
+  min-height: 46vh;
   background:
-    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.18), transparent 18%),
-    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.10), transparent 16%),
-    linear-gradient(180deg, #4d6ec6 0%, #1d2f6f 44%, #090b1e 100%),
-    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 24px 100%;
-  overflow: hidden;
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.12), transparent 22%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.08), transparent 20%),
+    linear-gradient(180deg, #6f8ee0 0%, #3552a3 50%, #1b2b63 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  border-bottom: none;
+  box-shadow: none;
 }
 
 .hero-container::before,
@@ -179,6 +177,7 @@
     40px 0 0 1px rgba(255,255,255,0.04),
     80px 0 0 1px rgba(255,255,255,0.04);
   pointer-events: none;
+  display: none;
 }
 
 .hero-container .hero-glow,
@@ -222,7 +221,7 @@
             rgba(255,255,255,0.08) 18px,
             rgba(255,255,255,0.08) 20px
         );
-    opacity: 0.38;
+   opacity: 0.22;
 }
 
 .hero-content {
@@ -234,7 +233,7 @@
     box-shadow: none;
 }
 
-    .hero-star-line {
+.hero-star-line {
   position: absolute;
   height: 2px;
   background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.65), rgba(255,255,255,0));
