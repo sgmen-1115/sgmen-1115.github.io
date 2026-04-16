@@ -25,6 +25,10 @@
     linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
   --ui-glass: rgba(236, 241, 252, 0.92);
   --text-blue: #17325f;
+    --hero-deep: #193b8f;
+  --hero-mid: #3f6fd6;
+  --hero-light: #9dc3ff;
+  --hero-calm: #dbe9ff;
 }
 
 body {
@@ -41,18 +45,29 @@ body {
   min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
   margin: 0;
   padding: 0;
-  background: transparent;
+  background:
+    radial-gradient(1100px 420px at 10% 20%, rgba(255,255,255,0.24), rgba(255,255,255,0) 55%),
+    radial-gradient(900px 380px at 88% 14%, rgba(210,230,255,0.20), rgba(210,230,255,0) 52%),
+    linear-gradient(180deg, var(--hero-light) 0%, var(--hero-mid) 44%, var(--hero-deep) 100%);
   overflow: hidden;
 }
 .page-visual::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background-image:
+  inset: -20% -10%;
+  background:
+    conic-gradient(from 180deg at 50% 50%,
+      rgba(255,255,255,0.0),
+      rgba(255,255,255,0.18),
+      rgba(164,196,255,0.22),
+      rgba(255,255,255,0.0));
+    background-image:
     radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px),
     radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
   background-size: 24px 24px, 16px 16px;
   opacity: 0.22;
+  filter: blur(28px);
+  animation: mindShift 14s ease-in-out infinite alternate;
   pointer-events: none;
 }
 .page-visual::after {
@@ -278,15 +293,17 @@ body {
       rgba(255,255,255,0.08) 18px,
       rgba(255,255,255,0.08) 20px
     );
-  opacity: 0.14;
+  opacity: 0.18;
 }
 .hero-content {
   position: relative;
   z-index: 2;
   background: transparent;
-  padding: 24px 20px;
+   padding: clamp(24px, 4vw, 56px) clamp(16px, 4vw, 48px);
   border: none;
   box-shadow: none;
+    max-width: 900px;
+  margin: 0 auto;
 }
 .hero-star-line {
   position: absolute;
@@ -317,14 +334,35 @@ body {
   opacity: 0.45;
 }
 .hero-title {
-  color: #ffffff;
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  line-height: 1.5;
-  font-size: 1.6rem;
-  text-shadow: 0 0 12px rgba(0, 0, 0, 0.18);
-  max-width: 620px;
-  margin: 0 auto;
+  margin: 0;
+  font-size: clamp(1.8rem, 3.7vw, 3rem);
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  color: #f5f9ff;
+  font-weight: 500;
+  text-shadow:
+    0 2px 10px rgba(5, 20, 60, 0.35),
+    0 0 28px rgba(186, 214, 255, 0.28);
+  animation: focusIn 900ms ease-out both;
+}
+
+    /* 英字ラベルをテーマに合わせる */
+.hero-content > div:first-child {
+  color: var(--hero-calm) !important;
+  letter-spacing: 0.22em !important;
+  font-weight: 700 !important;
+  opacity: 0.92;
+}
+
+/* 4) フレーズ下に細い希望ライン */
+.hero-title::after {
+  content: "";
+  display: block;
+  width: clamp(120px, 20vw, 220px);
+  height: 2px;
+  margin-top: 16px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.85), rgba(255,255,255,0.08));
+  border-radius: 999px;
 }
 
 /* 共通カード（全タブ） */
@@ -346,14 +384,23 @@ body {
 
 /* ホーム上のカードだけ暗背景に合わせる */
 #home .card {
-  background: rgba(18, 40, 92, 0.30);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  color: #fff;
+  background: linear-gradient(180deg, rgba(25,58,132,0.46), rgba(18,42,102,0.42));
+  border: 1px solid rgba(190,215,255,0.28);
+  box-shadow: 0 10px 30px rgba(9, 26, 71, 0.28);
 }
 #home .card p,
 #home .card strong,
 #home .card div {
   color: #fff;
+}
+    @keyframes mindShift {
+  0%   { transform: translateX(-2%) translateY(0%) rotate(-2deg); opacity: 0.75; }
+  100% { transform: translateX(2%) translateY(1%) rotate(2deg); opacity: 1; }
+}
+
+@keyframes focusIn {
+  from { opacity: 0; transform: translateY(8px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
 
 .video-container {
