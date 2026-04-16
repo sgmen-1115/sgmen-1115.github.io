@@ -478,6 +478,86 @@ body {
 .area-content {
   display: none;
 }
+
+.notice-board {
+  margin-top: 12px;
+}
+
+.notice-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notice-unlock-btn {
+  border: 1px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.notice-form {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.notice-form input {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid rgba(255,255,255,0.25);
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.notice-form input::placeholder {
+  color: rgba(255,255,255,0.65);
+}
+
+.notice-post-btn {
+  width: auto;
+  min-width: 80px;
+  padding: 10px 14px;
+}
+
+.notice-list {
+  display: grid;
+  gap: 8px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.notice-item {
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.notice-meta {
+  display: flex;
+  justify-content: space-between;
+  color: #d9e8ff;
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+}
+
+.notice-text {
+  color: #fff;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.notice-empty {
+  margin: 0;
+  color: #d9e8ff;
+}
 </style>
 </head>
 <body>
@@ -535,7 +615,10 @@ body {
         <div style="font-size: 0.8rem; letter-spacing: 3px; color: var(--primary-color); margin-bottom: 8px; font-weight: bold;">
           MEN'S DIVISION
         </div>
-        <h2 class="hero-title">僕が見ている景色は、<br>僕の心で変えられる。</h2>
+       <h2 class="hero-title">
+  僕が見ている景色は、<br>
+  <span style="color:#ffffff;">僕の心で変えられる。</span>
+</h2>
       </div>
     </div>
 
@@ -544,6 +627,22 @@ body {
         <span style="font-size: 0.8rem; color: rgba(255,255,255,0.75);">7.11 男子部結成記念日まで</span>
         <div id="timer" style="font-size: 1.8rem; font-weight: bold; color: var(--white);">計算中...</div>
       </div>
+
+    <div class="card notice-board">
+  <div class="notice-head">
+    <div class="sub-title" style="margin:0;">お知らせ</div>
+    <button id="notice-unlock-btn" type="button" class="notice-unlock-btn">投稿モード</button>
+  </div>
+
+  <form id="notice-form" class="notice-form" style="display:none;">
+    <input id="notice-input" type="text" maxlength="120" placeholder="お知らせを入力（120文字まで）">
+    <button type="submit" class="oumi-btn notice-post-btn">投稿</button>
+  </form>
+
+  <div id="notice-list" class="notice-list">
+    <p class="notice-empty">まだお知らせはありません。</p>
+  </div>
+</div>
 
       <div class="sub-title">注目動画</div>
       <div class="video-container">
@@ -628,8 +727,8 @@ body {
 
 <script type="module">
 　  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, set, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
+    import { getDatabase, ref, get, set, update, onValue, push, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    
     const firebaseConfig = {
         apiKey: "AIzaSyCFEUoUyWhz8Qlr2Z261LOlzwe7BIQQTx4",
         authDomain: "sgmen-db.firebaseapp.com",
@@ -751,6 +850,99 @@ body {
             document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
         });
     }
+
+    // ===== お知らせ機能（管理者ログイン不要版） =====
+const NOTICE_PASSCODE = "ここをあなた専用の投稿キーに変更"; // 例: "sgmen2026!"
+let noticePostEnabled = false;
+
+const noticeRef = ref(db, "noticeBoard");
+const noticeUnlockBtn = document.getElementById("notice-unlock-btn");
+const noticeForm = document.getElementById("notice-form");
+const noticeInput = document.getElementById("notice-input");
+const noticeList = document.getElementById("notice-list");
+
+function formatNoticeTime(ts) {
+  const d = new Date(ts || Date.now());
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  const h = String(d.getHours()).padStart(2, "0");
+  const min = String(d.getMinutes()).padStart(2, "0");
+  return y + "/" + m + "/" + day + " " + h + ":" + min;
+}
+
+// 投稿モード解除/有効化
+if (noticeUnlockBtn && noticeForm) {
+  noticeUnlockBtn.addEventListener("click", () => {
+    const code = prompt("投稿キーを入力");
+    if (code === NOTICE_PASSCODE) {
+      noticePostEnabled = true;
+      noticeForm.style.display = "flex";
+      alert("投稿モードを有効化しました");
+    } else {
+      alert("投稿キーが違います");
+    }
+  });
+}
+
+// 投稿
+if (noticeForm && noticeInput) {
+  noticeForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!noticePostEnabled) {
+      alert("投稿モードが無効です");
+      return;
+    }
+
+    const text = noticeInput.value.trim();
+    if (!text) return;
+
+    await push(noticeRef, {
+      text: text,
+      author: "運営",
+      createdAt: Date.now()
+    });
+
+    noticeInput.value = "";
+  });
+}
+
+// 表示（全員閲覧）
+if (noticeList) {
+  const q = query(noticeRef, orderByChild("createdAt"), limitToLast(30));
+  onValue(q, (snapshot) => {
+    const items = [];
+    snapshot.forEach((child) => items.push(child.val()));
+    items.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+
+    noticeList.innerHTML = "";
+    if (!items.length) {
+      const p = document.createElement("p");
+      p.className = "notice-empty";
+      p.textContent = "まだお知らせはありません。";
+      noticeList.appendChild(p);
+      return;
+    }
+
+    items.forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "notice-item";
+
+      const meta = document.createElement("div");
+      meta.className = "notice-meta";
+      meta.innerHTML = "<span>" + (item.author || "運営") + "</span><span>" + formatNoticeTime(item.createdAt) + "</span>";
+
+      const text = document.createElement("div");
+      text.className = "notice-text";
+      text.textContent = item.text || "";
+
+      row.appendChild(meta);
+      row.appendChild(text);
+      noticeList.appendChild(row);
+    });
+  });
+}
 </script>
 
 <script>
