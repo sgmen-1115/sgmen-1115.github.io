@@ -908,22 +908,27 @@ if (noticeList) {
   if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
 }
 
-    window.onload = () => {
-        const a = localStorage.getItem('userArea'); if(a) applyAreaSettings(a);
-        const g = localStorage.getItem('myPersonalGoal'); if(g) document.getElementById('my-goal-input').value = g;
-        
-        setInterval(() => {
-            const now = new Date();
-            const target = new Date(now.getFullYear(), 6, 11);
-            let diff = target - now;
-            if (diff < 0) diff = new Date(now.getFullYear() + 1, 6, 11) - now;
-            const d = Math.floor(diff / (1000*60*60*24));
-            const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
-            const m = Math.floor((diff % (1000*60*60)) / (1000*60));
-            const s = Math.floor((diff % (1000*60)) / 1000);
-            document.getElementById("timer").innerText = `${d}日 ${h}時 ${m}分 ${s}秒`;
-        }, 1000);
-    };
+window.onload = () => {
+    const a = localStorage.getItem('userArea');
+    if (a) applyAreaSettings(a);
+
+    // 旧UI互換: 要素がある時だけ代入
+    const g = localStorage.getItem('myPersonalGoal');
+    const oldGoalInput = document.getElementById('my-goal-input');
+    if (g && oldGoalInput) oldGoalInput.value = g;
+
+    setInterval(() => {
+        const now = new Date();
+        const target = new Date(now.getFullYear(), 6, 11);
+        let diff = target - now;
+        if (diff < 0) diff = new Date(now.getFullYear() + 1, 6, 11) - now;
+        const d = Math.floor(diff / (1000*60*60*24));
+        const h = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+        const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+        const s = Math.floor((diff % (1000*60)) / 1000);
+        document.getElementById("timer").innerText = `${d}日 ${h}時 ${m}分 ${s}秒`;
+    }, 1000);
+};
 </script>
 <script>
   const GOAL_DATE_KEY = "myGoalDate";
