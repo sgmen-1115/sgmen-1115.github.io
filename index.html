@@ -684,7 +684,8 @@ body {
 
 <script type="module">
 　  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, set, update, onValue, push, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getAuth, onAuthStateChanged, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+   import { getDatabase, ref, get, update, onValue, push, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     
     const firebaseConfig = {
         apiKey: "AIzaSyCFEUoUyWhz8Qlr2Z261LOlzwe7BIQQTx4",
@@ -695,44 +696,79 @@ body {
         messagingSenderId: "968577713228",
         appId: "1:968577713228:web:23eaf381b4be6db1fa60e9"
     };
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const auth = getAuth(app);
 
-    let currentUsername = localStorage.getItem('sokaUsername');
-    let userRef = currentUsername ? ref(db, 'users/' + currentUsername) : null;
+let currentUsername = localStorage.getItem("sokaUsername") || "";
+let userRef = null;
+let isAuthReady = false;
+let isUserListenerBound = false;
 
-    // --- 重複チェック付き設定保存 ---
-    document.getElementById('save-settings-btn').onclick = async () => {
-        const inputName = document.getElementById('input-username').value.trim();
-        const selectedArea = document.getElementById('select-souku').value;
+function bindUserDataListener() {
+  if (!userRef) return;
 
-        if (!inputName) { alert("ユーザー名を入力してください"); return; }
-        
-        if (inputName !== currentUsername) {
-            const checkRef = ref(db, 'users/' + inputName);
-            const snapshot = await get(checkRef);
-            if (snapshot.exists() && !currentUsername) {
-                alert("このユーザー名は既に使用されています。"); return;
-            } else if (!snapshot.exists()) {
-                await set(checkRef, { total: 0, totalMs: 0, createdAt: Date.now() });
-            }
-        }
-        localStorage.setItem('sokaUsername', inputName);
-        localStorage.setItem('userArea', selectedArea);
-        location.reload();
-    };
+ onValue(userRef, (snapshot) => {
+  const data = snapshot.val() || { total: 0, totalMs: 0 };
+  const displayName = data.username || currentUsername || "匿名";
+  document.getElementById("user-display-name").innerText = "利用者: " + displayName;
+    document.getElementById("total-count").innerText =
+      (data.total || 0).toLocaleString() + " 遍";
+    const h = Math.floor((data.totalMs || 0) / 3600000);
+    const m = Math.floor(((data.totalMs || 0) % 3600000) / 60000);
+    document.getElementById("total-time").innerText =
+      h + ":" + m.toString().padStart(2, "0");
+  });
+}
+
+onAuthStateChanged(auth, async (user) => {
+if (!user) {
+try {
+await signInAnonymously(auth);
+} catch (e) {
+console.error("匿名認証エラー:", e);
+alert("認証に失敗しました。Firebase Authentication の匿名認証を有効化してください。");
+}
+return;
+}
+userRef = ref(db, "users/" + user.uid);
+isAuthReady = true;
+if (!isUserListenerBound) {
+bindUserDataListener();
+isUserListenerBound = true;
+}
+});
+    
+// 設定保存（UID配下に保存）
+document.getElementById("save-settings-btn").onclick = async () => {
+  const inputName = document.getElementById("input-username").value.trim();
+  const selectedArea = document.getElementById("select-souku").value;
+
+  if (!inputName) {
+    alert("ユーザー名を入力してください");
+    return;
+  }
+  if (!isAuthReady || !userRef) {
+    alert("初期化中です。少し待ってもう一度お試しください。");
+    return;
+  }
+
+  currentUsername = inputName;
+  localStorage.setItem("sokaUsername", inputName);
+  localStorage.setItem("userArea", selectedArea);
+
+  await update(userRef, {
+    username: inputName,
+    area: selectedArea,
+    updatedAt: Date.now()
+  });
+
+  alert("設定を保存しました");
+ window.toggleSettings();
+};
 
     // --- 唱題カウンター ---
-    if (userRef) {
-        document.getElementById('user-display-name').innerText = `利用者: ${currentUsername}`;
-        onValue(userRef, (snapshot) => {
-            const data = snapshot.val() || { total: 0, totalMs: 0 };
-            document.getElementById('total-count').innerText = (data.total || 0).toLocaleString() + " 遍";
-            const h = Math.floor(data.totalMs / 3600000);
-            const m = Math.floor((data.totalMs % 3600000) / 60000);
-            document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
-        });
-    }
+   
 // --- 唱題タイマーロジック ---
     let startTime, timerInterval, elapsedTime = 0, isRunning = false;
     const startBtn = document.getElementById('startBtn');
@@ -741,7 +777,7 @@ body {
 
     // 1. スタート・ストップ
     startBtn.onclick = () => {
-        if (!userRef) { toggleSettings(); return; }
+        if (!userRef) { window.toggleSettings(); return; }
         if (!isRunning) {
             isRunning = true; startBtn.innerText = "ストップ";
             startTime = Date.now();
@@ -798,16 +834,6 @@ body {
     };
 
     // データのリアルタイム反映
-    if (userRef) {
-        onValue(userRef, (snapshot) => {
-            const data = snapshot.val() || { total: 0, totalMs: 0 };
-            document.getElementById('total-count').innerText = (data.total || 0).toLocaleString() + " 遍";
-            const h = Math.floor(data.totalMs / 3600000);
-            const m = Math.floor((data.totalMs % 3600000) / 60000);
-            document.getElementById('total-time').innerText = `${h}:${m.toString().padStart(2, '0')}`;
-        });
-    }
-
     // ===== お知らせ機能 =====
 const noticeRef = ref(db, "noticeBoard");
 const noticeList = document.getElementById("notice-list");
@@ -907,11 +933,6 @@ if (noticeList) {
 window.onload = () => {
     const a = localStorage.getItem('userArea');
     if (a) applyAreaSettings(a);
-
-    // 旧UI互換: 要素がある時だけ代入
-    const g = localStorage.getItem('myPersonalGoal');
-    const oldGoalInput = document.getElementById('my-goal-input');
-    if (g && oldGoalInput) oldGoalInput.value = g;
 
     setInterval(() => {
         const now = new Date();
