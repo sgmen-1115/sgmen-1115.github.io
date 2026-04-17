@@ -25,6 +25,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="男子部アプリ">
     <link rel="apple-touch-icon" href="icon-192★.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --primary-color: #003366;
@@ -67,14 +71,34 @@ body {
   box-shadow: none;
 }
 
-.fixed-header h1,
-.settings-btn {
-  color: rgba(245, 249, 255, 0.92);
+.fixed-header h1 {
+  margin: 0;
+  font-family: "Cinzel", serif;
+  font-size: clamp(0.76rem, 1.7vw, 0.95rem); /* 大きすぎ防止 */
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  line-height: 1;
+  color: rgba(245, 249, 255, 0.95);
+  text-transform: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .settings-btn {
   color: #2f3f75;
   cursor: pointer;
 }
+
+/* スマホでさらに少しだけコンパクト */
+@media (max-width: 768px) {
+  .fixed-header {
+    padding: 0 12px;
+  }
+  .fixed-header h1 {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+  }
+}    
 
 /* タブ */
 .tab-menu {
@@ -398,7 +422,7 @@ body {
 <body>
 
 <div class="fixed-header">
-    <h1>創価学会男子部公式サイト</h1>
+   <h1>SOKA Men's Division Official</h1>
     <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
 </div>
 
