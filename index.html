@@ -85,58 +85,60 @@ body {
   padding: 10px 12px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  background: var(--ui-glass);
-  border-radius: 0 0 24px 24px;
+  gap: 10px;
   width: min(1440px, calc(100% - 24px));
-}
-.tab-menu .tab-link,
-.tab-menu .tab-btn {
-  appearance: none;
-  -webkit-appearance: none;
-  border: 1px solid rgba(73, 103, 187, 0.25);
-  background: linear-gradient(180deg, #ffffff 0%, #edf2ff 100%);
-  color: #2a4178;
-  padding: 9px 16px;
-  border-radius: 14px;
-  font-size: clamp(16px, 1.05vw, 19px);
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 10px rgba(45, 73, 150, 0.12);
-  min-width: 0;
-  min-height: 44px;
-  flex: 1 1 0;
-}
-.tab-menu .tab-link:hover,
-.tab-menu .tab-btn:hover {
-  transform: translateY(-1px);
-  background: linear-gradient(180deg, #ffffff 0%, #e7efff 100%);
-}
-.tab-menu .tab-link.active,
-.tab-menu .tab-btn.active {
-  color: #fff;
-  background: linear-gradient(180deg, #6f8fe7 0%, #4d6ec4 100%);
-  border-color: rgba(56, 82, 165, 0.75);
+  background: rgba(25, 42, 92, 0.22);
+  backdrop-filter: blur(8px);
+  border-radius: 0 0 22px 22px;
 }
 
+.tab-menu .tab-link,
+.tab-menu .tab-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 249, 255, 0.9);
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.1;
+  padding: 8px 10px;
+}
+
+/* アクティブ */
+.tab-menu .tab-link.active,
+.tab-menu .tab-btn.active {
+  background: rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.42);
+}
+
+/* スマホ：5つを1画面に収める */
 @media (max-width: 768px) {
   .tab-menu {
     width: 100%;
+    padding: 8px 8px;
+    gap: 6px;
     border-radius: 0;
-    padding: 8px 10px;
-    gap: 8px;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: stretch;
+    overflow: hidden; /* ← 横スクロール禁止 */
+    height: auto;
   }
+
   .tab-menu .tab-link,
   .tab-menu .tab-btn {
-    flex: 0 0 auto;
-    min-width: 108px;
+    width: 100%;
+    min-width: 0;
     min-height: 40px;
-    font-size: 14px;
-    white-space: nowrap;
-    padding: 8px 12px;
-    border-radius: 12px;
+    font-size: 12px;
+    padding: 7px 4px;
+    white-space: normal;
+    word-break: keep-all;
+    text-align: center;
   }
 }
 
