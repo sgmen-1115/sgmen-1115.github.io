@@ -61,13 +61,15 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background: var(--ui-glass);
+  background: rgba(25, 42, 92, 0.22);
+  backdrop-filter: blur(8px);
+  border-bottom: none;
+  box-shadow: none;
 }
-.fixed-header h1 {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-  color: #2f3f75;
+
+.fixed-header h1,
+.settings-btn {
+  color: rgba(245, 249, 255, 0.92);
 }
 .settings-btn {
   color: #2f3f75;
