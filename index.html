@@ -642,7 +642,7 @@ body {
     <input type="date" id="goal-date-input" class="goal-date-input">
     <button class="oumi-btn goal-save-date-btn" onclick="saveGoalDate()">目標日を保存</button>
   </div>
-  <p id="goal-date-countdown" class="goal-date-countdown">目標日を設定してください</p>
+  <p id="goal-date-countdown" class="goal-date-countdown">※目標日を設定してください</p>
 
   <label style="font-size: 0.8rem; font-weight: bold; color: #666; display: block; margin: 14px 0 8px;">
     目標リスト
@@ -894,10 +894,6 @@ if (noticeList) {
         document.getElementById('action-default').style.display = ac ? 'none' : 'block';
     }
 
-    function saveMyGoal() {
-        localStorage.setItem('myPersonalGoal', document.getElementById('my-goal-input').value);
-        alert("保存しました");
-    }
 
    function openTab(evt, tabId) {
   document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
