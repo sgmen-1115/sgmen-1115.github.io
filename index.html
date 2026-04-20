@@ -1105,13 +1105,19 @@ if (noticeList) {
         }
     }
 
-    function applyAreaSettings(key) {
-        document.querySelectorAll('.area-content').forEach(el => el.style.display = 'none');
-        const sc = document.getElementById('sched-' + key); if(sc) sc.style.display = 'block';
-        const ac = document.getElementById('action-' + key); if(ac) ac.style.display = 'block';
-        document.getElementById('sched-default').style.display = sc ? 'none' : 'block';
-        document.getElementById('action-default').style.display = ac ? 'none' : 'block';
-    }
+   function applyAreaSettings(key) {
+  document.querySelectorAll('.area-content').forEach(el => el.style.display = 'none');
+
+  const sc = document.getElementById('sched-' + key);
+  const ac = document.getElementById('action-' + key);
+  const schedDefault = document.getElementById('sched-default');
+  const actionDefault = document.getElementById('action-default');
+
+  if (sc) sc.style.display = 'block';
+  if (ac) ac.style.display = 'block';
+  if (schedDefault) schedDefault.style.display = sc ? 'none' : 'block';
+  if (actionDefault) actionDefault.style.display = ac ? 'none' : 'block';
+}
 
 
    function openTab(evt, tabId) {
