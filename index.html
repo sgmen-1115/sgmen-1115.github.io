@@ -779,6 +779,18 @@ let userRef = null;
 let isAuthReady = false;
 let isUserListenerBound = false;
 
+function wait(ms) {
+return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function ensureAuthReady(maxMs = 8000) {
+const start = Date.now();
+while ((!isAuthReady || !userRef) && Date.now() - start < maxMs) {
+await wait(200);
+}
+return isAuthReady && !!userRef;
+}
+
 function bindUserDataListener() {
   if (!userRef) return;
 
