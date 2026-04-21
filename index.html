@@ -593,7 +593,7 @@ font-size: 0.8rem;
 <div id="settings-modal">
     <div class="modal-content">
         <h3>プロフィール設定</h3>
-        <p style="font-size:0.75rem; color:#666;">ユーザー名はPC/スマホ同期用です。重複はできません。</p>
+        <p style="font-size:0.75rem; color:#666;"> 表示名を保存します。個人を特定できる情報（本名・電話番号・住所など）は入力しないでください。 </p>
         <input type="text" id="input-username" placeholder="ユーザー名を入力">
         <hr style="border:0; border-top:1px solid #eee; margin:15px 0;">
         <select id="select-houmen" onchange="updateSoukuList()">
@@ -795,35 +795,65 @@ function bindUserDataListener() {
   });
 }
 
+    function validateDisplayName(name) {
+const trimmed = (name || "").trim();
+
+if (!trimmed) {
+return { ok: false, message: "表示名を入力してください。" };
+}
+if (trimmed.length > 20) {
+return { ok: false, message: "表示名は20文字以内で入力してください。" };
+}
+if (/[\r\n]/.test(trimmed)) {
+return { ok: false, message: "改行は使用できません。" };
+}
+
+const ngPatterns = [
+/\d{2,4}-\d{2,4}-\d{3,4}/,
+/\d{10,11}/,
+/@/,
+/(都|道|府|県|市|区|町|村|丁目|番地)/
+];
+for (const p of ngPatterns) {
+if (p.test(trimmed)) {
+return { ok: false, message: "個人情報に該当する内容は入力しないでください。" };
+}
+}
+
+return { ok: true, value: trimmed };
+}
     
 // 設定保存（UID配下に保存）
 document.getElementById("save-settings-btn").onclick = async () => {
-  const inputName = document.getElementById("input-username").value.trim();
-  const selectedArea = document.getElementById("select-souku").value;
+const inputRaw = document.getElementById("input-username").value;
+const selectedArea = document.getElementById("select-souku").value;
 
-  if (!inputName) {
-    alert("ユーザー名を入力してください");
-    return;
-  }
-  if (!isAuthReady || !userRef) {
-    alert("初期化中です。少し待ってもう一度お試しください。");
-    return;
-  }
+const check = validateDisplayName(inputRaw);
+if (!check.ok) {
+alert(check.message);
+return;
+}
 
-  currentUsername = inputName;
-  localStorage.setItem("sokaUsername", inputName);
-  localStorage.setItem("userArea", selectedArea);
+const inputName = check.value;
 
-  await update(userRef, {
-    username: inputName,
-    area: selectedArea,
-    updatedAt: Date.now()
-  });
+if (!isAuthReady || !userRef) {
+alert("初期化中です。少し待ってもう一度お試しください。");
+return;
+}
 
-  alert("設定を保存しました");
- window.toggleSettings();
+currentUsername = inputName;
+localStorage.setItem("sokaUsername", inputName);
+localStorage.setItem("userArea", selectedArea);
+
+await update(userRef, {
+username: inputName,
+area: selectedArea,
+updatedAt: Date.now()
+});
+
+alert("設定を保存しました");
+window.toggleSettings();
 };
-
 // --- 予定（閲覧専用） ---
 let currentAreaKey = "common";
 let scheduleWatchBound = false;
