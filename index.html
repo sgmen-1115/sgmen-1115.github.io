@@ -83,21 +83,12 @@
       text-overflow: ellipsis;
     }
 
-    /* ===== 上部サブタブ ===== */
-    .subtab-wrap {
-      position: sticky;
-      top: var(--header-h);
-      z-index: 2600;
-      padding: 8px 12px;
-      background: rgba(25, 42, 92, 0.22);
-      backdrop-filter: blur(8px);
-    }
-
-    .subtab-menu {
+    /* ===== サブタブ ===== */
+      .subtab-menu {
       display: flex;
+      flex-direction: row;
       gap: 8px;
-      width: min(900px, 100%);
-      margin: 0 auto;
+       margin: 12px 0 4px;
     }
 
     .subtab-btn {
@@ -490,18 +481,6 @@
     <h1>SOKA Men's Division Official</h1>
   </div>
 
-  <!-- 上部サブタブ（動画・学習タブ時のみ表示） -->
-  <div id="context-subtabs" class="subtab-wrap" hidden>
-    <div id="videos-subtabs" class="subtab-menu" hidden>
-      <button class="subtab-btn active" onclick="openSubTab('videos','videos-new',this)">新着</button>
-      <button class="subtab-btn" onclick="openSubTab('videos','videos-reco',this)">おすすめ</button>
-    </div>
-    <div id="study-subtabs" class="subtab-menu" hidden>
-      <button class="subtab-btn active" onclick="openSubTab('study','study-work',this)">仕事</button>
-      <button class="subtab-btn" onclick="openSubTab('study','study-activity',this)">活動</button>
-      <button class="subtab-btn" onclick="openSubTab('study','study-kyogaku',this)">教学</button>
-    </div>
-  </div>
 
   <!-- ホームタブ -->
   <div id="home" class="tab-content active">
@@ -542,8 +521,12 @@
   </div>
 
   <!-- 動画タブ -->
-  <div id="videos" class="tab-content">
-    <div id="videos-new" class="subpane active" data-subgroup="videos">
+<div id="videos" class="tab-content">
+    <div class="subtab-menu">
+      <button class="subtab-btn active" onclick="openSubTab('videos','videos-new',this)">新着</button>
+      <button class="subtab-btn" onclick="openSubTab('videos','videos-reco',this)">おすすめ</button>
+    </div>
+     <div id="videos-new" class="subpane active" data-subgroup="videos">
       <div class="sub-title">動画（新着）</div>
       <div class="card">
         <div class="shorts-row">
@@ -578,8 +561,13 @@
   </div>
 
   <!-- 学習タブ -->
-  <div id="study" class="tab-content">
-    <div id="study-work" class="subpane active" data-subgroup="study">
+ <div id="study" class="tab-content">
+    <div class="subtab-menu">
+      <button class="subtab-btn active" onclick="openSubTab('study','study-work',this)">仕事</button>
+      <button class="subtab-btn" onclick="openSubTab('study','study-activity',this)" >活動</button>
+      <button class="subtab-btn" onclick="openSubTab('study','study-kyogaku',this)">教学</button>
+    </div>
+     <div id="study-work" class="subpane active" data-subgroup="study">
       <div class="sub-title">学習資料（仕事）</div>
       <div class="card">
         <button type="button" class="study-thumb-btn" onclick="openStudyImage()">
@@ -632,14 +620,7 @@
       if (target) target.classList.add("active");
       if (btn) btn.classList.add("active");
 
-      const wrap = document.getElementById("context-subtabs");
-      const videosTabs = document.getElementById("videos-subtabs");
-      const studyTabs = document.getElementById("study-subtabs");
-
-      wrap.hidden = (tabId === "home");
-      videosTabs.hidden = (tabId !== "videos");
-      studyTabs.hidden = (tabId !== "study");
-    }
+      }
 
     // ===== サブタブ切替 =====
     function openSubTab(group, paneId, btn) {
