@@ -31,6 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&display=swap" rel="stylesheet" />
 
   <style>
+    /* ===== 変数 ===== */
     :root {
       --primary-color: #003366;
       --white: #ffffff;
@@ -40,17 +41,20 @@
       --hero-image: url("title_pic.jpg");
     }
 
+    /* ===== リセット ===== */
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       padding-top: var(--header-h);
+      padding-bottom: calc(74px + env(safe-area-inset-bottom));
       color: var(--text-blue);
       font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
       background: linear-gradient(180deg, #7ca2ef 0%, #4f78cc 48%, #2d4ea1 100%);
       background-attachment: fixed;
     }
 
+    /* ===== ヘッダー ===== */
     .fixed-header {
       position: fixed;
       top: 0;
@@ -79,43 +83,42 @@
       text-overflow: ellipsis;
     }
 
-    .tab-menu {
+    /* ===== 上部サブタブ ===== */
+    .subtab-wrap {
       position: sticky;
       top: var(--header-h);
-      z-index: 2500;
-      height: var(--tab-h);
-      margin: 0 auto;
-      padding: 10px 12px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: min(1440px, calc(100% - 24px));
+      z-index: 2600;
+      padding: 8px 12px;
       background: rgba(25, 42, 92, 0.22);
       backdrop-filter: blur(8px);
-      border-radius: 0 0 22px 22px;
     }
 
-    .tab-menu .tab-link {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 42px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.26);
+    .subtab-menu {
+      display: flex;
+      gap: 8px;
+      width: min(900px, 100%);
+      margin: 0 auto;
+    }
+
+    .subtab-btn {
+      border: 1px solid rgba(255, 255, 255, 0.25);
       background: rgba(255, 255, 255, 0.08);
-      color: rgba(245, 249, 255, 0.9);
+      color: rgba(245, 249, 255, 0.92);
+      border-radius: 999px;
+      min-height: 36px;
+      padding: 7px 14px;
       font-weight: 700;
-      font-size: 0.95rem;
-      line-height: 1.1;
-      padding: 8px 10px;
+      font-size: 0.86rem;
       cursor: pointer;
     }
 
-    .tab-menu .tab-link.active {
+    .subtab-btn.active {
       background: rgba(255, 255, 255, 0.24);
-      color: #ffffff;
       border-color: rgba(255, 255, 255, 0.42);
+      color: #fff;
     }
 
+    /* ===== タブコンテンツ ===== */
     .tab-content {
       display: none;
       position: relative;
@@ -148,6 +151,11 @@
       z-index: 1;
     }
 
+    /* ===== サブペイン ===== */
+    .subpane { display: none; }
+    .subpane.active { display: block; }
+
+    /* ===== ホーム ヒーロー ===== */
     .page-visual {
       position: relative;
       min-height: calc(100vh - (var(--header-h) + var(--tab-h)));
@@ -202,11 +210,9 @@
       border-radius: 999px;
     }
 
-    .hero-title rt {
-      font-size: 0.45em;
-      letter-spacing: 0;
-    }
+    .hero-title rt { font-size: 0.45em; letter-spacing: 0; }
 
+    /* ===== カード ===== */
     .card {
       background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(10px);
@@ -239,6 +245,7 @@
       margin: 15px 0 10px 0;
     }
 
+    /* ===== 動画（16:9） ===== */
     .video-container {
       position: relative;
       padding-bottom: 56.25%;
@@ -256,6 +263,7 @@
       border: 0;
     }
 
+    /* ===== Shorts（縦動画）===== */
     .shorts-row {
       display: flex;
       gap: 12px;
@@ -307,408 +315,384 @@
       border: 0;
     }
 
-    @media (max-width: 768px) {
-      .fixed-header {
-        padding: 0 12px;
-      }
-
-      .fixed-header h1 {
-        font-size: 0.72rem;
-        letter-spacing: 0.08em;
-      }
-
-      .tab-menu {
-        width: 100%;
-        padding: 8px;
-        gap: 6px;
-        border-radius: 0;
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        align-items: stretch;
-        overflow: hidden;
-        height: auto;
-      }
-
-      .tab-menu .tab-link {
-        width: 100%;
-        min-width: 0;
-        min-height: 40px;
-        font-size: 12px;
-        padding: 7px 4px;
-        white-space: normal;
-        word-break: keep-all;
-        text-align: center;
-      }
-
-      .shorts-card {
-        flex-basis: 72vw;
-      }
+    /* ===== リンクサムネイル ===== */
+    .link-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 6px 2px 10px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
     }
-.link-grid {
-  display: flex;
-  gap: 12px;
-  overflow-x: auto;
-  padding: 6px 2px 10px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
 
-.link-thumb {
-  flex: 0 0 min(280px, 78vw);
-  display: block;
-  text-decoration: none;
-  color: #17325f;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  scroll-snap-align: start;
-}
+    .link-thumb {
+      flex: 0 0 min(280px, 78vw);
+      display: block;
+      text-decoration: none;
+      color: #17325f;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      scroll-snap-align: start;
+    }
 
-.link-thumb:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
-}
+    .link-thumb:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
 
-.link-thumb img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block;
-  background: #dfe8ff;
-}
+    .link-thumb img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      background: #dfe8ff;
+    }
 
-.link-thumb .meta {
-  padding: 10px 12px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  line-height: 1.4;
-}
+    .link-thumb .meta {
+      padding: 10px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
 
-@media (max-width: 768px) {
-  .link-thumb {
-    flex-basis: 82vw;
-  }
-}
+    /* ===== 学習サムネイル ===== */
+    .study-thumb-btn {
+      width: 100%;
+      border: 0;
+      background: #fff;
+      border-radius: 14px;
+      padding: 0;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      text-align: left;
+    }
 
-.study-thumb-btn {
-width: 100%;
-border: 0;
-background: #fff;
-border-radius: 14px;
-padding: 0;
-overflow: hidden;
-cursor: pointer;
-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-text-align: left;
-}
+    .study-thumb-img {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #dfe8ff;
+    }
 
-.study-thumb-img {
-width: 100%;
-display: block;
-aspect-ratio: 16 / 9;
-object-fit: cover;
-background: #dfe8ff;
-}
+    .study-thumb-caption {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #17325f;
+    }
 
-.study-thumb-caption {
-padding: 10px 12px;
-font-size: 0.9rem;
-font-weight: 700;
-color: #17325f;
-}
+    /* ===== 学習モーダル ===== */
+    .study-image-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      background: rgba(0, 0, 0, 0.72);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
 
-.study-image-modal {
-display: none;
-position: fixed;
-inset: 0;
-z-index: 4000;
-background: rgba(0, 0, 0, 0.72);
-align-items: center;
-justify-content: center;
-padding: 16px;
-}
+    .study-image-modal.open {
+      display: flex;
+    }
 
-.study-image-wrap {
-width: min(960px, 96vw);
-max-height: 92vh;
-display: flex;
-flex-direction: column;
-gap: 10px;
-}
+    .study-image-wrap {
+      width: min(960px, 96vw);
+      max-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-.study-image-full {
-width: 100%;
-max-height: calc(92vh - 52px);
-object-fit: contain;
-border-radius: 12px;
-background: #111;
-}
+    .study-image-full {
+      width: 100%;
+      max-height: calc(92vh - 52px);
+      object-fit: contain;
+      border-radius: 12px;
+      background: #111;
+    }
 
-.study-image-close {
-border: 0;
-border-radius: 999px;
-padding: 10px 16px;
-font-weight: 700;
-cursor: pointer;
-}
+    .study-image-close {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-できます。下部固定タブにするなら、今の構成のまま「追加・差し替え」だけで実装できます。  
-以下をそのままコピペしてください。
+    /* ===== 下部固定タブ ===== */
+    .bottom-tabbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 5000;
+      height: calc(64px + env(safe-area-inset-bottom));
+      padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      background: rgba(20, 34, 74, 0.94);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 255, 255, 0.16);
+    }
 
-### 1) CSS追加（styleの最後）
-```css
-/* 下部固定タブ */
-body {
-  padding-bottom: calc(78px + env(safe-area-inset-bottom));
-}
+    .bottom-tab {
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: rgba(235, 242, 255, 0.75);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+    }
 
-.bottom-tabbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 5000;
-  height: calc(64px + env(safe-area-inset-bottom));
-  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  background: rgba(20, 34, 74, 0.92);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
-}
+    .bottom-tab svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-.bottom-tab {
-  border: 0;
-  border-radius: 12px;
-  background: transparent;
-  color: rgba(235, 242, 255, 0.75);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  font-size: 11px;
-  font-weight: 700;
-  cursor: pointer;
-}
+    .bottom-tab.active {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+    }
 
-.bottom-tab .icon {
-  font-size: 18px;
-  line-height: 1;
-}
-
-.bottom-tab.active {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-}
-```
-
-### 2) HTML追加（`</body>` の直前）
-```html
-<nav class="bottom-tabbar" aria-label="下部ナビゲーション">
-  <button class="bottom-tab active" onclick="openTab(event, 'home')">
-    <span class="icon">🏠</span>
-    <span>ホーム</span>
-  </button>
-  <button class="bottom-tab" onclick="openTab(event, 'videos')">
-    <span class="icon">🎬</span>
-    <span>動画</span>
-  </button>
-  <button class="bottom-tab" onclick="openTab(event, 'study')">
-    <span class="icon">📘</span>
-    <span>学習</span>
-  </button>
-</nav>
-```
-
-### 3) `openTab` 関数を差し替え
-```js
-function openTab(evt, tabId) {
-  document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
-  document.querySelectorAll(".tab-link, .bottom-tab").forEach((el) => el.classList.remove("active"));
-
-  const target = document.getElementById(tabId);
-  if (target) target.classList.add("active");
-  if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
-}
-```
-
-必要なら次に、絵文字ではなく「線アイコン（Home/Play/Book）」の本格版にします。
+    /* ===== レスポンシブ ===== */
+    @media (max-width: 768px) {
+      .fixed-header { padding: 0 12px; }
+      .fixed-header h1 { font-size: 0.72rem; letter-spacing: 0.08em; }
+      .shorts-card { flex-basis: 72vw; }
+      .link-thumb { flex-basis: 82vw; }
+    }
   </style>
 </head>
 
 <body>
+  <!-- ヘッダー -->
   <div class="fixed-header">
     <h1>SOKA Men's Division Official</h1>
   </div>
 
-  <div class="tab-menu">
-    <button class="tab-link active" onclick="openTab(event, 'home')">ホーム</button>
-    <button class="tab-link" onclick="openTab(event, 'videos')">動画</button>
-    <button class="tab-link" onclick="openTab(event, 'study')">学習</button>
+  <!-- 上部サブタブ（動画・学習タブ時のみ表示） -->
+  <div id="context-subtabs" class="subtab-wrap" hidden>
+    <div id="videos-subtabs" class="subtab-menu" hidden>
+      <button class="subtab-btn active" onclick="openSubTab('videos','videos-new',this)">新着</button>
+      <button class="subtab-btn" onclick="openSubTab('videos','videos-reco',this)">おすすめ</button>
+    </div>
+    <div id="study-subtabs" class="subtab-menu" hidden>
+      <button class="subtab-btn active" onclick="openSubTab('study','study-work',this)">仕事</button>
+      <button class="subtab-btn" onclick="openSubTab('study','study-activity',this)">活動</button>
+      <button class="subtab-btn" onclick="openSubTab('study','study-kyogaku',this)">教学</button>
+    </div>
   </div>
 
-<div id="home" class="tab-content active">
-  <div class="page-visual">
-    <div class="hero-container">
-      <div class="hero-content">
-        <div style="font-size:0.8rem; letter-spacing:3px; margin-bottom:8px; font-weight:bold; color:#dbe9ff;">
-          MEN'S DIVISION
+  <!-- ホームタブ -->
+  <div id="home" class="tab-content active">
+    <div class="page-visual">
+      <div class="hero-container">
+        <div class="hero-content">
+          <div style="font-size:0.8rem; letter-spacing:3px; margin-bottom:8px; font-weight:bold; color:#dbe9ff;">
+            MEN'S DIVISION
+          </div>
+          <h2 class="hero-title">答えは、僕の<ruby>生命<rt>なか</rt></ruby>にある。</h2>
         </div>
-        <h2 class="hero-title">答えは、僕の<ruby>生命<rt>なか</rt></ruby>にある。</h2>
-      </div>
-    </div>
-
-    <div style="padding:20px; max-width:800px; margin:0 auto;">
-      <div class="card" style="text-align:center;">
-        <span style="font-size:0.8rem; color:rgba(255,255,255,0.75);">7.11 男子部結成記念日まで</span>
-        <div id="timer" style="font-size:1.8rem; font-weight:bold; color:#fff;">計算中...</div>
       </div>
 
-      <div class="sub-title">注目動画</div>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/WORGpCGs3GY?start=483" allowfullscreen></iframe>
-      </div>
+      <div style="padding:20px; max-width:800px; margin:0 auto;">
+        <div class="card" style="text-align:center;">
+          <span style="font-size:0.8rem; color:rgba(255,255,255,0.75);">7.11 男子部結成記念日まで</span>
+          <div id="timer" style="font-size:1.8rem; font-weight:bold; color:#fff;">計算中...</div>
+        </div>
 
-      <div class="sub-title">おすすめリンク</div>
-      <div class="link-grid">
-        <a class="link-thumb" href="https://sokadisearch.org/ja/lp/" target="_blank" rel="noopener noreferrer">
-          <img src="https://image.thum.io/get/width/1000/noanimate/https://sokadisearch.org/ja/lp/" alt="SOKA DiSearch" loading="lazy">
-          <div class="meta">SOKA DiSearch</div>
-        </a>
-        <a class="link-thumb" href="https://www.sokayouth-media.jp/" target="_blank" rel="noopener noreferrer">
-          <img src="https://image.thum.io/get/width/1000/noanimate/https://www.sokayouth-media.jp/" alt="SOKA Youth Media" loading="lazy">
-          <div class="meta">SOKA Youth Media</div>
-        </a>
+        <div class="sub-title">注目動画</div>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/WORGpCGs3GY?start=483" allowfullscreen></iframe>
+        </div>
+
+        <div class="sub-title">おすすめリンク</div>
+        <div class="link-grid">
+          <a class="link-thumb" href="https://sokadisearch.org/ja/lp/" target="_blank" rel="noopener noreferrer">
+            <img src="https://image.thum.io/get/width/1000/noanimate/https://sokadisearch.org/ja/lp/" alt="SOKA DiSearch" loading="lazy">
+            <div class="meta">SOKA DiSearch</div>
+          </a>
+          <a class="link-thumb" href="https://www.sokayouth-media.jp/" target="_blank" rel="noopener noreferrer">
+            <img src="https://image.thum.io/get/width/1000/noanimate/https://www.sokayouth-media.jp/" alt="SOKA Youth Media" loading="lazy">
+            <div class="meta">SOKA Youth Media</div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <!-- 動画タブ -->
   <div id="videos" class="tab-content">
-    <div class="sub-title">動画（Shorts）</div>
-    <div class="card">
-      <div class="shorts-row">
-        <button class="shorts-card js-short" data-id="IkYfUuDlCUM" aria-label="動画1">
-          <img src="https://i.ytimg.com/vi_webp/IkYfUuDlCUM/hqdefault.webp" alt="動画1" />
-          <span class="shorts-play">▶</span>
-        </button>
-
-        <button class="shorts-card js-short" data-id="boA5kFqggE8" aria-label="動画2">
-          <img src="https://i.ytimg.com/vi_webp/boA5kFqggE8/hqdefault.webp" alt="動画2" />
-          <span class="shorts-play">▶</span>
-        </button>
-
-        <button class="shorts-card js-short" data-id="r_lZPLBDyHM" aria-label="動画3">
-          <img src="https://i.ytimg.com/vi_webp/r_lZPLBDyHM/hqdefault.webp" alt="動画3" />
-          <span class="shorts-play">▶</span>
-        </button>
-
-        <button class="shorts-card js-short" data-id="xsrxm140q2E" aria-label="動画4">
-          <img src="https://i.ytimg.com/vi_webp/xsrxm140q2E/hqdefault.webp" alt="動画4" />
-          <span class="shorts-play">▶</span>
-        </button>
-
-        <button class="shorts-card js-short" data-id="DTM88cfE85c" aria-label="動画5">
-          <img src="https://i.ytimg.com/vi_webp/DTM88cfE85c/hqdefault.webp" alt="動画5" />
-          <span class="shorts-play">▶</span>
-        </button>
+    <div id="videos-new" class="subpane active" data-subgroup="videos">
+      <div class="sub-title">動画（新着）</div>
+      <div class="card">
+        <div class="shorts-row">
+          <button class="shorts-card js-short" data-id="IkYfUuDlCUM" aria-label="動画1">
+            <img src="https://i.ytimg.com/vi_webp/IkYfUuDlCUM/hqdefault.webp" alt="動画1" />
+            <span class="shorts-play">▶</span>
+          </button>
+          <button class="shorts-card js-short" data-id="boA5kFqggE8" aria-label="動画2">
+            <img src="https://i.ytimg.com/vi_webp/boA5kFqggE8/hqdefault.webp" alt="動画2" />
+            <span class="shorts-play">▶</span>
+          </button>
+          <button class="shorts-card js-short" data-id="r_lZPLBDyHM" aria-label="動画3">
+            <img src="https://i.ytimg.com/vi_webp/r_lZPLBDyHM/hqdefault.webp" alt="動画3" />
+            <span class="shorts-play">▶</span>
+          </button>
+          <button class="shorts-card js-short" data-id="xsrxm140q2E" aria-label="動画4">
+            <img src="https://i.ytimg.com/vi_webp/xsrxm140q2E/hqdefault.webp" alt="動画4" />
+            <span class="shorts-play">▶</span>
+          </button>
+          <button class="shorts-card js-short" data-id="DTM88cfE85c" aria-label="動画5">
+            <img src="https://i.ytimg.com/vi_webp/DTM88cfE85c/hqdefault.webp" alt="動画5" />
+            <span class="shorts-play">▶</span>
+          </button>
+        </div>
       </div>
+    </div>
+
+    <div id="videos-reco" class="subpane" data-subgroup="videos">
+      <div class="sub-title">動画（おすすめ）</div>
+      <div class="card"><p>おすすめ動画をここに配置</p></div>
     </div>
   </div>
 
-<div id="study" class="tab-content">
-  <div class="sub-title">学習資料</div>
-  <div class="card">
-    <button type="button" class="study-thumb-btn" onclick="openStudyImage()">
-      <img src="zaimu.title.png" alt="学習資料サムネイル" class="study-thumb-img">
-      <div class="study-thumb-caption">財務 学習資料を見る</div>
+  <!-- 学習タブ -->
+  <div id="study" class="tab-content">
+    <div id="study-work" class="subpane active" data-subgroup="study">
+      <div class="sub-title">学習資料（仕事）</div>
+      <div class="card">
+        <button type="button" class="study-thumb-btn" onclick="openStudyImage()">
+          <img src="zaimu.title.png" alt="学習資料サムネイル" class="study-thumb-img">
+          <div class="study-thumb-caption">財務 学習資料を見る</div>
+        </button>
+      </div>
+    </div>
+    <div id="study-activity" class="subpane" data-subgroup="study">
+      <div class="sub-title">学習資料（活動）</div>
+      <div class="card"><p>活動用の資料をここに配置</p></div>
+    </div>
+    <div id="study-kyogaku" class="subpane" data-subgroup="study">
+      <div class="sub-title">学習資料（教学）</div>
+      <div class="card"><p>教学用の資料をここに配置</p></div>
+    </div>
+  </div>
+
+  <!-- 学習モーダル -->
+  <div id="study-image-modal" class="study-image-modal" onclick="closeStudyImage()">
+    <div class="study-image-wrap" onclick="event.stopPropagation()">
+      <img src="zaimu.png" alt="学習資料" class="study-image-full">
+      <button type="button" class="study-image-close" onclick="closeStudyImage()">閉じる</button>
+    </div>
+  </div>
+
+  <!-- 下部タブ -->
+  <nav class="bottom-tabbar" aria-label="メインナビゲーション">
+    <button class="bottom-tab active" data-primary="home" onclick="openPrimaryTab('home', this)">
+      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
+      <span>ホーム</span>
     </button>
-  </div>
-</div>
+    <button class="bottom-tab" data-primary="videos" onclick="openPrimaryTab('videos', this)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 10l4-2v8l-4-2z"/></svg>
+      <span>動画</span>
+    </button>
+    <button class="bottom-tab" data-primary="study" onclick="openPrimaryTab('study', this)">
+      <svg viewBox="0 0 24 24"><path d="M4 6.5A3.5 3.5 0 0 1 7.5 3H20v16.5h-12A3.5 3.5 0 0 0 4.5 23"/><path d="M20 3v16.5"/></svg>
+      <span>学習</span>
+    </button>
+  </nav>
 
-<div id="study-image-modal" class="study-image-modal" onclick="closeStudyImage()">
-  <div class="study-image-wrap" onclick="event.stopPropagation()">
-    <img src="zaimu.png" alt="学習資料" class="study-image-full">
-    <button type="button" class="study-image-close" onclick="closeStudyImage()">閉じる</button>
-  </div>
-</div>
+  <script>
+    // ===== タブ切替 =====
+    function openPrimaryTab(tabId, btn) {
+      document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
+      document.querySelectorAll(".bottom-tab").forEach((el) => el.classList.remove("active"));
 
-<script>
- function openTab(evt, tabId) {
-  document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
-  document.querySelectorAll(".tab-link, .bottom-tab").forEach((el) => el.classList.remove("active"));
+      const target = document.getElementById(tabId);
+      if (target) target.classList.add("active");
+      if (btn) btn.classList.add("active");
 
-  const target = document.getElementById(tabId);
-  if (target) target.classList.add("active");
-  if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
-}
+      const wrap = document.getElementById("context-subtabs");
+      const videosTabs = document.getElementById("videos-subtabs");
+      const studyTabs = document.getElementById("study-subtabs");
 
-  function updateCountdown() {
-    const now = new Date();
-    const thisYear = new Date(now.getFullYear(), 6, 11, 0, 0, 0, 0);
-    const target = now <= thisYear ? thisYear : new Date(now.getFullYear() + 1, 6, 11, 0, 0, 0, 0);
-    const diff = target.getTime() - now.getTime();
+      wrap.hidden = (tabId === "home");
+      videosTabs.hidden = (tabId !== "videos");
+      studyTabs.hidden = (tabId !== "study");
+    }
 
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
+    // ===== サブタブ切替 =====
+    function openSubTab(group, paneId, btn) {
+      document.querySelectorAll('[data-subgroup="' + group + '"]').forEach((el) => el.classList.remove("active"));
+      document.getElementById(paneId).classList.add("active");
+      btn.parentElement.querySelectorAll(".subtab-btn").forEach((el) => el.classList.remove("active"));
+      btn.classList.add("active");
+    }
 
-    const el = document.getElementById("timer");
-    if (el) el.textContent = d + "日 " + h + "時 " + m + "分 " + s + "秒";
-  }
+    // ===== 学習モーダル =====
+    function openStudyImage() {
+      document.getElementById("study-image-modal").classList.add("open");
+    }
 
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
+    function closeStudyImage() {
+      document.getElementById("study-image-modal").classList.remove("open");
+    }
 
-  document.querySelectorAll(".js-short").forEach((el) => {
-    el.addEventListener("click", () => {
-      const id = el.dataset.id;
-      const iframe = document.createElement("iframe");
-      iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1&rel=0";
-      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-      iframe.allowFullscreen = true;
-      el.innerHTML = "";
-      el.appendChild(iframe);
-    }, { once: true });
-  });
-
-  function openStudyImage() {
-    const modal = document.getElementById("study-image-modal");
-    if (modal) modal.style.display = "flex";
-  }
-
-  function closeStudyImage() {
-    const modal = document.getElementById("study-image-modal");
-    if (modal) modal.style.display = "none";
-  }
-
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("/sw.js", { scope: "/" })
-        .then((reg) => console.log("ServiceWorker registered:", reg))
-        .catch((err) => console.error("SW registration failed:", err));
+    // ===== Shorts タップで再生 =====
+    document.querySelectorAll(".js-short").forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.dataset.id;
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1";
+        iframe.allow = "autoplay; encrypted-media";
+        iframe.allowFullscreen = true;
+        card.innerHTML = "";
+        card.appendChild(iframe);
+      });
     });
-  }
-</script>
-  <nav class="bottom-tabbar" aria-label="下部ナビゲーション">
-  <button class="bottom-tab active" onclick="openTab(event, 'home')">
-    <span class="icon">🏠</span>
-    <span>ホーム</span>
-  </button>
-  <button class="bottom-tab" onclick="openTab(event, 'videos')">
-    <span class="icon">🎬</span>
-    <span>動画</span>
-  </button>
-  <button class="bottom-tab" onclick="openTab(event, 'study')">
-    <span class="icon">📘</span>
-    <span>学習</span>
-  </button>
-</nav>
+
+    // ===== カウントダウン =====
+    function updateCountdown() {
+      const target = new Date("2026-07-11T00:00:00+09:00");
+      const diff = target - new Date();
+      if (diff <= 0) {
+        document.getElementById("timer").textContent = "本日！";
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById("timer").textContent = `あと ${d}日 ${h}時間 ${m}分 ${s}秒`;
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ===== 初期表示 =====
+    window.addEventListener("load", () => {
+      const homeBtn = document.querySelector('.bottom-tab[data-primary="home"]');
+      openPrimaryTab("home", homeBtn);
+    });
+  </script>
 </body>
 </html>
