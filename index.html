@@ -454,6 +454,90 @@ padding: 10px 16px;
 font-weight: 700;
 cursor: pointer;
 }
+
+できます。下部固定タブにするなら、今の構成のまま「追加・差し替え」だけで実装できます。  
+以下をそのままコピペしてください。
+
+### 1) CSS追加（styleの最後）
+```css
+/* 下部固定タブ */
+body {
+  padding-bottom: calc(78px + env(safe-area-inset-bottom));
+}
+
+.bottom-tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5000;
+  height: calc(64px + env(safe-area-inset-bottom));
+  padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  background: rgba(20, 34, 74, 0.92);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.bottom-tab {
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: rgba(235, 242, 255, 0.75);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bottom-tab .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.bottom-tab.active {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+}
+```
+
+### 2) HTML追加（`</body>` の直前）
+```html
+<nav class="bottom-tabbar" aria-label="下部ナビゲーション">
+  <button class="bottom-tab active" onclick="openTab(event, 'home')">
+    <span class="icon">🏠</span>
+    <span>ホーム</span>
+  </button>
+  <button class="bottom-tab" onclick="openTab(event, 'videos')">
+    <span class="icon">🎬</span>
+    <span>動画</span>
+  </button>
+  <button class="bottom-tab" onclick="openTab(event, 'study')">
+    <span class="icon">📘</span>
+    <span>学習</span>
+  </button>
+</nav>
+```
+
+### 3) `openTab` 関数を差し替え
+```js
+function openTab(evt, tabId) {
+  document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
+  document.querySelectorAll(".tab-link, .bottom-tab").forEach((el) => el.classList.remove("active"));
+
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add("active");
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
+}
+```
+
+必要なら次に、絵文字ではなく「線アイコン（Home/Play/Book）」の本格版にします。
   </style>
 </head>
 
@@ -555,14 +639,14 @@ cursor: pointer;
 </div>
 
 <script>
-  function openTab(evt, tabId) {
-    document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
-    document.querySelectorAll(".tab-link").forEach((el) => el.classList.remove("active"));
+ function openTab(evt, tabId) {
+  document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
+  document.querySelectorAll(".tab-link, .bottom-tab").forEach((el) => el.classList.remove("active"));
 
-    const target = document.getElementById(tabId);
-    if (target) target.classList.add("active");
-    if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
-  }
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add("active");
+  if (evt && evt.currentTarget) evt.currentTarget.classList.add("active");
+}
 
   function updateCountdown() {
     const now = new Date();
@@ -612,5 +696,19 @@ cursor: pointer;
     });
   }
 </script>
+  <nav class="bottom-tabbar" aria-label="下部ナビゲーション">
+  <button class="bottom-tab active" onclick="openTab(event, 'home')">
+    <span class="icon">🏠</span>
+    <span>ホーム</span>
+  </button>
+  <button class="bottom-tab" onclick="openTab(event, 'videos')">
+    <span class="icon">🎬</span>
+    <span>動画</span>
+  </button>
+  <button class="bottom-tab" onclick="openTab(event, 'study')">
+    <span class="icon">📘</span>
+    <span>学習</span>
+  </button>
+</nav>
 </body>
 </html>
