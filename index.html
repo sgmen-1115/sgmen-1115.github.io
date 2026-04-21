@@ -344,21 +344,18 @@
         flex-basis: 72vw;
       }
     }
-link-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(220px, 280px));
-  gap: 14px;
-  justify-content: center;
-  width: 100%;
-  max-width: 620px;
-  margin: 8px auto 0;
+.link-grid {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 6px 2px 10px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .link-thumb {
+  flex: 0 0 min(280px, 78vw);
   display: block;
-  width: 100%;
-  max-width: 280px;
-  margin: 0 auto;
   text-decoration: none;
   color: #17325f;
   background: rgba(255, 255, 255, 0.92);
@@ -367,6 +364,7 @@ link-grid {
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  scroll-snap-align: start;
 }
 
 .link-thumb:hover {
@@ -390,13 +388,8 @@ link-grid {
 }
 
 @media (max-width: 768px) {
-  .link-grid {
-    grid-template-columns: 1fr;
-    max-width: 320px;
-  }
-
   .link-thumb {
-    max-width: 320px;
+    flex-basis: 82vw;
   }
 }
   </style>
