@@ -25,6 +25,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="男子部アプリ" />
   <link rel="apple-touch-icon" href="icon-192★.png" />
+  <link rel="icon" type="image/jpeg" href="ogp.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -558,6 +559,37 @@
       width: 100% !important;
     }
 
+    .x-fallback {
+      display: none;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: #f2f7ff;
+    }
+
+    .x-fallback.show {
+      display: block;
+    }
+
+    .x-fallback p {
+      margin: 0 0 8px;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .x-fallback a {
+      display: inline-block;
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #17325f;
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+    }
+
     .notice-board {
       list-style: none;
       margin: 0;
@@ -718,6 +750,10 @@
              href="https://twitter.com/yanashima_?ref_src=twsrc%5Etfw">
             Posts by @yanashima_
           </a>
+          <div id="x-fallback" class="x-fallback" role="status" aria-live="polite">
+            <p>X側の混雑によりタイムラインを取得できないため、リンクから直接ご確認ください。</p>
+            <a href="https://x.com/yanashima_" target="_blank" rel="noopener noreferrer">Xで開く</a>
+          </div>
         </div>
 
         <div class="sub-title">おすすめリンク</div>
@@ -896,6 +932,34 @@
   </nav>
 
   <script>
+    let xWidgetScriptRequested = false;
+    let xWidgetRendered = false;
+    const xWidgetCooldownKey = "xWidgetCooldownUntil";
+    const xWidgetCooldownMs = 10 * 60 * 1000;
+
+    function showXFallback(show) {
+      const box = document.getElementById("x-fallback");
+      if (!box) return;
+      box.classList.toggle("show", show);
+    }
+
+    function setXWidgetCooldown() {
+      try {
+        localStorage.setItem(xWidgetCooldownKey, String(Date.now() + xWidgetCooldownMs));
+      } catch (e) {
+        // localStorageが使えない環境では何もしない
+      }
+    }
+
+    function isXWidgetInCooldown() {
+      try {
+        const until = Number(localStorage.getItem(xWidgetCooldownKey) || "0");
+        return until > Date.now();
+      } catch (e) {
+        return false;
+      }
+    }
+
     // ===== タブ切替 =====
     function openPrimaryTab(tabId, btn) {
       document.querySelectorAll(".tab-content").forEach((el) => el.classList.remove("active"));
@@ -905,7 +969,7 @@
       if (target) target.classList.add("active");
       if (btn) btn.classList.add("active");
 
-      if (tabId === "home") {
+      if (tabId === "home" && !xWidgetRendered) {
         loadXTimelineWidget();
       }
     }
@@ -914,19 +978,52 @@
       const timeline = document.querySelector(".twitter-timeline");
       if (!timeline) return;
 
-      if (window.twttr && window.twttr.widgets) {
-        window.twttr.widgets.load(timeline.parentElement);
+      // 既に描画済みなら再読み込みしない（429回避）
+      if (xWidgetRendered) return;
+
+      if (isXWidgetInCooldown()) {
+        showXFallback(true);
         return;
       }
 
-      if (document.getElementById("x-widgets-script")) return;
+      const renderTimeline = () => {
+        if (window.twttr && window.twttr.widgets) {
+          showXFallback(false);
+          window.twttr.widgets.load(timeline.parentElement);
 
-      const script = document.createElement("script");
-      script.id = "x-widgets-script";
-      script.async = true;
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.charset = "utf-8";
-      document.body.appendChild(script);
+          // 一定時間後に埋め込み未生成ならフォールバックへ切り替える
+          window.setTimeout(() => {
+            const hasIframe = !!timeline.parentElement.querySelector("iframe");
+            if (hasIframe) {
+              xWidgetRendered = true;
+              showXFallback(false);
+            } else {
+              setXWidgetCooldown();
+              showXFallback(true);
+            }
+          }, 6000);
+        }
+      };
+
+      if (window.twttr && window.twttr.widgets) {
+        renderTimeline();
+        return;
+      }
+
+      if (xWidgetScriptRequested) return;
+      xWidgetScriptRequested = true;
+
+      let script = document.getElementById("x-widgets-script");
+      if (!script) {
+        script = document.createElement("script");
+        script.id = "x-widgets-script";
+        script.async = true;
+        script.src = "https://platform.twitter.com/widgets.js";
+        script.charset = "utf-8";
+        document.body.appendChild(script);
+      }
+
+      script.addEventListener("load", renderTimeline, { once: true });
     }
 
     // ===== サブタブ切替 =====
@@ -992,7 +1089,6 @@
     window.addEventListener("load", () => {
       const homeBtn = document.querySelector('.bottom-tab[data-primary="home"]');
       openPrimaryTab("home", homeBtn);
-      loadXTimelineWidget();
     });
   </script>
 </body>
