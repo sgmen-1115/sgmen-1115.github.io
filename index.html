@@ -323,29 +323,41 @@
       z-index: 1;
     }
 
-    .study-link-card {
+    .study-article-link {
       display: block;
-      width: 100%;
+      width: min(100%, 540px);
       text-decoration: none;
       color: #17325f;
       background: #fff;
       border-radius: 14px;
-      padding: 16px 18px;
+      overflow: hidden;
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .study-link-card strong {
-      display: block;
-      margin-bottom: 6px;
-      font-size: 1rem;
+    .study-article-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
     }
 
-    .study-link-card span {
+    .study-article-thumb {
       display: block;
-      font-size: 0.86rem;
-      line-height: 1.6;
-      color: #48628f;
-      word-break: break-all;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #dfe8ff;
+    }
+
+    .study-article-meta {
+      padding: 12px 14px;
+    }
+
+    .study-article-title {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.5;
+      color: #17325f;
     }
 
     /* ===== Shorts（縦動画）===== */
@@ -692,7 +704,14 @@
     </div>
     <div id="study-activity" class="subpane" data-subgroup="study">
       <div class="sub-title">学習資料（活動）</div>
-      <div class="card"><p>活動用の資料をここに配置</p></div>
+      <div class="card">
+        <a class="study-article-link" href="https://www.seikyoonline.com/article/E9FB51870888A4D7EBB81CD35A64F3EF" target="_blank" rel="noopener noreferrer">
+          <img class="study-article-thumb" src="tyudo_titlepng" alt="理念貫く「中道政治」を今こそ サムネイル" loading="lazy">
+          <div class="study-article-meta">
+            <p class="study-article-title">理念貫く「中道政治」を今こそ</p>
+          </div>
+        </a>
+      </div>
     </div>
     <div id="study-kyogaku" class="subpane" data-subgroup="study">
       <div class="sub-title">学習資料（教学）</div>
@@ -701,9 +720,11 @@
     <div id="study-qa" class="subpane" data-subgroup="study">
       <div class="sub-title">学習資料（Q＆A）</div>
       <div class="card">
-        <a class="study-link-card" href="https://www.sokayouth-media.jp/opinion/2881687.html" target="_blank" rel="noopener noreferrer">
-          <strong>財務 Q＆A を見る</strong>
-          <span>https://www.sokayouth-media.jp/opinion/2881687.html</span>
+        <a class="study-article-link" href="https://www.sokayouth-media.jp/opinion/2881687.html" target="_blank" rel="noopener noreferrer">
+          <img class="study-article-thumb" src="zaimu.title.png" alt="財務 Q＆A サムネイル" loading="lazy">
+          <div class="study-article-meta">
+            <p class="study-article-title">財務 Q＆A を見る</p>
+          </div>
         </a>
       </div>
     </div>
