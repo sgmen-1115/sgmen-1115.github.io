@@ -323,6 +323,31 @@
       z-index: 1;
     }
 
+    .study-link-card {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+      color: #17325f;
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px 18px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .study-link-card strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .study-link-card span {
+      display: block;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: #48628f;
+      word-break: break-all;
+    }
+
     /* ===== Shorts（縦動画）===== */
     .shorts-row {
       display: flex;
@@ -471,74 +496,6 @@
       color: #fff;
     }
 
-    /* ===== 学習サムネイル ===== */
-    .study-thumb-btn {
-      width: 100%;
-      border: 0;
-      background: #fff;
-      border-radius: 14px;
-      padding: 0;
-      overflow: hidden;
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      text-align: left;
-    }
-
-    .study-thumb-img {
-      width: 100%;
-      display: block;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-      background: #dfe8ff;
-    }
-
-    .study-thumb-caption {
-      padding: 10px 12px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #17325f;
-    }
-
-    /* ===== 学習モーダル ===== */
-    .study-image-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 4000;
-      background: rgba(0, 0, 0, 0.72);
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .study-image-modal.open {
-      display: flex;
-    }
-
-    .study-image-wrap {
-      width: min(960px, 96vw);
-      max-height: 92vh;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .study-image-full {
-      width: 100%;
-      max-height: calc(92vh - 52px);
-      object-fit: contain;
-      border-radius: 12px;
-      background: #111;
-    }
-
-    .study-image-close {
-      border: 0;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
     /* ===== 下部固定タブ ===== */
     .bottom-tabbar {
       position: fixed;
@@ -678,8 +635,11 @@
     </div>
     <div id="videos-new" class="subpane active" data-subgroup="videos">
       <div class="sub-title">動画（新着）</div>
-      <div class="card">
-        <p>新着動画を準備中です。</p>
+      <div class="card video-card-wrap">
+        <button type="button" class="featured-video-trigger js-featured-video" data-id="4rOAOxU0jWE" data-start="0" aria-label="新着動画を再生">
+          <img src="https://i.ytimg.com/vi/4rOAOxU0jWE/maxresdefault.jpg" alt="新着動画サムネイル" loading="lazy">
+          <span class="featured-video-play">▶</span>
+        </button>
       </div>
     </div>
 
@@ -724,15 +684,11 @@
       <button class="subtab-btn active" onclick="openSubTab('study','study-work',this)">仕事</button>
       <button class="subtab-btn" onclick="openSubTab('study','study-activity',this)" >活動</button>
       <button class="subtab-btn" onclick="openSubTab('study','study-kyogaku',this)">教学</button>
+      <button class="subtab-btn" onclick="openSubTab('study','study-qa',this)">Q＆A</button>
     </div>
     <div id="study-work" class="subpane active" data-subgroup="study">
       <div class="sub-title">学習資料（仕事）</div>
-      <div class="card">
-        <button type="button" class="study-thumb-btn" onclick="openStudyImage()">
-          <img src="zaimu.title.png" alt="学習資料サムネイル" class="study-thumb-img">
-          <div class="study-thumb-caption">財務 学習資料を見る</div>
-        </button>
-      </div>
+      <div class="card"><p>仕事に関する資料をここに配置</p></div>
     </div>
     <div id="study-activity" class="subpane" data-subgroup="study">
       <div class="sub-title">学習資料（活動）</div>
@@ -742,13 +698,14 @@
       <div class="sub-title">学習資料（教学）</div>
       <div class="card"><p>教学用の資料をここに配置</p></div>
     </div>
-  </div>
-
-  <!-- 学習モーダル -->
-  <div id="study-image-modal" class="study-image-modal" onclick="closeStudyImage()">
-    <div class="study-image-wrap" onclick="event.stopPropagation()">
-      <img src="zaimu.png" alt="学習資料" class="study-image-full">
-      <button type="button" class="study-image-close" onclick="closeStudyImage()">閉じる</button>
+    <div id="study-qa" class="subpane" data-subgroup="study">
+      <div class="sub-title">学習資料（Q＆A）</div>
+      <div class="card">
+        <a class="study-link-card" href="https://www.sokayouth-media.jp/opinion/2881687.html" target="_blank" rel="noopener noreferrer">
+          <strong>財務 Q＆A を見る</strong>
+          <span>https://www.sokayouth-media.jp/opinion/2881687.html</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -785,15 +742,6 @@
       document.getElementById(paneId).classList.add("active");
       btn.parentElement.querySelectorAll(".subtab-btn").forEach((el) => el.classList.remove("active"));
       btn.classList.add("active");
-    }
-
-    // ===== 学習モーダル =====
-    function openStudyImage() {
-      document.getElementById("study-image-modal").classList.add("open");
-    }
-
-    function closeStudyImage() {
-      document.getElementById("study-image-modal").classList.remove("open");
     }
 
     // ===== Shorts タップで再生 =====
