@@ -279,6 +279,50 @@
       max-width: var(--card-max-w);
     }
 
+    .featured-video-trigger {
+      position: relative;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #0b1430;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .featured-video-trigger img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .featured-video-trigger::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11,20,48,0.06), rgba(11,20,48,0.38));
+      pointer-events: none;
+    }
+
+    .featured-video-play {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 68px;
+      height: 68px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 28px;
+      z-index: 1;
+    }
+
     /* ===== Shorts（縦動画）===== */
     .shorts-row {
       display: flex;
@@ -601,16 +645,8 @@
         <div class="card">
           <ul class="notice-board">
             <li class="notice-item">
-              <span class="notice-date">04.22</span>
-              <p class="notice-text">動画タブに「新着」「おすすめ」、学習タブに「仕事」「活動」「教学」の切替を追加しました。</p>
-            </li>
-            <li class="notice-item">
-              <span class="notice-date">04.20</span>
-              <p class="notice-text">財務の学習資料を学習タブから確認できるようにしました。画像をタップすると拡大表示されます。</p>
-            </li>
-            <li class="notice-item">
-              <span class="notice-date">04.18</span>
-              <p class="notice-text">おすすめリンクを追加しました。横にスワイプして他のリンクも確認できます。</p>
+              <span class="notice-date">6月8日</span>
+              <p class="notice-text">任用試験（5月17日申込〆切）</p>
             </li>
           </ul>
         </div>
@@ -643,6 +679,19 @@
     <div id="videos-new" class="subpane active" data-subgroup="videos">
       <div class="sub-title">動画（新着）</div>
       <div class="card">
+        <p>新着動画を準備中です。</p>
+      </div>
+    </div>
+
+    <div id="videos-reco" class="subpane" data-subgroup="videos">
+      <div class="sub-title">動画（おすすめ）</div>
+      <div class="card video-card-wrap">
+        <button type="button" class="featured-video-trigger js-featured-video" data-id="WORGpCGs3GY" data-start="483" aria-label="おすすめ動画を再生">
+          <img src="https://i.ytimg.com/vi/WORGpCGs3GY/maxresdefault.jpg" alt="おすすめ動画サムネイル" loading="lazy">
+          <span class="featured-video-play">▶</span>
+        </button>
+      </div>
+      <div class="card">
         <div class="shorts-row">
           <button class="shorts-card js-short" data-id="IkYfUuDlCUM" aria-label="動画1">
             <img src="https://i.ytimg.com/vi_webp/IkYfUuDlCUM/hqdefault.webp" alt="動画1" />
@@ -664,16 +713,6 @@
             <img src="https://i.ytimg.com/vi_webp/DTM88cfE85c/hqdefault.webp" alt="動画5" />
             <span class="shorts-play">▶</span>
           </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="videos-reco" class="subpane" data-subgroup="videos">
-      <div class="sub-title">動画（おすすめ）</div>
-      <div class="card video-card-wrap">
-        <p>ホームで表示していた注目動画です。</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/WORGpCGs3GY?start=483" allowfullscreen></iframe>
         </div>
       </div>
     </div>
@@ -765,6 +804,20 @@
         iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1";
         iframe.allow = "autoplay; encrypted-media";
         iframe.allowFullscreen = true;
+        card.innerHTML = "";
+        card.appendChild(iframe);
+      });
+    });
+
+    document.querySelectorAll(".js-featured-video").forEach((card) => {
+      card.addEventListener("click", () => {
+        const id = card.dataset.id;
+        const start = card.dataset.start || "0";
+        const iframe = document.createElement("iframe");
+        iframe.src = "https://www.youtube.com/embed/" + id + "?autoplay=1&playsinline=1&start=" + start + "&rel=0";
+        iframe.allow = "autoplay; encrypted-media; picture-in-picture";
+        iframe.allowFullscreen = true;
+        iframe.title = "おすすめ動画";
         card.innerHTML = "";
         card.appendChild(iframe);
       });
