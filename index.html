@@ -904,6 +904,29 @@
       const target = document.getElementById(tabId);
       if (target) target.classList.add("active");
       if (btn) btn.classList.add("active");
+
+      if (tabId === "home") {
+        loadXTimelineWidget();
+      }
+    }
+
+    function loadXTimelineWidget() {
+      const timeline = document.querySelector(".twitter-timeline");
+      if (!timeline) return;
+
+      if (window.twttr && window.twttr.widgets) {
+        window.twttr.widgets.load(timeline.parentElement);
+        return;
+      }
+
+      if (document.getElementById("x-widgets-script")) return;
+
+      const script = document.createElement("script");
+      script.id = "x-widgets-script";
+      script.async = true;
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.charset = "utf-8";
+      document.body.appendChild(script);
     }
 
     // ===== サブタブ切替 =====
@@ -969,8 +992,8 @@
     window.addEventListener("load", () => {
       const homeBtn = document.querySelector('.bottom-tab[data-primary="home"]');
       openPrimaryTab("home", homeBtn);
+      loadXTimelineWidget();
     });
   </script>
-  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </body>
 </html>
