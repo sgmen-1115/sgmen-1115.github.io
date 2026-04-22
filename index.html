@@ -360,6 +360,87 @@
       color: #17325f;
     }
 
+    .qa-banner {
+      width: min(100%, 640px);
+      margin-bottom: 12px;
+      border-radius: 16px;
+      padding: 12px 16px;
+      background: linear-gradient(120deg, #0d2b68, #2f5db6 62%, #6fa1ff);
+      color: #fff;
+      box-shadow: 0 10px 24px rgba(11, 35, 90, 0.28);
+    }
+
+    .qa-banner strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
+    }
+
+    .qa-banner span {
+      font-size: 0.78rem;
+      color: rgba(232, 242, 255, 0.92);
+      letter-spacing: 0.06em;
+    }
+
+    .qa-list {
+      display: grid;
+      gap: 10px;
+      width: min(100%, 760px);
+    }
+
+    .qa-item {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.88);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    .qa-q {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #16315d;
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .qa-q::after {
+      content: "+";
+      flex: 0 0 auto;
+      font-size: 1.15rem;
+      color: #315da7;
+      transition: transform 0.2s ease;
+    }
+
+    .qa-item.open .qa-q::after {
+      content: "-";
+    }
+
+    .qa-a {
+      display: none;
+      padding: 0 16px 14px;
+      margin: 0;
+      color: #355689;
+      line-height: 1.8;
+      font-size: 0.88rem;
+      border-top: 1px solid rgba(26, 64, 130, 0.14);
+      background: rgba(240, 247, 255, 0.75);
+    }
+
+    .qa-item.open .qa-a {
+      display: block;
+    }
+
     /* ===== Shorts（縦動画）===== */
     .shorts-row {
       display: flex;
@@ -580,6 +661,10 @@
         justify-content: flex-end;
         padding-right: 4px;
       }
+      .qa-q {
+        font-size: 0.88rem;
+        padding: 13px 14px;
+      }
     }
   </style>
 </head>
@@ -644,6 +729,8 @@
     <div class="subtab-menu">
       <button class="subtab-btn active" onclick="openSubTab('videos','videos-new',this)">新着</button>
       <button class="subtab-btn" onclick="openSubTab('videos','videos-reco',this)">おすすめ</button>
+      <button class="subtab-btn" onclick="openSubTab('videos','videos-experience',this)">体験</button>
+      <button class="subtab-btn" onclick="openSubTab('videos','videos-activity',this)">活動</button>
     </div>
     <div id="videos-new" class="subpane active" data-subgroup="videos">
       <div class="sub-title">動画（新着）</div>
@@ -688,6 +775,21 @@
         </div>
       </div>
     </div>
+
+    <div id="videos-experience" class="subpane" data-subgroup="videos">
+      <div class="sub-title">動画（体験）</div>
+      <div class="card video-card-wrap">
+        <button type="button" class="featured-video-trigger js-featured-video" data-id="XdaAnNTNEjE" data-start="124" aria-label="体験動画を再生">
+          <img src="https://i.ytimg.com/vi/XdaAnNTNEjE/maxresdefault.jpg" alt="体験動画サムネイル" loading="lazy">
+          <span class="featured-video-play">▶</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="videos-activity" class="subpane" data-subgroup="videos">
+      <div class="sub-title">動画（活動）</div>
+      <div class="card"><p>活動動画をここに追加できます。</p></div>
+    </div>
   </div>
 
   <!-- 学習タブ -->
@@ -713,7 +815,7 @@
       <div class="sub-title">学習資料（活動）</div>
       <div class="card">
         <a class="study-article-link" href="https://www.seikyoonline.com/article/E9FB51870888A4D7EBB81CD35A64F3EF" target="_blank" rel="noopener noreferrer">
-          <img class="study-article-thumb" src="tyudo_title.png" alt="理念貫く「中道政治」を今こそ サムネイル" loading="lazy">
+          <img class="study-article-thumb" src="tyudo_titlepng" alt="理念貫く「中道政治」を今こそ サムネイル" loading="lazy">
           <div class="study-article-meta">
             <p class="study-article-title">理念貫く「中道政治」を今こそ</p>
           </div>
@@ -727,12 +829,37 @@
     <div id="study-qa" class="subpane" data-subgroup="study">
       <div class="sub-title">学習資料（Q＆A）</div>
       <div class="card">
-        <a class="study-article-link" href="https://www.sokayouth-media.jp/opinion/2881687.html" target="_blank" rel="noopener noreferrer">
-          <img class="study-article-thumb" src="zaimu.title.png" alt="財務 Q＆A サムネイル" loading="lazy">
-          <div class="study-article-meta">
-            <p class="study-article-title">財務 Q＆A を見る</p>
+        <div class="qa-banner">
+          <strong>男子部 Q＆A</strong>
+          <span>質問をタップすると回答が表示されます</span>
+        </div>
+
+        <div class="qa-list">
+          <div class="qa-item">
+            <button type="button" class="qa-q">①家庭や職場の事情で、引越しをしなければいけなくなった。</button>
+            <p class="qa-a">まずは最寄りの担当幹部へ早めに相談し、転居先エリアの組織につながる準備を進めましょう。新しい生活リズムが整うまでは、無理のない形で座談会や学習会に参加し、継続しやすい活動スタイルを一緒に確認していくことが大切です。</p>
           </div>
-        </a>
+
+          <div class="qa-item">
+            <button type="button" class="qa-q">②結婚／出産などライフステージに変化があった</button>
+            <p class="qa-a">環境が大きく変わる時期は、活動量よりも信心を続ける基盤づくりが重要です。家庭の状況を共有しながら、参加しやすい時間帯や役割へ調整し、パートナーとも対話を重ねて「長く続く形」を一緒に作っていきましょう。</p>
+          </div>
+
+          <div class="qa-item">
+            <button type="button" class="qa-q">③学会活動の中でトラブルに遭遇したら</button>
+            <p class="qa-a">一人で抱え込まず、事実関係を整理して複数の責任者へ速やかに相談してください。感情的な対応を避け、相手への敬意を保ちながら、組織としてのルールと対話で解決を図ることが、再発防止にもつながります。</p>
+          </div>
+
+          <div class="qa-item">
+            <button type="button" class="qa-q">④男子部学生部や未来部にも励ましを送りたい</button>
+            <p class="qa-a">世代ごとの課題に寄り添う励ましが効果的です。短いメッセージでも「具体的にどこが素晴らしいか」を伝えると、相手の勇気になります。必要に応じて担当者と連携し、訪問・オンライン・手紙など最適な手段を選びましょう。</p>
+          </div>
+
+          <div class="qa-item">
+            <button type="button" class="qa-q">⑤未来座談会やユース座談会などの開催にあたり、男子部や池田華陽会／ヤング白ゆり世代との協議会をもつことになった。</button>
+            <p class="qa-a">事前に目的・対象・役割分担を明確にして、短時間でも丁寧な打ち合わせを行うことが成功の鍵です。各世代の声を尊重しながら、当日の導線やフォロー体制まで共有しておくと、参加者が安心して集える座談会になります。</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -796,6 +923,13 @@
         iframe.title = "おすすめ動画";
         card.innerHTML = "";
         card.appendChild(iframe);
+      });
+    });
+
+    document.querySelectorAll(".qa-q").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const item = btn.closest(".qa-item");
+        item.classList.toggle("open");
       });
     });
 
