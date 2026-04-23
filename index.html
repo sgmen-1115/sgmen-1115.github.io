@@ -741,15 +741,11 @@
           </ul>
         </div>
 
-        <div class="sub-title">Xタイムライン</div>
+        <div class="sub-title">X最新投稿</div>
         <div class="card">
-          <a class="twitter-timeline"
-             data-height="520"
-             data-chrome="noheader nofooter noborders transparent"
-             data-lang="ja"
-             href="https://twitter.com/yanashima_?ref_src=twsrc%5Etfw">
-            Posts by @yanashima_
-          </a>
+          <blockquote class="twitter-tweet x-latest-tweet" data-lang="ja" data-dnt="true">
+            <a href="https://twitter.com/yanashima_/status/POST_ID">投稿を表示</a>
+          </blockquote>
           <div id="x-fallback" class="x-fallback" role="status" aria-live="polite">
             <p>X側の混雑によりタイムラインを取得できないため、リンクから直接ご確認ください。</p>
             <a href="https://x.com/yanashima_" target="_blank" rel="noopener noreferrer">Xで開く</a>
@@ -932,32 +928,13 @@
   </nav>
 
   <script>
-    let xWidgetScriptRequested = false;
-    let xWidgetRendered = false;
-    const xWidgetCooldownKey = "xWidgetCooldownUntil";
-    const xWidgetCooldownMs = 10 * 60 * 1000;
+    let xSingleScriptRequested = false;
+    let xSingleRendered = false;
 
     function showXFallback(show) {
       const box = document.getElementById("x-fallback");
       if (!box) return;
       box.classList.toggle("show", show);
-    }
-
-    function setXWidgetCooldown() {
-      try {
-        localStorage.setItem(xWidgetCooldownKey, String(Date.now() + xWidgetCooldownMs));
-      } catch (e) {
-        // localStorageが使えない環境では何もしない
-      }
-    }
-
-    function isXWidgetInCooldown() {
-      try {
-        const until = Number(localStorage.getItem(xWidgetCooldownKey) || "0");
-        return until > Date.now();
-      } catch (e) {
-        return false;
-      }
     }
 
     // ===== タブ切替 =====
@@ -969,61 +946,48 @@
       if (target) target.classList.add("active");
       if (btn) btn.classList.add("active");
 
-      if (tabId === "home" && !xWidgetRendered) {
-        loadXTimelineWidget();
+      if (tabId === "home" && !xSingleRendered) {
+        loadLatestTweetEmbed();
       }
     }
 
-    function loadXTimelineWidget() {
-      const timeline = document.querySelector(".twitter-timeline");
-      if (!timeline) return;
+    function loadLatestTweetEmbed() {
+      const tweet = document.querySelector(".x-latest-tweet");
+      if (!tweet) return;
+      if (xSingleRendered) return;
 
-      // 既に描画済みなら再読み込みしない（429回避）
-      if (xWidgetRendered) return;
-
-      if (isXWidgetInCooldown()) {
-        showXFallback(true);
-        return;
-      }
-
-      const renderTimeline = () => {
+      const render = () => {
         if (window.twttr && window.twttr.widgets) {
           showXFallback(false);
-          window.twttr.widgets.load(timeline.parentElement);
+          window.twttr.widgets.load(tweet.parentElement);
 
-          // 一定時間後に埋め込み未生成ならフォールバックへ切り替える
           window.setTimeout(() => {
-            const hasIframe = !!timeline.parentElement.querySelector("iframe");
+            const hasIframe = !!tweet.parentElement.querySelector("iframe");
             if (hasIframe) {
-              xWidgetRendered = true;
+              xSingleRendered = true;
               showXFallback(false);
             } else {
-              setXWidgetCooldown();
               showXFallback(true);
             }
-          }, 6000);
+          }, 5000);
         }
       };
 
       if (window.twttr && window.twttr.widgets) {
-        renderTimeline();
+        render();
         return;
       }
 
-      if (xWidgetScriptRequested) return;
-      xWidgetScriptRequested = true;
+      if (xSingleScriptRequested) return;
+      xSingleScriptRequested = true;
 
-      let script = document.getElementById("x-widgets-script");
-      if (!script) {
-        script = document.createElement("script");
-        script.id = "x-widgets-script";
-        script.async = true;
-        script.src = "https://platform.twitter.com/widgets.js";
-        script.charset = "utf-8";
-        document.body.appendChild(script);
-      }
-
-      script.addEventListener("load", renderTimeline, { once: true });
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.charset = "utf-8";
+      script.onload = render;
+      script.onerror = () => showXFallback(true);
+      document.body.appendChild(script);
     }
 
     // ===== サブタブ切替 =====
@@ -1113,6 +1077,7 @@
     window.addEventListener("load", () => {
       const homeBtn = document.querySelector('.bottom-tab[data-primary="home"]');
       openPrimaryTab("home", homeBtn);
+      loadLatestTweetEmbed();
     });
   </script>
 </body>
