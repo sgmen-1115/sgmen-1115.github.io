@@ -555,39 +555,82 @@
       transform: translateY(-1px);
     }
 
-    .twitter-timeline {
-      width: 100% !important;
+    .timeline-wrap {
+      max-width: var(--card-max-w);
     }
 
-    .x-fallback {
-      display: none;
-      margin-top: 10px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.14);
-      border: 1px solid rgba(255, 255, 255, 0.24);
-      color: #f2f7ff;
-    }
-
-    .x-fallback.show {
-      display: block;
-    }
-
-    .x-fallback p {
-      margin: 0 0 8px;
+    .timeline-note {
+      margin: 0 0 12px;
       font-size: 0.82rem;
       line-height: 1.6;
+      color: #355689;
     }
 
-    .x-fallback a {
-      display: inline-block;
-      text-decoration: none;
-      font-size: 0.8rem;
-      font-weight: 700;
+    .timeline-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-form input,
+    .timeline-form textarea {
+      width: 100%;
+      border: 1px solid rgba(24, 74, 159, 0.26);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
       color: #17325f;
-      background: #fff;
+      background: rgba(255, 255, 255, 0.95);
+    }
+
+    .timeline-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .timeline-form button {
+      border: 0;
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 10px 16px;
+      width: fit-content;
+      background: #184a9f;
+      color: #fff;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .timeline-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .timeline-item {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      border-radius: 14px;
+      padding: 12px;
+      color: #17325f;
+    }
+
+    .timeline-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.76rem;
+      color: #4b6a98;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .timeline-text {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: #17325f;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .notice-board {
@@ -635,7 +678,7 @@
       height: calc(64px + env(safe-area-inset-bottom));
       padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 8px;
       background: rgba(20, 34, 74, 0.94);
       backdrop-filter: blur(10px);
@@ -739,17 +782,6 @@
               <p class="notice-text">任用試験（5月17日申込〆切）</p>
             </li>
           </ul>
-        </div>
-
-        <div class="sub-title">X最新投稿</div>
-        <div class="card">
-          <blockquote class="twitter-tweet x-latest-tweet" data-lang="ja" data-dnt="true">
-            <a href="https://x.com/yanashima_/status/2045084868280004999">投稿を表示</a>
-          </blockquote>
-          <div id="x-fallback" class="x-fallback" role="status" aria-live="polite">
-            <p>X側の混雑により投稿を取得できないため、リンクから直接ご確認ください。</p>
-            <a href="https://x.com/yanashima_/status/2045084868280004999" target="_blank" rel="noopener noreferrer">投稿を開く</a>
-          </div>
         </div>
 
         <div class="sub-title">おすすめリンク</div>
@@ -911,6 +943,25 @@
     </div>
   </div>
 
+  <!-- タイムラインタブ -->
+  <div id="timeline" class="tab-content">
+    <div class="sub-title">全国タイムライン</div>
+    <div class="card timeline-wrap">
+      <p class="timeline-note">各地の活動の様子を記録できます。現在は端末内保存版（このブラウザのみ）です。将来的に全国共有APIへ接続できる構成にしています。</p>
+      <form id="timeline-form" class="timeline-form">
+        <input id="timeline-region" type="text" maxlength="30" placeholder="地域名（例: 東京・関西）" required>
+        <input id="timeline-author" type="text" maxlength="30" placeholder="投稿者名（任意）">
+        <textarea id="timeline-text" maxlength="500" placeholder="活動の様子を入力（500文字以内）" required></textarea>
+        <button type="submit">投稿する</button>
+      </form>
+    </div>
+
+    <div class="sub-title">投稿一覧</div>
+    <div class="card timeline-wrap">
+      <ul id="timeline-list" class="timeline-list"></ul>
+    </div>
+  </div>
+
   <!-- 下部タブ -->
   <nav class="bottom-tabbar" aria-label="メインナビゲーション">
     <button class="bottom-tab active" data-primary="home" onclick="openPrimaryTab('home', this)">
@@ -925,17 +976,15 @@
       <svg viewBox="0 0 24 24"><path d="M4 6.5A3.5 3.5 0 0 1 7.5 3H20v16.5h-12A3.5 3.5 0 0 0 4.5 23"/><path d="M20 3v16.5"/></svg>
       <span>学習</span>
     </button>
+    <button class="bottom-tab" data-primary="timeline" onclick="openPrimaryTab('timeline', this)">
+      <svg viewBox="0 0 24 24"><path d="M4 18h16"/><path d="M4 12h10"/><path d="M4 6h6"/></svg>
+      <span>タイムライン</span>
+    </button>
   </nav>
 
   <script>
-    let xSingleScriptRequested = false;
-    let xSingleRendered = false;
-
-    function showXFallback(show) {
-      const box = document.getElementById("x-fallback");
-      if (!box) return;
-      box.classList.toggle("show", show);
-    }
+    const TIMELINE_STORAGE_KEY = "sgmenTimelinePostsV1";
+    const MAX_TIMELINE_ITEMS = 60;
 
     // ===== タブ切替 =====
     function openPrimaryTab(tabId, btn) {
@@ -945,49 +994,100 @@
       const target = document.getElementById(tabId);
       if (target) target.classList.add("active");
       if (btn) btn.classList.add("active");
+    }
 
-      if (tabId === "home" && !xSingleRendered) {
-        loadLatestTweetEmbed();
+    function escapeHtml(str) {
+      return str
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function loadTimelinePosts() {
+      try {
+        const raw = localStorage.getItem(TIMELINE_STORAGE_KEY);
+        const items = raw ? JSON.parse(raw) : [];
+        return Array.isArray(items) ? items : [];
+      } catch {
+        return [];
       }
     }
 
-    function loadLatestTweetEmbed() {
-      const tweet = document.querySelector(".x-latest-tweet");
-      if (!tweet) return;
-      if (xSingleRendered) return;
+    function saveTimelinePosts(items) {
+      localStorage.setItem(TIMELINE_STORAGE_KEY, JSON.stringify(items.slice(0, MAX_TIMELINE_ITEMS)));
+    }
 
-      const render = () => {
-        if (window.twttr && window.twttr.widgets) {
-          showXFallback(false);
-          window.twttr.widgets.load(tweet.parentElement);
+    function formatTimelineDate(iso) {
+      const d = new Date(iso);
+      if (Number.isNaN(d.getTime())) return "日時不明";
+      return d.toLocaleString("ja-JP", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
 
-          window.setTimeout(() => {
-            const hasIframe = !!tweet.parentElement.querySelector("iframe");
-            if (hasIframe) {
-              xSingleRendered = true;
-              showXFallback(false);
-            } else {
-              showXFallback(true);
-            }
-          }, 5000);
-        }
-      };
+    function renderTimeline() {
+      const list = document.getElementById("timeline-list");
+      if (!list) return;
+      const items = loadTimelinePosts();
 
-      if (window.twttr && window.twttr.widgets) {
-        render();
+      if (items.length === 0) {
+        list.innerHTML = '<li class="timeline-item"><p class="timeline-text">まだ投稿はありません。最初の投稿をしてみましょう。</p></li>';
         return;
       }
 
-      if (xSingleScriptRequested) return;
-      xSingleScriptRequested = true;
+      list.innerHTML = items.map((item) => {
+        const region = escapeHtml(item.region || "地域未設定");
+        const author = escapeHtml(item.author || "匿名");
+        const text = escapeHtml(item.text || "");
+        const at = formatTimelineDate(item.createdAt);
+        return (
+          '<li class="timeline-item">' +
+            '<div class="timeline-meta">' +
+              '<span>' + region + '</span>' +
+              '<span>' + author + '</span>' +
+              '<span>' + at + '</span>' +
+            '</div>' +
+            '<p class="timeline-text">' + text + '</p>' +
+          '</li>'
+        );
+      }).join("");
+    }
 
-      const script = document.createElement("script");
-      script.async = true;
-      script.src = "https://platform.twitter.com/widgets.js";
-      script.charset = "utf-8";
-      script.onload = render;
-      script.onerror = () => showXFallback(true);
-      document.body.appendChild(script);
+    function initTimelineForm() {
+      const form = document.getElementById("timeline-form");
+      if (!form) return;
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const regionInput = document.getElementById("timeline-region");
+        const authorInput = document.getElementById("timeline-author");
+        const textInput = document.getElementById("timeline-text");
+        if (!regionInput || !textInput || !authorInput) return;
+
+        const region = regionInput.value.trim();
+        const author = authorInput.value.trim();
+        const text = textInput.value.trim();
+        if (!region || !text) return;
+
+        const current = loadTimelinePosts();
+        current.unshift({
+          region,
+          author,
+          text,
+          createdAt: new Date().toISOString()
+        });
+
+        saveTimelinePosts(current);
+        form.reset();
+        renderTimeline();
+      });
     }
 
     // ===== サブタブ切替 =====
@@ -1077,7 +1177,8 @@
     window.addEventListener("load", () => {
       const homeBtn = document.querySelector('.bottom-tab[data-primary="home"]');
       openPrimaryTab("home", homeBtn);
-      loadLatestTweetEmbed();
+      initTimelineForm();
+      renderTimeline();
     });
   </script>
 </body>
