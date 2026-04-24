@@ -754,6 +754,12 @@
       letter-spacing: 0.02em;
     }
 
+    .feature-post-source a {
+      color: rgba(232, 244, 255, 0.98);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
     /* ===== 下部固定タブ ===== */
     .bottom-tabbar {
       position: fixed;
@@ -916,6 +922,7 @@
   <div id="features" class="tab-content">
     <div class="feature-subtabs" role="tablist" aria-label="特集サブタブ">
       <button class="feature-pill active" onclick="openSubTab('feature-main','feature-rethink',this)">RE:THINK</button>
+      <button class="feature-pill" onclick="openSubTab('feature-main','feature-youth',this)">Youth media</button>
     </div>
 
     <div id="feature-rethink" class="feature-pane active" data-subgroup="feature-main">
@@ -993,6 +1000,48 @@
               <h4>人間主義と調和したAI活用の道</h4>
               <p>対話型AIにしか本音を語れない、相談できない人たちが存在しています。（中略）もちろん、どれほどAIが発展しても、題目をあげるのも、行動の責任を引き受けるのも、最後まで人間自身です。AIに任せる部分と、自分自身が汗を流し、心を砕くべき部分を取り違えないことが重要です。</p>
               <span class="feature-post-source">2026年2月号より抜粋</span>
+            </article>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="feature-youth" class="feature-pane" data-subgroup="feature-main">
+      <div class="card feature-shell">
+        <p class="feature-lead">社会と青年をつなぐ</p>
+
+        <div class="feature-mini-tabs" role="tablist" aria-label="Youth mediaカテゴリ">
+          <button class="feature-pill active" onclick="openSubTab('youth-cat','youth-opinion',this)">主張</button>
+          <button class="feature-pill" onclick="openSubTab('youth-cat','youth-qa',this)">質問に答える</button>
+          <button class="feature-pill" onclick="openSubTab('youth-cat','youth-study',this)">仏法を学ぶ</button>
+        </div>
+
+        <div id="youth-opinion" class="feature-pane active" data-subgroup="youth-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>「会合、多くないですか？」</h4>
+              <p>活動と家庭との両立に対する、これといった正解は持ち合わせていないが、心から思うのは、大好きな創価学会をもっと発展させていきたい、子どもたちに信心やさらに魅力ある創価学会を残していきたい、ということだ。「子育て中だから頑張れなくても仕方ない」「男子部の間は子どもと関われなくても仕方ない」ではなく、「子育て中も」「男子部の間も」何かを我慢したり、あきらめたりすることなく、生き生きと頑張れる体制や在り方はないものか。</p>
+              <span class="feature-post-source">詳しくは、<a href="https://www.sokayouth-media.jp/opinion/3074832.html" target="_blank" rel="noopener noreferrer">https://www.sokayouth-media.jp/opinion/3074832.html</a></span>
+            </article>
+          </div>
+        </div>
+
+        <div id="youth-qa" class="feature-pane" data-subgroup="youth-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>「質問に答える」の投稿は準備中です。順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="youth-study" class="feature-pane" data-subgroup="youth-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>「仏法を学ぶ」の投稿は準備中です。順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
             </article>
           </div>
         </div>
