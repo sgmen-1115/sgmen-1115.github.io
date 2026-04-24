@@ -568,32 +568,25 @@
       overflow: hidden;
       border: 1px solid rgba(255, 255, 255, 0.34);
       box-shadow: 0 12px 26px rgba(8, 26, 74, 0.24);
-      min-height: 180px;
+      min-height: 132px;
       isolation: isolate;
-      background: #1f438f;
-    }
-
-    .notice-feature img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: saturate(1.05) contrast(1.05);
-      transform: scale(1.01);
-      transition: transform 0.25s ease;
+      background: linear-gradient(135deg, #214c9f 0%, #183a7d 55%, #112e64 100%);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .notice-feature::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(165deg, rgba(7, 23, 66, 0.18) 5%, rgba(7, 23, 66, 0.82) 70%);
+      background:
+        radial-gradient(circle at 82% 14%, rgba(167, 207, 255, 0.26), rgba(167, 207, 255, 0) 38%),
+        linear-gradient(165deg, rgba(7, 23, 66, 0.15) 5%, rgba(7, 23, 66, 0.70) 70%);
       z-index: 1;
     }
 
-    .notice-feature:hover img {
-      transform: scale(1.06);
+    .notice-feature:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(7, 22, 58, 0.32);
     }
 
     .notice-feature-body {
@@ -623,6 +616,93 @@
       font-size: 0.98rem;
       line-height: 1.55;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+    }
+
+    .feature-shell {
+      max-width: 920px;
+    }
+
+    .feature-topline {
+      margin: 0 0 12px;
+      color: rgba(232, 242, 255, 0.9);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+    }
+
+    .feature-subtabs,
+    .feature-mini-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 2px 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .feature-pill {
+      border: 1px solid rgba(255, 255, 255, 0.36);
+      background: rgba(255, 255, 255, 0.08);
+      color: rgba(245, 249, 255, 0.95);
+      border-radius: 999px;
+      min-height: 36px;
+      padding: 7px 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .feature-pill.active {
+      background: rgba(255, 255, 255, 0.26);
+      border-color: rgba(255, 255, 255, 0.48);
+      color: #fff;
+    }
+
+    .feature-pane { display: none; }
+    .feature-pane.active { display: block; }
+
+    .feature-lead {
+      margin: 0 0 14px;
+      color: #355689;
+      font-size: 0.87rem;
+      line-height: 1.8;
+    }
+
+    .feature-post-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .feature-post {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(24, 74, 159, 0.16);
+      border-left: 5px solid #1f4ea1;
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: #17325f;
+    }
+
+    .feature-post h4 {
+      margin: 0 0 8px;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #15305a;
+    }
+
+    .feature-post p {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.7;
+      color: #2d4e7f;
+    }
+
+    .feature-post-source {
+      margin-top: 9px;
+      display: block;
+      font-size: 0.76rem;
+      color: #5476a7;
+      font-weight: 700;
+      letter-spacing: 0.02em;
     }
 
     /* ===== 下部固定タブ ===== */
@@ -735,18 +815,16 @@
         <div class="card">
           <div class="notice-feature-grid">
             <a class="notice-feature" href="https://www.seikyoonline.com/article/99ADB086CDACBD26C78BFD7E6B12A46F" target="_blank" rel="noopener noreferrer">
-              <img class="js-link-thumb-img" src="https://image.thum.io/get/width/1200/noanimate/https://www.seikyoonline.com/article/99ADB086CDACBD26C78BFD7E6B12A46F" alt="全国各地の活動レポート" loading="lazy" data-fallback-title="全国各地の活動レポート" data-fallback-subtitle="SEIKYO ONLINE">
               <div class="notice-feature-body">
                 <span class="notice-feature-tag">注目記事</span>
-                <p class="notice-feature-title">全国の挑戦がつながる。<br>最新の活動レポートをチェック</p>
+                <p class="notice-feature-title">「創価新報」が青年・現役世代向けに！</p>
               </div>
             </a>
 
             <a class="notice-feature" href="https://www.seikyoonline.com/article/F22735D07CB7CAD3620837CE051D6746" target="_blank" rel="noopener noreferrer">
-              <img class="js-link-thumb-img" src="https://image.thum.io/get/width/1200/noanimate/https://www.seikyoonline.com/article/F22735D07CB7CAD3620837CE051D6746" alt="現場の実践ストーリー" loading="lazy" data-fallback-title="現場の実践ストーリー" data-fallback-subtitle="SEIKYO ONLINE">
               <div class="notice-feature-body">
-                <span class="notice-feature-tag">特集</span>
-                <p class="notice-feature-title">現場で生まれた工夫と感動。<br>いま読みたい実践ストーリー</p>
+                <span class="notice-feature-tag">注目記事</span>
+                <p class="notice-feature-title">「ワールド・セイキョウVol.7」が発売！</p>
               </div>
             </a>
           </div>
@@ -766,6 +844,80 @@
         <div class="link-scroll-hint" aria-hidden="true">
           <span>左右にスワイプ</span>
           <span class="dots">○○○</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 特集タブ -->
+  <div id="features" class="tab-content">
+    <p class="feature-topline">深掘りして読む、考える、対話する。</p>
+
+    <div class="feature-subtabs" role="tablist" aria-label="特集サブタブ">
+      <button class="feature-pill active" onclick="openSubTab('feature-main','feature-rethink',this)">RE:THINK</button>
+    </div>
+
+    <div id="feature-rethink" class="feature-pane active" data-subgroup="feature-main">
+      <div class="sub-title">RE:THINK</div>
+      <div class="card feature-shell">
+        <p class="feature-lead">雑誌「第三文明」の連載「RE:THINK」〜青年たちの仏法探求　社会的難題への挑戦〜より抜粋</p>
+
+        <div class="feature-mini-tabs" role="tablist" aria-label="RE:THINKカテゴリ">
+          <button class="feature-pill active" onclick="openSubTab('rethink-cat','rethink-politics',this)">政治</button>
+          <button class="feature-pill" onclick="openSubTab('rethink-cat','rethink-society',this)">社会</button>
+          <button class="feature-pill" onclick="openSubTab('rethink-cat','rethink-education',this)">教育</button>
+          <button class="feature-pill" onclick="openSubTab('rethink-cat','rethink-peace',this)">平和</button>
+          <button class="feature-pill" onclick="openSubTab('rethink-cat','rethink-religion',this)">宗教</button>
+        </div>
+
+        <div id="rethink-politics" class="feature-pane active" data-subgroup="rethink-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>人間主義とは、秩序ある共生</h4>
+              <p>例えば、外国人政策をイデオロギーのみで考えれば、「排外」「優遇」という二項対立になってしまいます。（中略）人口減少という日本社会の実情からも、外国人との共生を排除するのは非現実的と言わざるを得ません。一方で、日本国民の不安解消も大切な課題であり、ルールは整備されなければならない。その線引きや塩梅は何通りも都度、議論を重ねよりよいルールや仕組みに変えていく。</p>
+              <span class="feature-post-source">2026年1月号より抜粋</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="rethink-society" class="feature-pane" data-subgroup="rethink-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>社会テーマの投稿は準備中です。管理者投稿で順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="rethink-education" class="feature-pane" data-subgroup="rethink-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>教育テーマの投稿は準備中です。管理者投稿で順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="rethink-peace" class="feature-pane" data-subgroup="rethink-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>平和テーマの投稿は準備中です。管理者投稿で順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
+            </article>
+          </div>
+        </div>
+
+        <div id="rethink-religion" class="feature-pane" data-subgroup="rethink-cat">
+          <div class="feature-post-list">
+            <article class="feature-post">
+              <h4>準備中</h4>
+              <p>宗教テーマの投稿は準備中です。管理者投稿で順次追加されます。</p>
+              <span class="feature-post-source">近日公開</span>
+            </article>
+          </div>
         </div>
       </div>
     </div>
@@ -917,6 +1069,10 @@
       <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
       <span>ホーム</span>
     </button>
+    <button class="bottom-tab" data-primary="features" onclick="openPrimaryTab('features', this)">
+      <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h12"/><path d="M4 17h8"/></svg>
+      <span>特集</span>
+    </button>
     <button class="bottom-tab" data-primary="videos" onclick="openPrimaryTab('videos', this)">
       <svg viewBox="0 0 24 24"><rect x="3" y="5" width="14" height="14" rx="2"/><path d="M17 10l4-2v8l-4-2z"/></svg>
       <span>動画</span>
@@ -942,7 +1098,7 @@
     function openSubTab(group, paneId, btn) {
       document.querySelectorAll('[data-subgroup="' + group + '"]').forEach((el) => el.classList.remove("active"));
       document.getElementById(paneId).classList.add("active");
-      btn.parentElement.querySelectorAll(".subtab-btn").forEach((el) => el.classList.remove("active"));
+      btn.parentElement.querySelectorAll("button").forEach((el) => el.classList.remove("active"));
       btn.classList.add("active");
     }
 
